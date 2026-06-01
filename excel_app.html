@@ -733,7 +733,7 @@ Les questions doivent être concrètes et pratiques : syntaxe de formule, compor
 Réponds UNIQUEMENT en JSON valide sans markdown. Format strict :
 {"question":"...","options":["A. ...","B. ...","C. ...","D. ..."],"correct_index":0,"explanation":"explication courte et pédagogique en français (1-2 phrases avec la syntaxe si pertinent)"}`;
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages',{
+    const res = await fetch('/.netlify/functions/claude',{
       method:'POST', headers:{'Content-Type':'application/json'},
       body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:900,messages:[{role:'user',content:prompt}]})
     });
@@ -822,7 +822,7 @@ Questions concrètes : syntaxe, résultat de formule, choix de la bonne fonction
 Réponds UNIQUEMENT en JSON valide sans markdown :
 {"question":"...","options":["A. ...","B. ...","C. ...","D. ..."],"correct_index":0,"explanation":"explication pédagogique en français avec syntaxe si utile"}`;
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages',{
+    const res = await fetch('/.netlify/functions/claude',{
       method:'POST', headers:{'Content-Type':'application/json'},
       body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:900,messages:[{role:'user',content:prompt}]})
     });

@@ -917,7 +917,7 @@ async function loadSessStep() {
 Réponds UNIQUEMENT en JSON valide sans markdown ni texte autour. Format strict :
 {"question":"...","options":["A. ...","B. ...","C. ...","D. ..."],"correct_index":0,"explanation":"explication en français 1-2 phrases"}`;
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const res = await fetch('/.netlify/functions/claude', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 900, messages: [{ role: 'user', content: prompt }] })
@@ -1007,7 +1007,7 @@ async function genLibre() {
 Réponds UNIQUEMENT en JSON valide sans markdown. Format :
 {"question":"...","options":["A. ...","B. ...","C. ...","D. ..."],"correct_index":0,"explanation":"explication courte en français"}`;
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const res = await fetch('/.netlify/functions/claude', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 900, messages: [{ role: 'user', content: prompt }] })
