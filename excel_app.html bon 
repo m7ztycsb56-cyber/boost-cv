@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Excel MOS/TOSA — Boost CV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #070d0a;
+    --surface: #0e1812;
+    --surface2: #162219;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --accent: #2d9e6b;
+    --accent2: #4dcc8f;
+    --green: #3dd68c;
+    --red: #f87171;
+    --amber: #fbbf24;
+    --blue: #60a5fa;
+    --purple: #a78bfa;
+    --text: #e4ede9;
+    --muted: #5a7068;
+    --muted2: #8aab9e;
+    --font-display: 'Syne', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    min-height: 100vh;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 28px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+  }
+
+  .logo {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 24px;
+    letter-spacing: -0.3px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .logo-dot {
+    width: 8px; height: 8px;
+    background: var(--accent2);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .nav-section {
+    font-size: 10px;
+    font-family: var(--font-mono);
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 12px 0 6px;
+    padding: 0 8px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--muted2);
+    cursor: pointer;
+    transition: all 0.15s;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    font-family: var(--font-body);
+  }
+
+  .nav-item:hover { background: var(--surface2); color: var(--text); }
+  .nav-item.active { background: var(--surface2); color: var(--text); }
+  .nav-item .nav-icon { font-size: 15px; opacity: 0.7; }
+
+  .sidebar-bottom {
+    margin-top: auto;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .info-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 12px;
+    background: var(--surface2);
+    border-radius: 8px;
+    font-size: 12px;
+    font-family: var(--font-mono);
+    color: var(--muted2);
+  }
+
+  .info-pill span { color: var(--accent2); }
+
+  /* MAIN */
+  .main { padding: 36px 40px; max-width: 860px; }
+
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* HEADER */
+  .page-header { margin-bottom: 32px; }
+  .page-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .page-title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+  }
+  .page-sub { font-size: 14px; color: var(--muted2); margin-top: 6px; }
+
+  /* STATS */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .stat-val {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.5px;
+  }
+
+  .stat-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* PROGRESS */
+  .progress-section { margin-bottom: 28px; }
+  .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .progress-title { font-size: 13px; color: var(--muted2); }
+  .progress-pct { font-family: var(--font-mono); font-size: 13px; color: var(--accent2); }
+  .progress-track { height: 3px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 2px; transition: width 0.6s ease; }
+
+  /* PHASE STRIP */
+  .phase-strip { display: flex; gap: 8px; margin-bottom: 28px; }
+  .phase-chip {
+    flex: 1; padding: 10px 12px; border-radius: 8px;
+    border: 1px solid var(--border); font-size: 12px;
+    text-align: center; color: var(--muted); font-family: var(--font-mono);
+  }
+  .phase-chip.active { border-color: var(--accent2); color: var(--accent2); background: rgba(77,204,143,0.06); }
+  .phase-chip.done { border-color: var(--green); color: var(--green); background: rgba(61,214,140,0.05); }
+  .phase-chip .ph-name { font-size: 10px; display: block; margin-bottom: 2px; opacity: 0.7; }
+
+  /* SESSION */
+  .session-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .session-day { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+  .session-prog { font-family: var(--font-mono); font-size: 12px; color: var(--accent2); }
+  .session-bar { height: 2px; background: var(--surface2); border-radius: 1px; margin-bottom: 24px; overflow: hidden; }
+  .session-bar-fill { height: 100%; background: var(--accent2); border-radius: 1px; transition: width 0.4s ease; }
+
+  /* SCORE MINI */
+  .score-mini {
+    display: flex; gap: 16px; align-items: center; margin-bottom: 20px;
+    padding: 10px 16px; background: var(--surface2); border-radius: 8px;
+    font-family: var(--font-mono); font-size: 13px; color: var(--muted2);
+  }
+  .score-mini span { color: var(--text); }
+
+  /* EX CARD */
+  .ex-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 24px; margin-bottom: 16px;
+    animation: fadeIn 0.25s ease;
+  }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .ex-tag {
+    display: inline-block; font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 20px; margin-bottom: 14px;
+  }
+
+  .tag-formules   { background: rgba(77,204,143,0.12); color: var(--accent2); border: 1px solid rgba(77,204,143,0.3); }
+  .tag-tcd        { background: rgba(96,165,250,0.12); color: var(--blue); border: 1px solid rgba(96,165,250,0.3); }
+  .tag-graphiques { background: rgba(251,191,36,0.12); color: var(--amber); border: 1px solid rgba(251,191,36,0.3); }
+  .tag-finance    { background: rgba(167,139,250,0.12); color: var(--purple); border: 1px solid rgba(167,139,250,0.3); }
+  .tag-mfc        { background: rgba(248,113,113,0.12); color: var(--red); border: 1px solid rgba(248,113,113,0.3); }
+  .tag-pratique   { background: rgba(77,204,143,0.08); color: var(--green); border: 1px solid rgba(61,214,140,0.3); }
+
+  .ex-q { font-size: 16px; color: var(--text); line-height: 1.65; margin-bottom: 20px; }
+
+  .options { display: flex; flex-direction: column; gap: 8px; }
+
+  .opt-btn {
+    text-align: left; padding: 11px 16px; border-radius: 8px;
+    border: 1px solid var(--border2); background: var(--surface2);
+    color: var(--muted2); font-size: 14px; cursor: pointer;
+    transition: all 0.15s; font-family: var(--font-body); line-height: 1.5;
+  }
+  .opt-btn:hover:not(:disabled) { border-color: var(--accent2); color: var(--text); }
+  .opt-btn.correct { background: rgba(61,214,140,0.1); border-color: var(--green); color: var(--green); }
+  .opt-btn.wrong { background: rgba(248,113,113,0.08); border-color: var(--red); color: var(--red); }
+  .opt-btn:disabled { cursor: default; }
+
+  .expl {
+    margin-top: 14px; padding: 12px 16px; background: var(--surface2);
+    border-radius: 8px; font-size: 13px; color: var(--muted2); line-height: 1.6;
+    border-left: 2px solid var(--accent2); display: none;
+  }
+
+  /* FORMULA BOX */
+  .formula-box {
+    background: var(--surface2); border: 1px solid var(--border2);
+    border-radius: 8px; padding: 12px 16px; margin-bottom: 16px;
+    font-family: var(--font-mono); font-size: 14px; color: var(--accent2);
+    letter-spacing: 0.02em;
+  }
+
+  /* ACTION */
+  .action-row { display: flex; gap: 10px; margin-top: 16px; }
+
+  .btn {
+    padding: 10px 20px; border-radius: 8px; font-size: 13px; cursor: pointer;
+    font-family: var(--font-body); transition: all 0.15s;
+    display: flex; align-items: center; gap: 6px;
+    border: 1px solid var(--border2); background: none; color: var(--muted2);
+  }
+  .btn:hover { background: var(--surface2); color: var(--text); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .btn.primary:hover { background: var(--accent2); border-color: var(--accent2); color: #0e1812; }
+  .btn:active { transform: scale(0.98); }
+
+  /* CHALLENGE CARD (pratique) */
+  .challenge-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 28px; text-align: center;
+    animation: fadeIn 0.25s ease;
+  }
+  .challenge-icon { font-size: 36px; margin-bottom: 12px; }
+  .challenge-title { font-family: var(--font-display); font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+  .challenge-desc { font-size: 14px; color: var(--muted2); margin-bottom: 20px; line-height: 1.6; max-width: 440px; margin-left: auto; margin-right: auto; }
+  .challenge-formula {
+    display: inline-block; background: var(--surface2); border: 1px solid var(--border2);
+    border-radius: 6px; padding: 8px 16px; font-family: var(--font-mono);
+    font-size: 14px; color: var(--accent2); margin-bottom: 20px;
+  }
+
+  /* RECAP */
+  .recap {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 40px 24px; text-align: center;
+    animation: fadeIn 0.25s ease;
+  }
+  .recap-score {
+    font-family: var(--font-display); font-size: 52px; font-weight: 700;
+    letter-spacing: -2px; color: var(--accent2); margin-bottom: 6px;
+  }
+  .recap-label { font-size: 14px; color: var(--muted2); margin-bottom: 24px; }
+  .recap-stars { font-size: 32px; margin-bottom: 20px; letter-spacing: 4px; }
+
+  /* LOADING */
+  .loading { padding: 40px; text-align: center; color: var(--muted); font-size: 14px; font-family: var(--font-mono); }
+  .dot-anim::after { content: '...'; animation: dots 1.2s steps(4,end) infinite; }
+  @keyframes dots { 0%,20%{content:''} 40%{content:'.'} 60%{content:'..'} 80%,100%{content:'...'} }
+
+  /* TRACKER */
+  .tracker-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 8px; }
+  .day-cell {
+    aspect-ratio: 1; border-radius: 6px; display: flex; align-items: center;
+    justify-content: center; font-family: var(--font-mono); font-size: 11px;
+    border: 1px solid var(--border); color: var(--muted); cursor: default;
+  }
+  .day-cell.done { background: rgba(61,214,140,0.12); border-color: var(--green); color: var(--green); }
+  .day-cell.missed { background: rgba(248,113,113,0.06); border-color: rgba(248,113,113,0.2); color: rgba(248,113,113,0.4); }
+  .day-cell.today { border-color: var(--accent2); color: var(--accent2); }
+  .day-cell.future { opacity: 0.3; }
+
+  .week-labels { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 12px; }
+  .week-lbl { text-align: center; font-family: var(--font-mono); font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+  /* LIBRE */
+  .libre-controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+
+  select {
+    padding: 9px 14px; border-radius: 8px; border: 1px solid var(--border2);
+    background: var(--surface2); color: var(--text); font-size: 13px;
+    font-family: var(--font-body); cursor: pointer; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235a7068' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px;
+  }
+  select:focus { outline: none; border-color: var(--accent2); }
+
+  @media (max-width: 700px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .main { padding: 20px 16px; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="logo"><div class="logo-dot"></div>Excel MOS/TOSA</div>
+
+    <div class="nav-section">Navigation</div>
+    <button class="nav-item active" onclick="showView('dashboard')">
+      <span class="nav-icon">◈</span> Tableau de bord
+    </button>
+    <button class="nav-item" onclick="showView('session')">
+      <span class="nav-icon">▷</span> Session du jour
+    </button>
+    <button class="nav-item" onclick="showView('libre')">
+      <span class="nav-icon">⊞</span> Mode libre
+    </button>
+    <button class="nav-item" onclick="showView('tracker')">
+      <span class="nav-icon">◫</span> Suivi
+    </button>
+
+    <div class="sidebar-bottom">
+      <a href="toeic_app.html" style="display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--surface2);border-radius:8px;font-size:12px;color:var(--muted2);text-decoration:none;margin-bottom:4px;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted2)'">
+        <span>🎯</span> App TOEIC →
+      </a>
+      <div class="info-pill">📅 Début : <span>1er juin</span></div>
+      <div class="info-pill">🏁 Examen : <span>~20 juin</span></div>
+      <div class="info-pill">💰 Coût : <span>80–100 €</span></div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- DASHBOARD -->
+    <div id="view-dashboard" class="view active">
+      <div class="page-header">
+        <div class="page-eyebrow">Boost CV · Master GFF 2027</div>
+        <h1 class="page-title">Excel MOS / TOSA 📊</h1>
+        <p class="page-sub">1er juin → 20 juin · 20 jours · 30–60 min/jour</p>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">Jour</div>
+          <div class="stat-val" id="stat-day">—</div>
+          <div class="stat-sub">sur 20</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Sessions faites</div>
+          <div class="stat-val" id="stat-done">—</div>
+          <div class="stat-sub">jours complétés</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Score moyen</div>
+          <div class="stat-val" id="stat-avg">—</div>
+          <div class="stat-sub">aux QCM</div>
+        </div>
+      </div>
+
+      <div class="progress-section">
+        <div class="progress-header">
+          <span class="progress-title">Progression globale</span>
+          <span class="progress-pct" id="prog-pct">0%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="prog-fill" style="width:0%"></div>
+        </div>
+      </div>
+
+      <div class="phase-strip">
+        <div class="phase-chip" id="phase1-chip">
+          <span class="ph-name">Phase 1</span>
+          J1→J7 Bases
+        </div>
+        <div class="phase-chip" id="phase2-chip">
+          <span class="ph-name">Phase 2</span>
+          J8→J14 Avancé
+        </div>
+        <div class="phase-chip" id="phase3-chip">
+          <span class="ph-name">Phase 3</span>
+          J15→J20 Exam
+        </div>
+      </div>
+
+      <div style="margin-bottom:28px;">
+        <button class="btn primary" onclick="showView('session')" style="font-size:14px;padding:12px 24px;">
+          ▷ Lancer la session du jour
+        </button>
+      </div>
+
+      <!-- Programme résumé -->
+      <div class="page-eyebrow" style="margin-bottom:12px;">Programme complet</div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:28px;">
+        <div style="padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;font-size:13px;">
+          <span style="font-family:var(--font-mono);color:var(--accent2);margin-right:12px;">J1→J7</span>
+          <span style="color:var(--muted2);">Formules clés · RECHERCHEV · Mise en forme conditionnelle · Graphiques</span>
+        </div>
+        <div style="padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;font-size:13px;">
+          <span style="font-family:var(--font-mono);color:var(--blue);margin-right:12px;">J8→J14</span>
+          <span style="color:var(--muted2);">TCD · INDEX/EQUIV · Fonctions financières (VAN, TRI, VPM) · Macros</span>
+        </div>
+        <div style="padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;font-size:13px;">
+          <span style="font-family:var(--font-mono);color:var(--purple);margin-right:12px;">J15→J20</span>
+          <span style="color:var(--muted2);">Examens blancs · Révision ciblée · Passage examen officiel</span>
+        </div>
+      </div>
+
+      <div class="page-eyebrow" style="margin-bottom:12px;">Derniers scores</div>
+      <div id="dash-history">
+        <div style="color:var(--muted);font-size:13px;font-family:var(--font-mono);">Aucun score enregistré.</div>
+      </div>
+    </div>
+
+    <!-- SESSION DU JOUR -->
+    <div id="view-session" class="view">
+      <div class="page-header">
+        <div class="page-eyebrow" id="sess-eyebrow">Session du jour</div>
+        <h1 class="page-title" id="sess-title">—</h1>
+        <p class="page-sub" id="sess-sub">—</p>
+      </div>
+
+      <div class="session-header">
+        <span class="session-day" id="sess-day-lbl">—</span>
+        <span class="session-prog" id="sess-prog">0 / 0</span>
+      </div>
+      <div class="session-bar"><div class="session-bar-fill" id="sess-bar" style="width:0%"></div></div>
+
+      <div class="score-mini">
+        Bonnes rép : <span id="sm-ok">0</span> &nbsp;·&nbsp;
+        Exercices : <span id="sm-ex">0</span> &nbsp;·&nbsp;
+        Score : <span id="sm-pct">—</span>
+      </div>
+
+      <div id="sess-area">
+        <div class="loading"><span class="dot-anim">Chargement</span></div>
+      </div>
+    </div>
+
+    <!-- MODE LIBRE -->
+    <div id="view-libre" class="view">
+      <div class="page-header">
+        <div class="page-eyebrow">Entraînement</div>
+        <h1 class="page-title">Mode libre</h1>
+        <p class="page-sub">Génère des QCM Excel à la demande selon le thème de ton choix.</p>
+      </div>
+
+      <div class="libre-controls">
+        <select id="libre-type">
+          <option value="formules">Formules & Fonctions</option>
+          <option value="tcd">Tableaux croisés dynamiques</option>
+          <option value="graphiques">Graphiques</option>
+          <option value="finance">Fonctions financières</option>
+          <option value="mfc">Mise en forme conditionnelle</option>
+          <option value="general">Culture Excel générale</option>
+        </select>
+        <select id="libre-diff">
+          <option value="debutant">Débutant</option>
+          <option value="intermediaire" selected>Intermédiaire</option>
+          <option value="avance">Avancé (MOS)</option>
+        </select>
+        <button class="btn primary" onclick="genLibre()">Générer →</button>
+      </div>
+
+      <div id="libre-area"></div>
+    </div>
+
+    <!-- SUIVI -->
+    <div id="view-tracker" class="view">
+      <div class="page-header">
+        <div class="page-eyebrow">Calendrier</div>
+        <h1 class="page-title">Ton suivi</h1>
+        <p class="page-sub">20 jours · 1er juin → 20 juin 2026</p>
+      </div>
+
+      <div class="week-labels">
+        <div class="week-lbl">LUN</div>
+        <div class="week-lbl">MAR</div>
+        <div class="week-lbl">MER</div>
+        <div class="week-lbl">JEU</div>
+        <div class="week-lbl">VEN</div>
+      </div>
+      <div class="tracker-grid" id="tracker-grid"></div>
+
+      <div style="display:flex;gap:16px;margin-top:12px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)"><div style="width:12px;height:12px;border-radius:3px;background:rgba(61,214,140,0.12);border:1px solid var(--green)"></div>Fait</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)"><div style="width:12px;height:12px;border-radius:3px;border:1px solid var(--accent2)"></div>Aujourd'hui</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)"><div style="width:12px;height:12px;border-radius:3px;background:rgba(248,113,113,0.06);border:1px solid rgba(248,113,113,0.2)"></div>Manqué</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)"><div style="width:12px;height:12px;border-radius:3px;border:1px solid var(--border);opacity:0.3"></div>À venir</div>
+      </div>
+
+      <div style="margin-top:32px;">
+        <div class="page-eyebrow" style="margin-bottom:14px;">Historique des scores</div>
+        <div id="history-list">
+          <div style="color:var(--muted);font-size:13px;font-family:var(--font-mono);">Aucun score enregistré.</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+// ─── DATES ──────────────────────────────────────────
+const _n = new Date();
+const today = new Date(_n.getFullYear(), _n.getMonth(), _n.getDate());
+const _start = new Date(2026, 5, 1);
+const DAY_NUM = Math.max(1, Math.min(20, Math.floor((today - _start) / 86400000) + 1));
+const STARTED = today >= _start;
+
+// ─── STATE ──────────────────────────────────────────
+function loadState() {
+  try { return JSON.parse(localStorage.getItem('excel_state') || 'null') || { doneDays: {}, scores: [] }; }
+  catch { return { doneDays: {}, scores: [] }; }
+}
+function saveState(s) { localStorage.setItem('excel_state', JSON.stringify(s)); }
+let STATE = loadState();
+
+// ─── SESSIONS ───────────────────────────────────────
+const SESSIONS = {
+  1:  { title: 'Formules essentielles',        sub: 'SOMME, MOYENNE, SI, NB.SI, RECHERCHEV — les fondamentaux', steps: ['formules_base','formules_base','si_fonctions','si_fonctions'] },
+  2:  { title: 'RECHERCHEV & RECHERCHEH',      sub: 'Maîtriser les fonctions de recherche', steps: ['recherche','recherche','recherche','formules_base'] },
+  3:  { title: 'Mise en forme conditionnelle', sub: 'Visualiser les données avec des règles MFC', steps: ['mfc','mfc','mfc','formules_base'] },
+  4:  { title: 'Graphiques',                   sub: 'Créer et personnaliser des graphiques pro', steps: ['graphiques','graphiques','graphiques','formules_base'] },
+  5:  { title: 'Révision Phase 1',             sub: 'Mix formules + MFC + graphiques', steps: ['formules_base','si_fonctions','mfc','graphiques','recherche'] },
+  6:  { title: 'Fonctions Texte & Date',        sub: 'GAUCHE, DROITE, CONCATENER, DATEDIF...', steps: ['texte_date','texte_date','texte_date','formules_base'] },
+  7:  { title: 'Validation & Protection',      sub: 'Listes déroulantes, protection de feuilles', steps: ['validation','validation','mfc','formules_base'] },
+  8:  { title: 'Tableaux Croisés Dynamiques 1',sub: 'Créer et configurer un TCD', steps: ['tcd_base','tcd_base','tcd_base','tcd_base'] },
+  9:  { title: 'Tableaux Croisés Dynamiques 2',sub: 'Filtres, segments, champs calculés', steps: ['tcd_avance','tcd_avance','tcd_avance','tcd_base'] },
+  10: { title: 'INDEX & EQUIV',                sub: 'La combinaison reine des fonctions de recherche', steps: ['index_equiv','index_equiv','index_equiv','recherche'] },
+  11: { title: 'Fonctions financières — VPM',  sub: 'Calcul de remboursement d\'emprunt', steps: ['finance_vpm','finance_vpm','finance_vpm','finance_base'] },
+  12: { title: 'Fonctions financières — VAN/TRI', sub: 'Valeur actuelle nette et taux de rentabilité', steps: ['finance_van','finance_van','finance_van','finance_vpm'] },
+  13: { title: 'Power Query & Macros intro',   sub: 'Automatiser les tâches répétitives', steps: ['macros','macros','tcd_avance','index_equiv'] },
+  14: { title: 'Révision Phase 2',             sub: 'Mix TCD + INDEX/EQUIV + Finance', steps: ['tcd_avance','index_equiv','finance_van','finance_vpm','macros'] },
+  15: { title: 'Examen blanc 1',               sub: 'Simulation complète format MOS/TOSA', steps: ['exam_blanc','exam_blanc','exam_blanc','exam_blanc','exam_blanc'] },
+  16: { title: 'Révision ciblée 1',            sub: 'Retravaille les points faibles du blanc 1', steps: ['formules_base','tcd_avance','index_equiv','finance_van'] },
+  17: { title: 'Examen blanc 2',               sub: 'Deuxième simulation complète', steps: ['exam_blanc','exam_blanc','exam_blanc','exam_blanc','exam_blanc'] },
+  18: { title: 'Révision ciblée 2',            sub: 'Consolidation finale', steps: ['tcd_avance','index_equiv','finance_van','si_fonctions','recherche'] },
+  19: { title: 'Examen blanc 3',               sub: 'Simulation finale — objectif 80%+', steps: ['exam_blanc','exam_blanc','exam_blanc','exam_blanc','exam_blanc'] },
+  20: { title: 'Révision express + Bilan',     sub: 'Dernières révisions avant l\'examen officiel !', steps: ['formules_base','tcd_base','index_equiv','finance_van','graphiques'] },
+};
+
+const PROMPTS = {
+  formules_base:  'les formules Excel essentielles : SOMME, MOYENNE, NB, NBVAL, MAX, MIN, et leurs variantes conditionnelles',
+  si_fonctions:   'la fonction SI, SI.CONDITIONS, ET, OU dans Excel — logique conditionnelle',
+  recherche:      'RECHERCHEV, RECHERCHEH, RECHERCHEX dans Excel — syntaxe, usage, erreurs courantes',
+  mfc:            'la mise en forme conditionnelle dans Excel — règles, barres de données, icônes, formules personnalisées',
+  graphiques:     'les graphiques dans Excel — types, personnalisation, graphiques combinés, axes secondaires',
+  texte_date:     'les fonctions texte (GAUCHE, DROITE, NBCAR, STXT, CONCATENER, TEXTE) et date (AUJOURD\'HUI, DATEDIF, MOIS, ANNEE) dans Excel',
+  validation:     'la validation des données dans Excel — listes déroulantes, restrictions, messages d\'erreur, protection de feuilles',
+  tcd_base:       'les tableaux croisés dynamiques Excel — création, configuration, champs, valeurs, étiquettes',
+  tcd_avance:     'les TCD avancés dans Excel — segments, chronologies, champs calculés, graphiques croisés dynamiques',
+  index_equiv:    'la combinaison INDEX/EQUIV dans Excel — syntaxe, cas d\'usage, comparaison avec RECHERCHEV',
+  finance_base:   'les fonctions financières Excel de base — VA, VC, TAUX, NPM',
+  finance_vpm:    'la fonction VPM dans Excel — calcul de mensualités d\'emprunt, PRINCPER, INTPER',
+  finance_van:    'les fonctions VAN et TRI dans Excel — valeur actuelle nette, taux de rentabilité interne, analyse de projet',
+  macros:         'les macros et VBA basiques dans Excel — enregistrement, modification, automatisation',
+  exam_blanc:     'un QCM style examen MOS/TOSA Excel couvrant formules, TCD, graphiques ou fonctions avancées — question variée niveau certification',
+};
+
+const TAG_INFO = {
+  formules_base:  ['tag-formules','Formules'],
+  si_fonctions:   ['tag-formules','SI / Logique'],
+  recherche:      ['tag-formules','Recherche'],
+  mfc:            ['tag-mfc','MFC'],
+  graphiques:     ['tag-graphiques','Graphiques'],
+  texte_date:     ['tag-formules','Texte & Date'],
+  validation:     ['tag-mfc','Validation'],
+  tcd_base:       ['tag-tcd','TCD'],
+  tcd_avance:     ['tag-tcd','TCD Avancé'],
+  index_equiv:    ['tag-formules','INDEX/EQUIV'],
+  finance_base:   ['tag-finance','Finance'],
+  finance_vpm:    ['tag-finance','VPM'],
+  finance_van:    ['tag-finance','VAN / TRI'],
+  macros:         ['tag-pratique','Macros'],
+  exam_blanc:     ['tag-tcd','Examen Blanc'],
+};
+
+// ─── NAV ────────────────────────────────────────────
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('view-' + id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(b => { if (b.getAttribute('onclick').includes(id)) b.classList.add('active'); });
+  if (id === 'dashboard') renderDashboard();
+  if (id === 'session') initSession();
+  if (id === 'tracker') renderTracker();
+}
+
+// ─── DASHBOARD ──────────────────────────────────────
+function renderDashboard() {
+  const doneDays = Object.keys(STATE.doneDays).filter(k => STATE.doneDays[k]).length;
+  const pct = STARTED ? Math.round(DAY_NUM / 20 * 100) : 0;
+  const scores = STATE.scores || [];
+  const avg = scores.length > 0 ? Math.round(scores.reduce((a,b) => a+b.pct,0)/scores.length) + '%' : '—';
+
+  document.getElementById('stat-day').textContent = STARTED ? DAY_NUM : '—';
+  document.getElementById('stat-done').textContent = doneDays;
+  document.getElementById('stat-avg').textContent = avg;
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('prog-fill').style.width = pct + '%';
+
+  const p1 = document.getElementById('phase1-chip');
+  const p2 = document.getElementById('phase2-chip');
+  const p3 = document.getElementById('phase3-chip');
+  [p1,p2,p3].forEach(c => c.classList.remove('active','done'));
+  if (!STARTED) { p1.classList.add('active'); }
+  else if (DAY_NUM <= 7) p1.classList.add('active');
+  else if (DAY_NUM <= 14) { p1.classList.add('done'); p2.classList.add('active'); }
+  else { p1.classList.add('done'); p2.classList.add('done'); p3.classList.add('active'); }
+
+  const hist = document.getElementById('dash-history');
+  if (scores.length === 0) {
+    hist.innerHTML = '<div style="color:var(--muted);font-size:13px;font-family:var(--font-mono);">Aucun score enregistré.</div>';
+  } else {
+    hist.innerHTML = scores.slice(-5).reverse().map(s => `
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:13px;margin-bottom:6px;">
+        <span style="color:var(--muted);font-family:var(--font-mono);">Jour ${s.day}</span>
+        <span style="color:var(--muted2);">${s.title}</span>
+        <span style="font-family:var(--font-mono);color:${s.pct>=80?'var(--green)':s.pct>=50?'var(--amber)':'var(--red)'};">${s.pct}%</span>
+      </div>`).join('');
+  }
+}
+
+// ─── SESSION ────────────────────────────────────────
+let sessStepIdx=0, sessCorrect=0, sessTotal=0, sessAnswered=false, sessCurrentCorrect=null, sessSteps=[];
+
+function initSession() {
+  if (!STARTED) {
+    document.getElementById('sess-eyebrow').textContent = 'Programme Excel';
+    document.getElementById('sess-title').textContent = 'La prépa commence le 1er juin !';
+    document.getElementById('sess-sub').textContent = 'Dans ' + Math.ceil((START-today)/86400000) + ' jours — utilise le mode libre pour t\'y préparer.';
+    document.getElementById('sess-area').innerHTML = `
+      <div class="challenge-card">
+        <div class="challenge-icon">📅</div>
+        <div class="challenge-title">Pas encore commencé</div>
+        <div class="challenge-desc">La préparation Excel démarre le 1er juin. En attendant, entraîne-toi en mode libre pour prendre de l'avance !</div>
+        <button class="btn primary" onclick="showView('libre')">Mode libre →</button>
+      </div>`;
+    return;
+  }
+  sessStepIdx=0; sessCorrect=0; sessTotal=0; sessAnswered=false;
+  const sess = SESSIONS[DAY_NUM] || SESSIONS[20];
+  sessSteps = sess.steps;
+  document.getElementById('sess-eyebrow').textContent = `Phase ${DAY_NUM<=7?1:DAY_NUM<=14?2:3} · Jour ${DAY_NUM}`;
+  document.getElementById('sess-title').textContent = sess.title;
+  document.getElementById('sess-sub').textContent = sess.sub;
+  document.getElementById('sess-day-lbl').textContent = `Jour ${DAY_NUM} / 20`;
+  updateSessUI();
+  loadSessStep();
+}
+
+function updateSessUI() {
+  const pct = sessSteps.length > 0 ? Math.round(sessStepIdx/sessSteps.length*100) : 0;
+  document.getElementById('sess-bar').style.width = pct + '%';
+  document.getElementById('sess-prog').textContent = `${sessStepIdx} / ${sessSteps.length}`;
+  document.getElementById('sm-ok').textContent = sessCorrect;
+  document.getElementById('sm-ex').textContent = sessTotal;
+  document.getElementById('sm-pct').textContent = sessTotal>0 ? Math.round(sessCorrect/sessTotal*100)+'%' : '—';
+}
+
+async function loadSessStep() {
+  updateSessUI();
+  const area = document.getElementById('sess-area');
+  if (sessStepIdx >= sessSteps.length) { showRecap(area); return; }
+  const step = sessSteps[sessStepIdx];
+  sessAnswered = false;
+  area.innerHTML = '<div class="loading"><span class="dot-anim">Génération</span></div>';
+  const [tagClass, tagLabel] = TAG_INFO[step] || ['tag-formules','Exercice'];
+  const prompt = `Tu es un expert Excel et formateur certifié MOS/TOSA. Génère UN QCM sur ${PROMPTS[step]}, niveau intermédiaire à avancé (objectif certification MOS ou TOSA).
+Les questions doivent être concrètes et pratiques : syntaxe de formule, comportement d'une fonction, résultat d'une opération, choix de la bonne fonction pour un besoin donné.
+Réponds UNIQUEMENT en JSON valide sans markdown. Format strict :
+{"question":"...","options":["A. ...","B. ...","C. ...","D. ..."],"correct_index":0,"explanation":"explication courte et pédagogique en français (1-2 phrases avec la syntaxe si pertinent)"}`;
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:900,messages:[{role:'user',content:prompt}]})
+    });
+    const data = await res.json();
+    const raw = data.content.map(b=>b.text||'').join('');
+    const ex = JSON.parse(raw.replace(/```json|```/g,'').trim());
+    sessCurrentCorrect = ex.correct_index;
+    sessTotal++;
+    area.innerHTML = `
+      <div class="ex-card">
+        <span class="ex-tag ${tagClass}">${tagLabel}</span>
+        <div class="ex-q">${ex.question}</div>
+        <div class="options">${ex.options.map((o,i)=>`<button class="opt-btn" id="so-${i}" onclick="sessCheck(${i})">${o}</button>`).join('')}</div>
+        <div class="expl" id="sess-expl">${ex.explanation}</div>
+      </div>
+      <div class="action-row">
+        <button class="btn primary" id="sess-next" onclick="sessNext()" style="display:none;">
+          ${sessStepIdx+1<sessSteps.length?'Question suivante →':'Voir mon bilan →'}
+        </button>
+      </div>`;
+    updateSessUI();
+  } catch(e) {
+    area.innerHTML = `<div class="ex-card"><p style="color:var(--muted);font-size:14px;font-family:var(--font-mono);">Erreur — <button onclick="loadSessStep()" style="background:none;border:none;cursor:pointer;color:var(--accent2);">Réessayer</button></p></div>`;
+  }
+}
+
+function sessCheck(idx) {
+  if (sessAnswered) return;
+  sessAnswered = true;
+  document.querySelectorAll('#sess-area .opt-btn').forEach(b=>b.disabled=true);
+  if (idx===sessCurrentCorrect) { document.getElementById('so-'+idx).classList.add('correct'); sessCorrect++; }
+  else { document.getElementById('so-'+idx).classList.add('wrong'); document.getElementById('so-'+sessCurrentCorrect).classList.add('correct'); }
+  document.getElementById('sess-expl').style.display='block';
+  document.getElementById('sess-next').style.display='flex';
+  updateSessUI();
+}
+
+function sessNext() { sessStepIdx++; loadSessStep(); }
+
+function showRecap(area) {
+  const pct = sessTotal>0 ? Math.round(sessCorrect/sessTotal*100) : 0;
+  const stars = pct>=80?'⭐⭐⭐':pct>=50?'⭐⭐':'⭐';
+  const msg = pct>=80?'Excellent — tu es sur la bonne voie !':pct>=50?'Bon effort, continue à pratiquer !':'Continue, les formules ça vient avec la répétition !';
+  const sess = SESSIONS[DAY_NUM]||SESSIONS[20];
+  STATE.doneDays[DAY_NUM]=true;
+  STATE.scores=STATE.scores||[];
+  STATE.scores.push({day:DAY_NUM,title:sess.title,correct:sessCorrect,total:sessTotal,pct});
+  saveState(STATE);
+  area.innerHTML = `
+    <div class="recap">
+      <div class="recap-stars">${stars}</div>
+      <div class="recap-score">${sessCorrect}/${sessTotal}</div>
+      <div class="recap-label">${msg} · Jour ${DAY_NUM} complété</div>
+      <div class="action-row" style="justify-content:center;">
+        <button class="btn" onclick="showView('tracker')">Voir mon suivi</button>
+        <button class="btn" onclick="showView('libre')">Mode libre →</button>
+      </div>
+    </div>`;
+}
+
+// ─── LIBRE ──────────────────────────────────────────
+const LIBRE_PROMPTS = {
+  formules:   'les formules et fonctions Excel (SOMME, SI, RECHERCHEV, NB.SI, CONCATENER, etc.)',
+  tcd:        'les tableaux croisés dynamiques Excel',
+  graphiques: 'les graphiques Excel — création, personnalisation, types',
+  finance:    'les fonctions financières Excel (VAN, TRI, VPM, VA, VC, TAUX)',
+  mfc:        'la mise en forme conditionnelle Excel — règles et formules',
+  general:    'la culture Excel générale pour la certification MOS ou TOSA',
+};
+const LIBRE_TAG = {
+  formules:['tag-formules','Formules'], tcd:['tag-tcd','TCD'],
+  graphiques:['tag-graphiques','Graphiques'], finance:['tag-finance','Finance'],
+  mfc:['tag-mfc','MFC'], general:['tag-formules','Excel']
+};
+let libreAnswered=false, libreCorrect=null;
+
+async function genLibre() {
+  const type = document.getElementById('libre-type').value;
+  const diff = document.getElementById('libre-diff').value;
+  const area = document.getElementById('libre-area');
+  libreAnswered = false;
+  area.innerHTML='<div class="loading"><span class="dot-anim">Génération</span></div>';
+  const [tagClass, tagLabel] = LIBRE_TAG[type];
+  const prompt = `Tu es un formateur certifié Excel MOS/TOSA. Génère UN QCM pratique sur ${LIBRE_PROMPTS[type]}, niveau ${diff}.
+Questions concrètes : syntaxe, résultat de formule, choix de la bonne fonction, erreurs courantes.
+Réponds UNIQUEMENT en JSON valide sans markdown :
+{"question":"...","options":["A. ...","B. ...","C. ...","D. ..."],"correct_index":0,"explanation":"explication pédagogique en français avec syntaxe si utile"}`;
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:900,messages:[{role:'user',content:prompt}]})
+    });
+    const data = await res.json();
+    const raw = data.content.map(b=>b.text||'').join('');
+    const ex = JSON.parse(raw.replace(/```json|```/g,'').trim());
+    libreCorrect = ex.correct_index;
+    area.innerHTML = `
+      <div class="ex-card">
+        <span class="ex-tag ${tagClass}">${tagLabel}</span>
+        <div class="ex-q">${ex.question}</div>
+        <div class="options">${ex.options.map((o,i)=>`<button class="opt-btn" id="lo-${i}" onclick="libreCheck(${i})">${o}</button>`).join('')}</div>
+        <div class="expl" id="libre-expl">${ex.explanation}</div>
+      </div>
+      <div class="action-row">
+        <button class="btn primary" id="libre-next" onclick="genLibre()" style="display:none;">Question suivante →</button>
+      </div>`;
+  } catch(e) {
+    area.innerHTML=`<div class="ex-card"><p style="color:var(--muted);font-size:14px;font-family:var(--font-mono);">Erreur — <button onclick="genLibre()" style="background:none;border:none;cursor:pointer;color:var(--accent2);">Réessayer</button></p></div>`;
+  }
+}
+
+function libreCheck(idx) {
+  if (libreAnswered) return;
+  libreAnswered = true;
+  document.querySelectorAll('#libre-area .opt-btn').forEach(b=>b.disabled=true);
+  if (idx===libreCorrect) document.getElementById('lo-'+idx).classList.add('correct');
+  else { document.getElementById('lo-'+idx).classList.add('wrong'); document.getElementById('lo-'+libreCorrect).classList.add('correct'); }
+  document.getElementById('libre-expl').style.display='block';
+  document.getElementById('libre-next').style.display='flex';
+}
+
+// ─── TRACKER ────────────────────────────────────────
+function renderTracker() {
+  const grid = document.getElementById('tracker-grid');
+  let cells = '';
+  // 1er juin = lundi → pas d'offset
+  for (let d=1; d<=20; d++) {
+    const isToday = STARTED && d===DAY_NUM;
+    const isPast = STARTED ? d<DAY_NUM : false;
+    const isDone = !!STATE.doneDays[d];
+    let cls = 'day-cell';
+    if (isToday) cls+=' today';
+    else if (isDone) cls+=' done';
+    else if (isPast) cls+=' missed';
+    else cls+=' future';
+    cells += `<div class="${cls}" title="Jour ${d}">J${d}</div>`;
+  }
+  grid.innerHTML = cells;
+
+  const scores = STATE.scores || [];
+  const hist = document.getElementById('history-list');
+  if (scores.length===0) {
+    hist.innerHTML='<div style="color:var(--muted);font-size:13px;font-family:var(--font-mono);">Aucun score enregistré.</div>';
+  } else {
+    hist.innerHTML=scores.slice().reverse().map(s=>`
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:13px;margin-bottom:6px;">
+        <span style="color:var(--muted);font-family:var(--font-mono);min-width:60px;">Jour ${s.day}</span>
+        <span style="color:var(--muted2);flex:1;margin:0 12px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${s.title}</span>
+        <span style="font-family:var(--font-mono);font-size:12px;color:var(--muted2);">${s.correct}/${s.total}</span>
+        <span style="font-family:var(--font-mono);margin-left:12px;color:${s.pct>=80?'var(--green)':s.pct>=50?'var(--amber)':'var(--red)'};">${s.pct}%</span>
+      </div>`).join('');
+  }
+}
+
+// ─── INIT ────────────────────────────────────────────
+renderDashboard();
+</script>
+</body>
+</html>

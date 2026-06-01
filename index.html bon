@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boost CV — Master GFF 2027</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #080a0d;
+    --surface: #10131a;
+    --border: rgba(255,255,255,0.07);
+    --text: #e8eaf0;
+    --muted: #5a607a;
+    --muted2: #9298b0;
+    --toeic: #7c6dfa;
+    --toeic2: #a594ff;
+    --excel: #2d9e6b;
+    --excel2: #4dcc8f;
+    --amf: #f59e0b;
+    --amf2: #fbbf24;
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+  .container { max-width: 560px; width: 100%; }
+  .header { text-align: center; margin-bottom: 48px; }
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .sub { font-size: 15px; color: var(--muted2); line-height: 1.6; }
+
+  .cards { display: flex; flex-direction: column; gap: 14px; }
+
+  .card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 22px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    text-decoration: none;
+    transition: all 0.18s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.18s;
+  }
+  .card.toeic::before { background: radial-gradient(ellipse at left, rgba(124,109,250,0.08), transparent 70%); }
+  .card.excel::before { background: radial-gradient(ellipse at left, rgba(45,158,107,0.08), transparent 70%); }
+  .card.amf::before { background: radial-gradient(ellipse at left, rgba(245,158,11,0.08), transparent 70%); }
+  .card:hover { border-color: rgba(255,255,255,0.15); transform: translateY(-1px); }
+  .card:hover::before { opacity: 1; }
+
+  .card-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+    width: 52px; height: 52px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .card-body { flex: 1; }
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+  .card-sub { font-size: 13px; color: var(--muted2); }
+
+  .card-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    flex-shrink: 0;
+  }
+  .card.toeic .card-badge { background: rgba(124,109,250,0.15); color: var(--toeic2); border: 1px solid rgba(124,109,250,0.3); }
+  .card.excel .card-badge { background: rgba(45,158,107,0.15); color: var(--excel2); border: 1px solid rgba(45,158,107,0.3); }
+  .card.amf .card-badge { background: rgba(245,158,11,0.12); color: var(--amf2); border: 1px solid rgba(245,158,11,0.25); }
+
+  .card.disabled { opacity: 0.45; pointer-events: none; cursor: default; }
+
+  .footer { text-align: center; margin-top: 40px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="eyebrow">Boost CV · Master GFF 2027</div>
+    <h1>Tes certifications</h1>
+    <p class="sub">3 certifs · 1 été · Clique sur celle du jour.</p>
+  </div>
+
+  <div class="cards">
+    <a href="toeic_app.html" class="card toeic">
+      <div class="card-icon">🎯</div>
+      <div class="card-body">
+        <div class="card-title">TOEIC 850</div>
+        <div class="card-sub">22 mai → juillet 2026 · 70 jours</div>
+      </div>
+      <span class="card-badge">EN COURS</span>
+    </a>
+
+    <a href="excel_app.html" class="card excel">
+      <div class="card-icon">📊</div>
+      <div class="card-body">
+        <div class="card-title">Excel MOS / TOSA</div>
+        <div class="card-sub">1er → 20 juin 2026 · 20 jours</div>
+      </div>
+      <span class="card-badge">1 JUIN</span>
+    </a>
+
+    <a class="card amf disabled">
+      <div class="card-icon">🏛️</div>
+      <div class="card-body">
+        <div class="card-title">Certification AMF</div>
+        <div class="card-sub">Mi-juillet → mi-août 2026 · 3 semaines</div>
+      </div>
+      <span class="card-badge">MI-JUILLET</span>
+    </a>
+  </div>
+
+  <div class="footer">mathys · boost cv 2026</div>
+</div>
+</body>
+</html>
