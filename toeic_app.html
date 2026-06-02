@@ -920,7 +920,7 @@ Réponds UNIQUEMENT en JSON valide sans markdown ni texte autour. Format strict 
     const res = await fetch('/.netlify/functions/claude', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 900, messages: [{ role: 'user', content: prompt }] })
+      body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 900, messages: [{ role: 'user', content: prompt }] })
     });
     const data = await res.json();
     const raw = data.content.map(b => b.text || '').join('');
@@ -1010,7 +1010,7 @@ Réponds UNIQUEMENT en JSON valide sans markdown. Format :
     const res = await fetch('/.netlify/functions/claude', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 900, messages: [{ role: 'user', content: prompt }] })
+      body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 900, messages: [{ role: 'user', content: prompt }] })
     });
     const data = await res.json();
     const raw = data.content.map(b => b.text || '').join('');

@@ -735,7 +735,7 @@ Réponds UNIQUEMENT en JSON valide sans markdown. Format strict :
   try {
     const res = await fetch('/.netlify/functions/claude',{
       method:'POST', headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:900,messages:[{role:'user',content:prompt}]})
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:900,messages:[{role:'user',content:prompt}]})
     });
     const data = await res.json();
     const raw = data.content.map(b=>b.text||'').join('');
@@ -756,7 +756,8 @@ Réponds UNIQUEMENT en JSON valide sans markdown. Format strict :
       </div>`;
     updateSessUI();
   } catch(e) {
-    area.innerHTML = `<div class="ex-card"><p style="color:var(--muted);font-size:14px;font-family:var(--font-mono);">Erreur — <button onclick="loadSessStep()" style="background:none;border:none;cursor:pointer;color:var(--accent2);">Réessayer</button></p></div>`;
+    console.error('TOEIC ERROR:', e);
+    area.innerHTML = `<div class="ex-card"><p style="color:var(--muted);font-size:13px;font-family:var(--font-mono);">Erreur : ${e.message} — <button onclick="loadSessStep()" style="background:none;border:none;cursor:pointer;color:var(--accent2);">Réessayer</button></p></div>`;
   }
 }
 
@@ -824,7 +825,7 @@ Réponds UNIQUEMENT en JSON valide sans markdown :
   try {
     const res = await fetch('/.netlify/functions/claude',{
       method:'POST', headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:900,messages:[{role:'user',content:prompt}]})
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:900,messages:[{role:'user',content:prompt}]})
     });
     const data = await res.json();
     const raw = data.content.map(b=>b.text||'').join('');
