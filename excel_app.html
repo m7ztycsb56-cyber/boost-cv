@@ -738,7 +738,7 @@ const VIDEOS = [
   {icon:'🎓',color:'var(--blue)',title:"Morpheus Formation",desc:"Cours Excel structurés du débutant à l'avancé, orientés certification TOSA.",url:"https://www.morpheus-formation.fr/blog/excel/formation-youtube/",tag:"Cours"},
   {icon:'📚',color:'var(--amber)',title:"Tuto.com — Excel de A à Z",desc:"Tutoriels vidéo : formules, mises en forme, tableaux. Bon pour piocher par thème.",url:"https://fr.tuto.com/excel/",tag:"Tutoriels"},
   {icon:'🧮',color:'var(--accent)',title:"Support Microsoft Excel",desc:"La doc officielle : fiches claires sur chaque fonction (SOMME, MOYENNE, NB…).",url:"https://support.microsoft.com/fr-fr/excel",tag:"Officiel"},
-  {icon:'🏅',color:'var(--blue)',title:"TOSA — site officiel",desc:"Référentiel, format de l'examen et passage de la certification (Isograd).",url:"https://www.tosa.org/FR/certification-excel",tag:"Certif"}
+  {icon:'🏅',color:'var(--blue)',title:"TOSA — site officiel",desc:"Référentiel, format de l'examen (35 questions, 1h, score /1000) et passage de la certification (Isograd).",url:"https://www.tosa.org/FR/certification-microsoft-excel?sbj_id=57",tag:"Certif"}
 ];
 const FORMULAS = [
   ['=SOMME(A1:A10)',"Additionne toutes les valeurs de la plage","Total des ventes"],
@@ -1095,7 +1095,19 @@ const FN={
   PRODUIT:a=>{const n=toNums(a);return n.reduce((p,x)=>p*x,1);},
   ARRONDI:a=>{const n=parseFloat(String(a[0]).replace(',','.'))||0;const d=Math.trunc(parseFloat(a[1])||0);const f=Math.pow(10,d);return Math.round(n*f)/f;}
 };
-function splitArgs(s){return s.split(/[;,]/).map(x=>x.trim()).filter(x=>x!=='');}
+function splitArgs(s){
+  // En Excel français : point-virgule = séparateur d'arguments, virgule = décimale.
+  // On accepte aussi la virgule comme séparateur SI aucun point-virgule n'est présent
+  // ET qu'elle ne sert pas de décimale (cas anglo-saxon SOMME(A1,B1)).
+  if(s.indexOf(';')!==-1){
+    return s.split(';').map(x=>x.trim()).filter(x=>x!=='');
+  }
+  // pas de ';' : la virgule est un séparateur seulement si elle sépare des références/plages
+  if(/,/.test(s) && /[A-Z]+\d+/i.test(s) && !/\d,\d/.test(s.replace(/[A-Z]+\d+/gi,''))){
+    return s.split(',').map(x=>x.trim()).filter(x=>x!=='');
+  }
+  return [s.trim()].filter(x=>x!=='');
+}
 function resolveArg(arg,grid){
   arg=arg.trim();
   if(/^[A-Z]+\d+:[A-Z]+\d+$/i.test(arg))return expandRange(arg,grid);
