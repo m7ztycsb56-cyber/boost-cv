@@ -55,15 +55,17 @@ a{color:inherit}
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
 input,select{font-family:inherit}
 
-.app{display:grid;grid-template-columns:268px 1fr;min-height:100vh}
+.app{display:flex;align-items:stretch;min-height:100vh}
+.mainwrap{flex:1 1 auto;min-width:0;display:flex;flex-direction:column}
 
 /* ---------- Sidebar ---------- */
 .sidebar{
+  flex:0 0 268px;width:268px;
   background:linear-gradient(180deg,rgba(17,26,22,.9),rgba(10,15,13,.7));
   border-right:1px solid var(--border-soft);
   padding:26px 18px;
   display:flex;flex-direction:column;
-  position:sticky;top:0;height:100vh;
+  position:sticky;top:0;align-self:flex-start;height:100vh;
   backdrop-filter:blur(8px);
 }
 .brand{display:flex;align-items:center;gap:11px;padding:0 8px 6px}
@@ -102,7 +104,7 @@ input,select{font-family:inherit}
 .toeic-link:hover{border-color:var(--accent-2);color:var(--text);background:var(--surface)}
 
 /* ---------- Main ---------- */
-.main{padding:38px 46px 80px;max-width:1080px;width:100%}
+.main{padding:38px 46px 80px;max-width:1080px;width:100%;margin:0 auto}
 .view{display:none;animation:fade .4s ease both}
 .view.active{display:block}
 @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -289,9 +291,9 @@ table.ss td input{
 .menu-btn{display:none}
 .topbar{display:none}
 @media(max-width:900px){
-  .app{grid-template-columns:1fr}
-  .sidebar{position:fixed;left:0;top:0;bottom:0;width:268px;z-index:50;transform:translateX(-105%);transition:.25s;height:100vh}
+  .sidebar{position:fixed;left:0;top:0;bottom:0;flex-basis:268px;width:268px;z-index:50;transform:translateX(-105%);transition:.25s;height:100vh}
   .app.nav-open .sidebar{transform:none;box-shadow:0 0 60px rgba(0,0,0,.6)}
+  .mainwrap{width:100%}
   .topbar{display:flex;align-items:center;gap:14px;padding:14px 18px;border-bottom:1px solid var(--border-soft);position:sticky;top:0;z-index:40;background:rgba(10,15,13,.85);backdrop-filter:blur(10px)}
   .menu-btn{display:grid;place-items:center;width:40px;height:40px;border-radius:10px;border:1px solid var(--border);background:var(--surface)}
   .menu-btn svg{width:20px;height:20px}
@@ -371,7 +373,7 @@ table.ss td input{
   </aside>
 
   <!-- Main -->
-  <div>
+  <div class="mainwrap">
   <div class="topbar">
     <button class="menu-btn" id="menuBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
     <span class="tb-title">Excel TOSA</span>
