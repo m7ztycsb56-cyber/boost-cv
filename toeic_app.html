@@ -3,1091 +3,1419 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TOEIC 850 — Boost CV</title>
+<title>TOEIC — Préparation</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --bg: #0b0c0f;
-    --surface: #13141a;
-    --surface2: #1c1e27;
-    --border: rgba(255,255,255,0.07);
-    --border2: rgba(255,255,255,0.12);
-    --accent: #7c6dfa;
-    --accent2: #a594ff;
-    --green: #3dd68c;
-    --red: #f87171;
-    --amber: #fbbf24;
-    --text: #e8e9f0;
-    --muted: #6b6d7e;
-    --muted2: #9294a8;
-    --font-display: 'Syne', sans-serif;
-    --font-mono: 'DM Mono', monospace;
-    --font-body: 'DM Sans', sans-serif;
-  }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font-body);
-    font-size: 15px;
-    line-height: 1.6;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* GRID LAYOUT */
-  .layout {
-    display: grid;
-    grid-template-columns: 220px 1fr;
-    min-height: 100vh;
-  }
-
-  /* SIDEBAR */
-  .sidebar {
-    background: var(--surface);
-    border-right: 1px solid var(--border);
-    padding: 28px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    position: sticky;
-    top: 0;
-    height: 100vh;
-  }
-
-  .logo {
-    font-family: var(--font-display);
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 24px;
-    letter-spacing: -0.3px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .logo-dot {
-    width: 8px; height: 8px;
-    background: var(--accent);
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .nav-section {
-    font-size: 10px;
-    font-family: var(--font-mono);
-    color: var(--muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin: 12px 0 6px;
-    padding: 0 8px;
-  }
-
-  .nav-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 9px 12px;
-    border-radius: 8px;
-    font-size: 13px;
-    color: var(--muted2);
-    cursor: pointer;
-    transition: all 0.15s;
-    border: none;
-    background: none;
-    width: 100%;
-    text-align: left;
-    font-family: var(--font-body);
-  }
-
-  .nav-item:hover { background: var(--surface2); color: var(--text); }
-  .nav-item.active { background: var(--surface2); color: var(--text); }
-  .nav-item .nav-icon { font-size: 15px; opacity: 0.7; }
-
-  .sidebar-bottom {
-    margin-top: auto;
-    border-top: 1px solid var(--border);
-    padding-top: 16px;
-  }
-
-  .streak-pill {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 12px;
-    background: var(--surface2);
-    border-radius: 8px;
-    font-size: 13px;
-    color: var(--amber);
-    font-family: var(--font-mono);
-  }
-
-  /* MAIN */
-  .main {
-    padding: 36px 40px;
-    max-width: 860px;
-  }
-
-  /* VIEWS */
-  .view { display: none; }
-  .view.active { display: block; }
-
-  /* HEADER */
-  .page-header {
-    margin-bottom: 32px;
-  }
-
-  .page-eyebrow {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-
-  .page-title {
-    font-family: var(--font-display);
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--text);
-    letter-spacing: -0.5px;
-    line-height: 1.2;
-  }
-
-  .page-sub {
-    font-size: 14px;
-    color: var(--muted2);
-    margin-top: 6px;
-  }
-
-  /* STATS ROW */
-  .stats-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-bottom: 28px;
-  }
-
-  .stat-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 18px 20px;
-  }
-
-  .stat-label {
-    font-size: 11px;
-    font-family: var(--font-mono);
-    color: var(--muted);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-
-  .stat-val {
-    font-family: var(--font-display);
-    font-size: 26px;
-    font-weight: 700;
-    color: var(--text);
-    letter-spacing: -0.5px;
-  }
-
-  .stat-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
-
-  /* PROGRESS BAR */
-  .progress-section { margin-bottom: 28px; }
-
-  .progress-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-
-  .progress-title { font-size: 13px; color: var(--muted2); }
-  .progress-pct { font-family: var(--font-mono); font-size: 13px; color: var(--accent2); }
-
-  .progress-track {
-    height: 3px;
-    background: var(--surface2);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    border-radius: 2px;
-    transition: width 0.6s ease;
-  }
-
-  /* PHASE STRIP */
-  .phase-strip {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 28px;
-  }
-
-  .phase-chip {
-    flex: 1;
-    padding: 10px 12px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    font-size: 12px;
-    text-align: center;
-    color: var(--muted);
-    font-family: var(--font-mono);
-  }
-
-  .phase-chip.active {
-    border-color: var(--accent);
-    color: var(--accent2);
-    background: rgba(124, 109, 250, 0.07);
-  }
-
-  .phase-chip.done { border-color: var(--green); color: var(--green); background: rgba(61, 214, 140, 0.05); }
-  .phase-chip .ph-name { font-size: 10px; display: block; margin-bottom: 2px; opacity: 0.7; }
-
-  /* SESSION VIEW */
-  .session-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 24px;
-  }
-
-  .session-day {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--muted);
-  }
-
-  .session-prog {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--accent2);
-  }
-
-  .session-bar {
-    height: 2px;
-    background: var(--surface2);
-    border-radius: 1px;
-    margin-bottom: 28px;
-    overflow: hidden;
-  }
-
-  .session-bar-fill {
-    height: 100%;
-    background: var(--accent);
-    border-radius: 1px;
-    transition: width 0.4s ease;
-  }
-
-  /* EX CARD */
-  .ex-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 24px;
-    margin-bottom: 16px;
-    animation: fadeIn 0.25s ease;
-  }
-
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
-  .ex-tag {
-    display: inline-block;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    padding: 3px 10px;
-    border-radius: 20px;
-    margin-bottom: 14px;
-  }
-
-  .tag-grammar { background: rgba(124,109,250,0.15); color: var(--accent2); border: 1px solid rgba(124,109,250,0.3); }
-  .tag-vocab { background: rgba(61,214,140,0.1); color: var(--green); border: 1px solid rgba(61,214,140,0.25); }
-  .tag-listening { background: rgba(251,191,36,0.1); color: var(--amber); border: 1px solid rgba(251,191,36,0.25); }
-  .tag-reading { background: rgba(248,113,113,0.1); color: var(--red); border: 1px solid rgba(248,113,113,0.25); }
-  .tag-duolingo { background: rgba(61,214,140,0.1); color: var(--green); border: 1px solid rgba(61,214,140,0.25); }
-
-  .ex-q {
-    font-size: 16px;
-    color: var(--text);
-    line-height: 1.65;
-    margin-bottom: 20px;
-    font-weight: 400;
-  }
-
-  .options { display: flex; flex-direction: column; gap: 8px; }
-
-  .opt-btn {
-    text-align: left;
-    padding: 11px 16px;
-    border-radius: 8px;
-    border: 1px solid var(--border2);
-    background: var(--surface2);
-    color: var(--muted2);
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.15s;
-    font-family: var(--font-body);
-    line-height: 1.5;
-  }
-
-  .opt-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--text); }
-  .opt-btn.correct { background: rgba(61,214,140,0.1); border-color: var(--green); color: var(--green); }
-  .opt-btn.wrong { background: rgba(248,113,113,0.08); border-color: var(--red); color: var(--red); }
-  .opt-btn:disabled { cursor: default; }
-
-  .expl {
-    margin-top: 14px;
-    padding: 12px 16px;
-    background: var(--surface2);
-    border-radius: 8px;
-    font-size: 13px;
-    color: var(--muted2);
-    line-height: 1.6;
-    border-left: 2px solid var(--accent);
-    display: none;
-  }
-
-  /* ACTION BTNS */
-  .action-row { display: flex; gap: 10px; margin-top: 16px; }
-
-  .btn {
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-size: 13px;
-    cursor: pointer;
-    font-family: var(--font-body);
-    transition: all 0.15s;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    border: 1px solid var(--border2);
-    background: none;
-    color: var(--muted2);
-  }
-
-  .btn:hover { background: var(--surface2); color: var(--text); }
-  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-  .btn.primary:hover { background: var(--accent2); border-color: var(--accent2); }
-  .btn:active { transform: scale(0.98); }
-  .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
-
-  /* DUOLINGO STEP */
-  .duo-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 32px 24px;
-    text-align: center;
-    animation: fadeIn 0.25s ease;
-  }
-
-  .duo-icon { font-size: 40px; margin-bottom: 14px; }
-  .duo-title { font-family: var(--font-display); font-size: 20px; font-weight: 600; margin-bottom: 8px; }
-  .duo-sub { font-size: 14px; color: var(--muted2); margin-bottom: 24px; line-height: 1.5; }
-
-  /* RECAP */
-  .recap {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 40px 24px;
-    text-align: center;
-    animation: fadeIn 0.25s ease;
-  }
-
-  .recap-score {
-    font-family: var(--font-display);
-    font-size: 52px;
-    font-weight: 700;
-    letter-spacing: -2px;
-    color: var(--accent2);
-    margin-bottom: 6px;
-  }
-
-  .recap-label { font-size: 14px; color: var(--muted2); margin-bottom: 24px; }
-  .recap-stars { font-size: 32px; margin-bottom: 20px; letter-spacing: 4px; }
-
-  /* SCORE MINI */
-  .score-mini {
-    display: flex;
-    gap: 16px;
-    align-items: center;
-    margin-bottom: 20px;
-    padding: 10px 16px;
-    background: var(--surface2);
-    border-radius: 8px;
-    font-family: var(--font-mono);
-    font-size: 13px;
-    color: var(--muted2);
-  }
-
-  .score-mini span { color: var(--text); }
-
-  /* LOADING */
-  .loading {
-    padding: 40px;
-    text-align: center;
-    color: var(--muted);
-    font-size: 14px;
-    font-family: var(--font-mono);
-  }
-
-  .dot-anim::after {
-    content: '...';
-    animation: dots 1.2s steps(4, end) infinite;
-  }
-
-  @keyframes dots { 0%, 20% { content: ''; } 40% { content: '.'; } 60% { content: '..'; } 80%, 100% { content: '...'; } }
-
-  /* TRACKER */
-  .tracker-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 6px;
-    margin-bottom: 8px;
-  }
-
-  .day-cell {
-    aspect-ratio: 1;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    cursor: default;
-    position: relative;
-  }
-
-  .day-cell.done { background: rgba(61,214,140,0.12); border-color: var(--green); color: var(--green); }
-  .day-cell.missed { background: rgba(248,113,113,0.06); border-color: rgba(248,113,113,0.2); color: rgba(248,113,113,0.5); }
-  .day-cell.today { border-color: var(--accent); color: var(--accent2); }
-  .day-cell.future { opacity: 0.3; }
-
-  .week-labels {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 6px;
-    margin-bottom: 16px;
-  }
-
-  .week-lbl {
-    text-align: center;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  /* LIBRE */
-  .libre-controls {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-    align-items: center;
-  }
-
-  select {
-    padding: 9px 14px;
-    border-radius: 8px;
-    border: 1px solid var(--border2);
-    background: var(--surface2);
-    color: var(--text);
-    font-size: 13px;
-    font-family: var(--font-body);
-    cursor: pointer;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6d7e' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    padding-right: 32px;
-  }
-
-  select:focus { outline: none; border-color: var(--accent); }
-
-  /* RESPONSIVE */
-  @media (max-width: 700px) {
-    .layout { grid-template-columns: 1fr; }
-    .sidebar { display: none; }
-    .main { padding: 20px 16px; }
-    .stats-row { grid-template-columns: 1fr 1fr; }
-  }
+:root{
+  --bg:#080b12;
+  --bg-grad:#0a0e18;
+  --surface:#111623;
+  --surface-2:#161d2e;
+  --surface-3:#1d2740;
+  --border:#26324f;
+  --border-soft:#1b2440;
+  --text:#eaf0fb;
+  --text-dim:#9eabc7;
+  --text-mute:#5f6e8f;
+  --accent:#4f9cff;
+  --accent-2:#2f7fe6;
+  --accent-soft:rgba(79,156,255,.12);
+  --accent-glow:rgba(79,156,255,.35);
+  --violet:#a78bfa;
+  --violet-soft:rgba(167,139,250,.12);
+  --amber:#f0b429;
+  --amber-soft:rgba(240,180,41,.12);
+  --green:#34d399;
+  --green-soft:rgba(52,211,153,.12);
+  --red:#ff6b6b;
+  --red-soft:rgba(255,107,107,.12);
+  --radius:16px;
+  --radius-sm:10px;
+  --shadow:0 18px 50px -18px rgba(0,0,0,.7);
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --display:'Bricolage Grotesque',system-ui,sans-serif;
+  --body:'Schibsted Grotesk',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:var(--body);
+  background:
+    radial-gradient(1200px 600px at 100% -10%, rgba(79,156,255,.09), transparent 55%),
+    radial-gradient(900px 500px at -10% 110%, rgba(167,139,250,.06), transparent 50%),
+    linear-gradient(160deg,var(--bg),var(--bg-grad));
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  line-height:1.55;
+  min-height:100vh;
+}
+::selection{background:var(--accent-glow);color:#fff}
+a{color:inherit}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select{font-family:inherit}
+
+.app{display:flex;align-items:stretch;min-height:100vh}
+.mainwrap{flex:1 1 auto;min-width:0;display:flex;flex-direction:column}
+
+/* ---------- Sidebar ---------- */
+.sidebar{
+  flex:0 0 268px;width:268px;
+  background:linear-gradient(180deg,rgba(17,22,35,.9),rgba(8,11,18,.7));
+  border-right:1px solid var(--border-soft);
+  padding:26px 18px;
+  display:flex;flex-direction:column;
+  position:sticky;top:0;align-self:flex-start;height:100vh;
+  backdrop-filter:blur(8px);
+}
+.brand{display:flex;align-items:center;gap:11px;padding:0 8px 6px}
+.brand .logo{
+  width:38px;height:38px;border-radius:11px;flex:none;
+  background:linear-gradient(135deg,var(--accent),var(--violet));
+  display:grid;place-items:center;font-family:var(--display);font-weight:800;color:#07142b;
+  font-size:18px;box-shadow:0 6px 20px -6px var(--accent-glow);
+}
+.brand .t{font-family:var(--display);font-weight:800;font-size:17px;letter-spacing:-.02em;line-height:1.1}
+.brand .s{font-size:11px;color:var(--text-mute);letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+
+.nav-label{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-mute);font-weight:700;padding:22px 12px 8px}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav-item{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 12px;border-radius:11px;
+  color:var(--text-dim);font-weight:500;font-size:14.5px;
+  transition:.16s;width:100%;text-align:left;position:relative;
+}
+.nav-item svg{width:18px;height:18px;flex:none;opacity:.85}
+.nav-item:hover{background:var(--surface-2);color:var(--text)}
+.nav-item.active{background:var(--accent-soft);color:var(--accent)}
+.nav-item.active::before{content:"";position:absolute;left:-18px;top:8px;bottom:8px;width:3px;border-radius:0 3px 3px 0;background:var(--accent)}
+.nav-item .badge{margin-left:auto;font-size:10px;font-weight:700;background:var(--surface-3);color:var(--text-dim);padding:1px 7px;border-radius:20px}
+
+.side-foot{margin-top:auto;display:flex;flex-direction:column;gap:8px;padding-top:18px}
+.exam-pill{border:1px solid var(--border);border-radius:13px;padding:13px 14px;background:var(--surface)}
+.exam-pill .r{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.exam-pill .lab{font-size:11px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.1em;font-weight:600}
+.exam-pill .big{font-family:var(--display);font-weight:800;font-size:26px;color:var(--amber);line-height:1}
+.exam-pill .sub{font-size:12px;color:var(--text-dim);margin-top:3px}
+.toeic-link{display:flex;align-items:center;gap:9px;padding:11px 13px;border-radius:11px;border:1px solid var(--border-soft);color:var(--text-dim);font-size:13.5px;font-weight:500;transition:.16s;text-decoration:none}
+.toeic-link:hover{border-color:var(--green);color:var(--text);background:var(--surface)}
+
+/* ---------- Main ---------- */
+.main{padding:38px 46px 80px;max-width:1080px;width:100%;margin:0 auto}
+.view{display:none;animation:fade .4s ease both}
+.view.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.stagger>*{animation:rise .5s ease both}
+.stagger>*:nth-child(1){animation-delay:.02s}
+.stagger>*:nth-child(2){animation-delay:.07s}
+.stagger>*:nth-child(3){animation-delay:.12s}
+.stagger>*:nth-child(4){animation-delay:.17s}
+.stagger>*:nth-child(5){animation-delay:.22s}
+.stagger>*:nth-child(6){animation-delay:.27s}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+.eyebrow{font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:10px}
+h1.page{font-family:var(--display);font-weight:800;font-size:clamp(30px,4vw,42px);letter-spacing:-.025em;line-height:1.04}
+.lede{color:var(--text-dim);font-size:16px;margin-top:10px;max-width:640px}
+h2.sec{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.02em;margin:34px 0 16px;display:flex;align-items:center;gap:10px}
+h2.sec .tick{width:7px;height:18px;border-radius:3px;background:var(--accent);display:inline-block}
+
+.card{background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--radius);padding:22px}
+.grid{display:grid;gap:16px}
+.g-2{grid-template-columns:1fr 1fr}
+.g-3{grid-template-columns:repeat(3,1fr)}
+.g-4{grid-template-columns:repeat(4,1fr)}
+
+.stat{background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--radius);padding:20px;position:relative;overflow:hidden}
+.stat .ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;margin-bottom:14px}
+.stat .num{font-family:var(--display);font-weight:800;font-size:34px;line-height:1;letter-spacing:-.02em}
+.stat .lab{color:var(--text-dim);font-size:13.5px;margin-top:6px}
+.stat .spark{position:absolute;right:-10px;bottom:-10px;font-size:84px;opacity:.05;font-family:var(--display);font-weight:800}
+
+.progress-wrap{margin-top:8px}
+.bar{height:9px;border-radius:20px;background:var(--surface-3);overflow:hidden}
+.bar>i{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,var(--accent-2),var(--accent));box-shadow:0 0 14px var(--accent-glow);transition:width .8s cubic-bezier(.2,.8,.2,1)}
+
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+.btn{display:inline-flex;align-items:center;gap:9px;justify-content:center;padding:12px 20px;border-radius:12px;font-weight:600;font-size:14.5px;transition:.16s;border:1px solid transparent}
+.btn svg{width:17px;height:17px}
+.btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#06142b;box-shadow:0 10px 26px -10px var(--accent-glow)}
+.btn.primary:hover{transform:translateY(-2px);box-shadow:0 14px 32px -10px var(--accent-glow)}
+.btn.ghost{background:var(--surface-2);border-color:var(--border);color:var(--text)}
+.btn.ghost:hover{border-color:var(--accent-2);background:var(--surface-3)}
+.btn.sm{padding:8px 14px;font-size:13px;border-radius:10px}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
+
+/* parcours */
+.theme-card{background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--radius);overflow:hidden;transition:.18s}
+.theme-card:hover{border-color:var(--border)}
+.theme-head{display:flex;gap:16px;padding:20px 22px;align-items:flex-start}
+.theme-num{width:46px;height:46px;border-radius:13px;flex:none;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:18px;background:var(--accent-soft);color:var(--accent);border:1px solid var(--border)}
+.theme-card.done .theme-num{background:var(--accent);color:#06142b}
+.theme-title{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:-.01em}
+.theme-sub{font-size:12px;color:var(--text-mute);margin-top:2px;font-weight:600;letter-spacing:.03em;display:flex;gap:8px;align-items:center}
+.tag-sec{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 8px;border-radius:20px}
+.tag-listen{background:var(--violet-soft);color:var(--violet)}
+.tag-read{background:var(--green-soft);color:var(--green)}
+.theme-desc{color:var(--text-dim);font-size:14px;margin-top:8px}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.chip{font-size:12px;color:var(--text-dim);background:var(--surface-2);border:1px solid var(--border-soft);padding:5px 11px;border-radius:20px}
+.theme-foot{display:flex;gap:10px;align-items:center;padding:0 22px 20px;flex-wrap:wrap}
+.check-btn{display:inline-flex;align-items:center;gap:9px;font-size:13.5px;font-weight:600;color:var(--text-dim);padding:8px 14px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);transition:.16s}
+.check-btn:hover{border-color:var(--accent-2);color:var(--text)}
+.check-btn.on{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-2)}
+.check-btn .box{width:17px;height:17px;border-radius:5px;border:2px solid currentColor;display:grid;place-items:center}
+.check-btn.on .box{background:var(--accent);border-color:var(--accent)}
+.check-btn.on .box svg{width:11px;height:11px;color:#06142b}
+.check-btn:not(.on) .box svg{display:none}
+
+/* controls */
+.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:20px 0}
+.sel{position:relative}
+.sel select{appearance:none;background:var(--surface-2);border:1px solid var(--border);color:var(--text);padding:11px 40px 11px 16px;border-radius:12px;font-size:14.5px;font-weight:500;cursor:pointer;transition:.16s;min-width:220px}
+.sel select:hover{border-color:var(--accent-2)}
+.sel::after{content:"";position:absolute;right:15px;top:50%;width:8px;height:8px;border-right:2px solid var(--text-dim);border-bottom:2px solid var(--text-dim);transform:translateY(-65%) rotate(45deg);pointer-events:none}
+
+/* quiz */
+.quiz-shell{background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--radius);padding:26px;min-height:240px}
+.quiz-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;gap:14px}
+.q-tag{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:4px 11px;border-radius:20px;border:1px solid var(--border)}
+.q-count{font-size:13px;color:var(--text-mute);font-weight:600}
+.q-progress{height:5px;border-radius:20px;background:var(--surface-3);overflow:hidden;margin-bottom:22px}
+.q-progress>i{display:block;height:100%;background:var(--accent);border-radius:20px;transition:width .35s}
+
+/* audio box */
+.audio-box{background:linear-gradient(135deg,var(--violet-soft),var(--accent-soft));border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.audio-box .ablurb{font-size:13px;color:var(--text-dim);flex:1;min-width:160px}
+.audio-play{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--violet),var(--accent));color:#0a0a1a;font-weight:700;font-size:14.5px;padding:12px 20px;border-radius:11px;transition:.16s;box-shadow:0 8px 22px -8px rgba(167,139,250,.5)}
+.audio-play:hover{transform:translateY(-2px)}
+.audio-play svg{width:18px;height:18px}
+.audio-play.playing{animation:pulse 1.2s ease infinite}
+@keyframes pulse{0%,100%{box-shadow:0 8px 22px -8px rgba(167,139,250,.5)}50%{box-shadow:0 8px 30px -4px rgba(167,139,250,.8)}}
+.speed-toggle{font-size:12.5px;font-weight:600;color:var(--text-dim);background:var(--surface-2);border:1px solid var(--border);padding:9px 14px;border-radius:10px;transition:.16s}
+.speed-toggle:hover{border-color:var(--violet);color:var(--text)}
+.audio-warn{font-size:12.5px;color:var(--amber);background:var(--amber-soft);border:1px solid rgba(240,180,41,.3);border-radius:10px;padding:10px 14px;margin-bottom:16px}
+
+.scene{background:var(--surface-2);border:1px dashed var(--border);border-radius:12px;padding:14px 16px;margin-bottom:16px;font-size:14px;color:var(--text-dim)}
+.scene b{color:var(--text)}
+.passage{background:var(--surface-2);border:1px solid var(--border-soft);border-left:3px solid var(--accent);border-radius:10px;padding:16px 18px;margin-bottom:18px;font-size:14.5px;line-height:1.65;color:var(--text)}
+.passage .ptitle{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-mute);font-weight:700;margin-bottom:8px}
+
+.q-text{font-size:18px;font-weight:600;font-family:var(--display);letter-spacing:-.01em;line-height:1.4;margin-bottom:20px}
+.opts{display:flex;flex-direction:column;gap:11px}
+.opt{display:flex;align-items:center;gap:14px;text-align:left;width:100%;padding:15px 18px;border-radius:13px;border:1px solid var(--border);background:var(--surface-2);font-size:15px;transition:.14s;color:var(--text)}
+.opt:hover:not(:disabled){border-color:var(--accent-2);background:var(--surface-3)}
+.opt .key{width:26px;height:26px;border-radius:7px;flex:none;display:grid;place-items:center;font-weight:700;font-size:13px;background:var(--surface-3);color:var(--text-dim);border:1px solid var(--border)}
+.opt.correct{border-color:var(--green);background:var(--green-soft)}
+.opt.correct .key{background:var(--green);color:#062013;border-color:var(--green)}
+.opt.wrong{border-color:var(--red);background:var(--red-soft)}
+.opt.wrong .key{background:var(--red);color:#fff;border-color:var(--red)}
+.opt:disabled{cursor:default}
+.explain{margin-top:18px;padding:15px 18px;border-radius:12px;background:var(--accent-soft);border:1px solid rgba(79,156,255,.3);font-size:14.5px;color:var(--text);display:none}
+.explain.show{display:block;animation:fade .3s ease both}
+.explain b{color:var(--accent)}
+.transcript{margin-top:12px;padding:13px 16px;border-radius:11px;background:var(--surface-2);border:1px solid var(--border-soft);font-size:13.5px;color:var(--text-dim);display:none}
+.transcript.show{display:block;animation:fade .3s ease both}
+.transcript .tl{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--violet);font-weight:700;margin-bottom:6px}
+.transcript .en{font-style:italic;color:var(--text)}
+.quiz-foot{display:flex;justify-content:flex-end;margin-top:20px}
+
+.result{text-align:center;padding:20px 10px}
+.result .ring{width:130px;height:130px;margin:0 auto 18px;position:relative}
+.result .score{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:34px}
+.result h3{font-family:var(--display);font-size:24px;font-weight:800;letter-spacing:-.02em}
+.result p{color:var(--text-dim);margin-top:8px}
+
+/* resources */
+.res-card{background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--radius);padding:20px;transition:.18s;display:flex;flex-direction:column}
+.res-card:hover{border-color:var(--border);transform:translateY(-3px)}
+.res-ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;margin-bottom:14px;font-size:18px}
+.res-card h4{font-family:var(--display);font-weight:700;font-size:16.5px;letter-spacing:-.01em}
+.res-card p{color:var(--text-dim);font-size:13.5px;margin-top:7px;flex:1}
+.res-card .go{margin-top:14px;display:inline-flex;align-items:center;gap:7px;color:var(--accent);font-weight:600;font-size:13.5px;text-decoration:none}
+.res-card .go svg{width:14px;height:14px;transition:.16s}
+.res-card:hover .go svg{transform:translate(3px,-3px)}
+
+.cheat{width:100%;border-collapse:collapse;font-size:14px}
+.cheat th{text-align:left;padding:11px 14px;color:var(--text-mute);font-size:11px;letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.cheat td{padding:12px 14px;border-bottom:1px solid var(--border-soft);color:var(--text-dim)}
+.cheat td:first-child{color:var(--text);font-weight:600}
+.cheat .en{font-family:var(--mono);color:var(--accent);font-size:13px}
+.cheat tr:hover td{background:var(--surface)}
+
+.tip-list{display:flex;flex-direction:column;gap:10px}
+.tip-item{display:flex;gap:12px;align-items:flex-start;padding:13px 15px;background:var(--surface-2);border:1px solid var(--border-soft);border-radius:11px;font-size:14px;color:var(--text-dim)}
+.tip-item .ti{flex:none;width:26px;height:26px;border-radius:8px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-weight:700;font-size:13px;font-family:var(--mono)}
+
+/* suivi */
+.theme-prog{display:flex;flex-direction:column;gap:14px}
+.tp-row{display:grid;grid-template-columns:140px 1fr 56px;gap:14px;align-items:center}
+.tp-row .name{font-size:14px;font-weight:500;color:var(--text)}
+.tp-row .pct{text-align:right;font-family:var(--mono);font-size:13px;color:var(--text-dim);font-weight:600}
+.hist{display:flex;flex-direction:column;gap:9px;max-height:340px;overflow:auto}
+.hist-row{display:flex;align-items:center;gap:13px;padding:12px 15px;background:var(--surface-2);border:1px solid var(--border-soft);border-radius:11px;font-size:13.5px}
+.hist-row .hic{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;flex:none}
+.hist-row .hd{flex:1}
+.hist-row .ht{font-weight:600;color:var(--text)}
+.hist-row .hs{color:var(--text-mute);font-size:12px}
+.hist-row .hv{font-family:var(--mono);font-weight:700;font-size:14px}
+.empty{text-align:center;padding:40px 20px;color:var(--text-mute)}
+.empty svg{width:40px;height:40px;opacity:.4;margin-bottom:12px}
+
+.loader{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:50px 20px;color:var(--text-dim)}
+.spinner{width:38px;height:38px;border:3px solid var(--surface-3);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.muted-note{font-size:12.5px;color:var(--text-mute);margin-top:14px;display:flex;align-items:center;gap:7px}
+.muted-note svg{width:14px;height:14px;flex:none}
+
+/* mobile */
+.menu-btn{display:none}
+.topbar{display:none}
+@media(max-width:900px){
+  .sidebar{position:fixed;left:0;top:0;bottom:0;flex-basis:268px;width:268px;z-index:50;transform:translateX(-105%);transition:.25s;height:100vh}
+  .app.nav-open .sidebar{transform:none;box-shadow:0 0 60px rgba(0,0,0,.6)}
+  .mainwrap{width:100%}
+  .topbar{display:flex;align-items:center;gap:14px;padding:14px 18px;border-bottom:1px solid var(--border-soft);position:sticky;top:0;z-index:40;background:rgba(8,11,18,.85);backdrop-filter:blur(10px)}
+  .menu-btn{display:grid;place-items:center;width:40px;height:40px;border-radius:10px;border:1px solid var(--border);background:var(--surface)}
+  .menu-btn svg{width:20px;height:20px}
+  .topbar .tb-title{font-family:var(--display);font-weight:800;font-size:16px}
+  .main{padding:24px 20px 70px}
+  .scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:45}
+  .app.nav-open .scrim{display:block}
+  .g-2,.g-3,.g-4{grid-template-columns:1fr}
+  .tp-row{grid-template-columns:110px 1fr 48px}
+}
 </style>
 </head>
 <body>
-<div class="layout">
+<div class="app" id="app">
 
-  <!-- SIDEBAR -->
-  <nav class="sidebar">
-    <div class="logo"><div class="logo-dot"></div>TOEIC 850</div>
+  <div class="scrim" id="scrim"></div>
 
-    <div class="nav-section">Navigation</div>
-    <button class="nav-item active" onclick="showView('dashboard')">
-      <span class="nav-icon">◈</span> Tableau de bord
-    </button>
-    <button class="nav-item" onclick="showView('session')">
-      <span class="nav-icon">▷</span> Session du jour
-    </button>
-    <button class="nav-item" onclick="showView('libre')">
-      <span class="nav-icon">⊞</span> Mode libre
-    </button>
-    <button class="nav-item" onclick="showView('tracker')">
-      <span class="nav-icon">◫</span> Suivi
-    </button>
-
-    <div class="sidebar-bottom">
-      <a href="excel_app.html" style="display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--surface2);border-radius:8px;font-size:12px;color:var(--muted2);text-decoration:none;margin-bottom:4px;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted2)'">
-        <span>📊</span> App Excel →
-      </a>
-      <div class="streak-pill">
-        🔥 <span id="streak-count">1</span> jour de streak
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="logo">T</div>
+      <div>
+        <div class="t">TOEIC</div>
+        <div class="s">Préparation</div>
       </div>
     </div>
-  </nav>
 
-  <!-- MAIN -->
+    <div class="nav-label">Apprentissage</div>
+    <nav class="nav" id="nav">
+      <button class="nav-item active" data-view="today">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        Aujourd'hui
+      </button>
+      <button class="nav-item" data-view="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+        Tableau de bord
+      </button>
+      <button class="nav-item" data-view="parcours">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/><path d="M4 6v12" opacity=".4"/></svg>
+        Parcours <span class="badge" id="nav-parcours-badge">0/7</span>
+      </button>
+      <button class="nav-item" data-view="session">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        Session du jour
+      </button>
+      <button class="nav-item" data-view="libre">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18" opacity=".5"/></svg>
+        Mode libre
+      </button>
+      <button class="nav-item" data-view="listening">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        Listening (audio)
+      </button>
+      <button class="nav-item" data-view="ressources">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Ressources
+      </button>
+      <button class="nav-item" data-view="suivi">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>
+        Suivi
+      </button>
+    </nav>
+
+    <div class="side-foot">
+      <div class="exam-pill">
+        <div class="r"><span class="lab">Examen TOEIC</span></div>
+        <div class="r" style="margin-top:4px">
+          <span class="big" id="countdown">—</span>
+          <span class="sub" id="exam-date">27 juin</span>
+        </div>
+        <div class="sub" id="streak-line">🔥 Série : 0 jour</div>
+      </div>
+      <a class="toeic-link" href="excel_app.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:17px;height:17px"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18" opacity=".5"/></svg>
+        App Excel →
+      </a>
+    </div>
+  </aside>
+
+  <div class="mainwrap">
+  <div class="topbar">
+    <button class="menu-btn" id="menuBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
+    <span class="tb-title">TOEIC</span>
+  </div>
   <main class="main">
 
+    <!-- AUJOURD'HUI -->
+    <section class="view active" id="view-today">
+      <div id="today-host"></div>
+    </section>
+
     <!-- DASHBOARD -->
-    <div id="view-dashboard" class="view active">
-      <div class="page-header">
-        <div class="page-eyebrow">Boost CV · Master GFF 2027</div>
-        <h1 class="page-title">Bonjour 👋</h1>
-        <p class="page-sub" id="dash-sub">Phase 1 — Fondations · 22 mai → 11 juin</p>
-      </div>
+    <section class="view" id="view-dashboard">
+      <div class="eyebrow">Listening &amp; Reading · Score visé 750+</div>
+      <h1 class="page">Salut Mathys 👋</h1>
+      <p class="lede">Ton espace TOEIC. La méthode : suis le parcours des 7 parties, entraîne ton oreille avec le Listening audio, et enchaîne les QCM pour gagner des points. Pas de point négatif à l'examen — on répond à tout !</p>
 
-      <div class="stats-row">
-        <div class="stat-card">
-          <div class="stat-label">Jour</div>
-          <div class="stat-val" id="stat-day">—</div>
-          <div class="stat-sub">sur 70</div>
+      <div class="grid g-4 stagger" style="margin-top:30px">
+        <div class="stat">
+          <div class="ic" style="background:var(--amber-soft);color:var(--amber)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <div class="num" id="d-days" style="color:var(--amber)">—</div>
+          <div class="lab">jours avant l'examen</div>
+          <div class="spark">⏳</div>
         </div>
-        <div class="stat-card">
-          <div class="stat-label">Jours faits</div>
-          <div class="stat-val" id="stat-done">—</div>
-          <div class="stat-sub">sessions complètes</div>
+        <div class="stat">
+          <div class="ic" style="background:var(--accent-soft);color:var(--accent)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+          <div class="num" id="d-prog">0%</div>
+          <div class="lab">parcours terminé</div>
+          <div class="spark">✓</div>
         </div>
-        <div class="stat-card">
-          <div class="stat-label">Score moyen</div>
-          <div class="stat-val" id="stat-avg">—</div>
-          <div class="stat-sub">aux exercices</div>
+        <div class="stat">
+          <div class="ic" style="background:var(--green-soft);color:var(--green)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></div>
+          <div class="num" id="d-acc">—</div>
+          <div class="lab">de réussite aux QCM</div>
+          <div class="spark">%</div>
         </div>
-      </div>
-
-      <div class="progress-section">
-        <div class="progress-header">
-          <span class="progress-title">Progression globale</span>
-          <span class="progress-pct" id="prog-pct">0%</span>
-        </div>
-        <div class="progress-track">
-          <div class="progress-fill" id="prog-fill" style="width:0%"></div>
+        <div class="stat">
+          <div class="ic" style="background:var(--violet-soft);color:var(--violet)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><path d="M12 20V10M18 20V4M6 20v-4"/></svg></div>
+          <div class="num" id="d-level" style="color:var(--violet)">—</div>
+          <div class="lab">niveau estimé (CECRL)</div>
+          <div class="spark">≈</div>
         </div>
       </div>
 
-      <div class="phase-strip">
-        <div class="phase-chip active" id="phase1-chip">
-          <span class="ph-name">Phase 1</span>
-          22 mai → 11 juin
+      <div class="grid g-2" style="margin-top:16px">
+        <div class="card">
+          <h2 class="sec" style="margin-top:0"><span class="tick"></span>Ta progression</h2>
+          <div class="progress-wrap">
+            <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text-dim);margin-bottom:9px"><span id="prog-text">0 partie sur 7</span><span id="prog-pct" style="font-family:var(--mono);font-weight:700;color:var(--accent)">0%</span></div>
+            <div class="bar"><i id="prog-bar" style="width:0%"></i></div>
+          </div>
+          <div class="cta-row" style="margin-top:22px">
+            <button class="btn primary" data-goto="session"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 3l14 9-14 9V3z"/></svg>Lancer la session du jour</button>
+            <button class="btn ghost" data-goto="listening"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/></svg>Entraîner mon oreille</button>
+          </div>
         </div>
-        <div class="phase-chip" id="phase2-chip">
-          <span class="ph-name">Phase 2</span>
-          12 juin → 9 juil
-        </div>
-        <div class="phase-chip" id="phase3-chip">
-          <span class="ph-name">Phase 3</span>
-          10 → 31 juil
-        </div>
-      </div>
-
-      <div style="margin-top:8px;">
-        <button class="btn primary" onclick="showView('session')" style="font-size:14px; padding:12px 24px;">
-          ▷ Lancer la session du jour
-        </button>
-      </div>
-
-      <div style="margin-top:28px;">
-        <div class="page-eyebrow" style="margin-bottom:12px;">Derniers scores</div>
-        <div id="dash-history" style="display:flex; flex-direction:column; gap:8px;">
-          <div style="color:var(--muted); font-size:13px; font-family:var(--font-mono);">Aucun score enregistré.</div>
+        <div class="card">
+          <h2 class="sec" style="margin-top:0"><span class="tick" style="background:var(--amber)"></span>Conseil du jour</h2>
+          <p id="tip-text" style="color:var(--text-dim);font-size:15px">—</p>
+          <div class="cta-row" style="margin-top:18px">
+            <button class="btn ghost sm" data-goto="parcours"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>Voir le parcours</button>
+            <button class="btn ghost sm" data-goto="ressources"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Ressources</button>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- SESSION DU JOUR -->
-    <div id="view-session" class="view">
-      <div class="page-header">
-        <div class="page-eyebrow" id="sess-eyebrow">Session du jour</div>
-        <h1 class="page-title" id="sess-title">—</h1>
-        <p class="page-sub" id="sess-sub">—</p>
-      </div>
+    <!-- PARCOURS -->
+    <section class="view" id="view-parcours">
+      <div class="eyebrow">Les 7 parties du test</div>
+      <h1 class="page">Ton parcours TOEIC</h1>
+      <p class="lede">4 parties d'écoute (Listening) puis 3 de lecture (Reading). Coche chaque partie quand tu te sens à l'aise — ta progression se met à jour partout.</p>
+      <div class="grid" style="margin-top:28px" id="parcours-list"></div>
+    </section>
 
-      <div class="session-header">
-        <span class="session-day" id="sess-day-label">—</span>
-        <span class="session-prog" id="sess-prog">0 / 0</span>
-      </div>
-
-      <div class="session-bar">
-        <div class="session-bar-fill" id="sess-bar" style="width:0%"></div>
-      </div>
-
-      <div class="score-mini">
-        Bonnes rép : <span id="sm-ok">0</span> &nbsp;·&nbsp;
-        Exercices : <span id="sm-ex">0</span> &nbsp;·&nbsp;
-        Score : <span id="sm-pct">—</span>
-      </div>
-
-      <div id="sess-area">
-        <div class="loading"><span class="dot-anim">Chargement</span></div>
-      </div>
-    </div>
+    <!-- SESSION -->
+    <section class="view" id="view-session">
+      <div class="eyebrow">Entraînement quotidien</div>
+      <h1 class="page">Session du jour</h1>
+      <p class="lede">6 questions variées chaque jour : un peu d'écoute, un peu de lecture. La routine idéale pour progresser sans s'épuiser.</p>
+      <div style="margin-top:26px" id="session-host"></div>
+    </section>
 
     <!-- MODE LIBRE -->
-    <div id="view-libre" class="view">
-      <div class="page-header">
-        <div class="page-eyebrow">Entraînement</div>
-        <h1 class="page-title">Mode libre</h1>
-        <p class="page-sub">Génère des exercices à la demande sur le thème de ton choix.</p>
+    <section class="view" id="view-libre">
+      <div class="eyebrow">À la demande</div>
+      <h1 class="page">Mode libre</h1>
+      <p class="lede">Choisis une partie et un niveau, puis génère un QCM ciblé autant de fois que tu veux.</p>
+      <div class="controls">
+        <div class="sel"><select id="libre-part"></select></div>
+        <div class="sel"><select id="libre-level">
+          <option value="Débutant">Débutant</option>
+          <option value="Intermédiaire">Intermédiaire</option>
+          <option value="Avancé">Avancé</option>
+        </select></div>
+        <button class="btn primary" id="libre-gen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>Générer</button>
       </div>
+      <div id="libre-host"></div>
+    </section>
 
-      <div class="libre-controls">
-        <select id="libre-type">
-          <option value="grammar">Grammaire</option>
-          <option value="vocab">Vocabulaire business</option>
-          <option value="listening">Listening Part 2</option>
-          <option value="reading">Reading Part 5</option>
-        </select>
-        <select id="libre-theme">
-          <option value="general">Thème général</option>
-          <option value="finance">Finance & Comptabilité</option>
-          <option value="rh">Ressources Humaines</option>
-          <option value="marketing">Marketing</option>
-          <option value="voyages">Voyages d'affaires</option>
-          <option value="bureautique">Bureautique</option>
-        </select>
-        <select id="libre-diff">
-          <option value="debutant">Débutant</option>
-          <option value="intermediaire" selected>Intermédiaire</option>
-          <option value="avance">Avancé</option>
-        </select>
-        <button class="btn primary" onclick="genLibre()">Générer →</button>
+    <!-- LISTENING -->
+    <section class="view" id="view-listening">
+      <div class="eyebrow">Compréhension orale</div>
+      <h1 class="page">Listening — entraînement audio</h1>
+      <p class="lede">L'app lit l'anglais à voix haute (parties 1 à 4). Clique sur <b>Écouter l'audio</b>, choisis ta réponse, puis révèle la transcription pour vérifier. Tu peux ralentir le débit si besoin.</p>
+      <div class="controls">
+        <div class="sel"><select id="listen-part">
+          <option value="">Toutes les parties d'écoute</option>
+          <option value="p1">Partie 1 — Photographies</option>
+          <option value="p2">Partie 2 — Questions-Réponses</option>
+          <option value="p3">Partie 3 — Conversations</option>
+          <option value="p4">Partie 4 — Exposés</option>
+        </select></div>
+        <button class="btn primary" id="listen-gen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 3l14 9-14 9V3z"/></svg>Commencer l'écoute</button>
       </div>
+      <div id="listen-host"></div>
+    </section>
 
-      <div id="libre-area"></div>
-    </div>
+    <!-- RESSOURCES -->
+    <section class="view" id="view-ressources">
+      <div class="eyebrow">Vidéos · vocabulaire · stratégies</div>
+      <h1 class="page">Ressources</h1>
+      <p class="lede">De quoi accompagner chaque partie : entraînements vidéo, vocabulaire essentiel, points de grammaire et stratégies d'examen.</p>
+
+      <h2 class="sec"><span class="tick"></span>Vidéos &amp; entraînements</h2>
+      <div class="grid g-3" id="videos-list"></div>
+
+      <h2 class="sec"><span class="tick" style="background:var(--violet)"></span>Vocabulaire essentiel TOEIC</h2>
+      <div class="card" style="padding:8px 4px"><table class="cheat" id="vocab-table"></table></div>
+
+      <h2 class="sec"><span class="tick" style="background:var(--green)"></span>Grammaire clé (Partie 5 &amp; 6)</h2>
+      <div class="card" style="padding:8px 4px"><table class="cheat" id="grammar-table"></table></div>
+
+      <h2 class="sec"><span class="tick" style="background:var(--amber)"></span>Stratégies &amp; barème</h2>
+      <div class="grid g-2">
+        <div class="card">
+          <div style="font-family:var(--display);font-weight:700;font-size:16px;margin-bottom:14px">Astuces par partie</div>
+          <div class="tip-list" id="tips-list"></div>
+        </div>
+        <div class="card">
+          <div style="font-family:var(--display);font-weight:700;font-size:16px;margin-bottom:14px">Le test en bref</div>
+          <div class="tip-list" id="facts-list"></div>
+        </div>
+      </div>
+    </section>
 
     <!-- SUIVI -->
-    <div id="view-tracker" class="view">
-      <div class="page-header">
-        <div class="page-eyebrow">Calendrier</div>
-        <h1 class="page-title">Ton suivi</h1>
-        <p class="page-sub">70 jours · Phase 1 Fondations en cours</p>
+    <section class="view" id="view-suivi">
+      <div class="eyebrow">Statistiques</div>
+      <h1 class="page">Ton suivi</h1>
+      <p class="lede">Tes résultats par partie et l'historique de tes sessions. Tout est enregistré sur cet appareil.</p>
+
+      <div class="grid g-3 stagger" style="margin-top:28px">
+        <div class="stat"><div class="num" id="s-total">0</div><div class="lab">questions répondues</div><div class="spark">∑</div></div>
+        <div class="stat"><div class="num" id="s-correct" style="color:var(--green)">0</div><div class="lab">bonnes réponses</div><div class="spark">✓</div></div>
+        <div class="stat"><div class="num" id="s-level" style="color:var(--violet)">—</div><div class="lab">niveau estimé</div><div class="spark">≈</div></div>
       </div>
 
-      <div class="week-labels">
-        <div class="week-lbl">LUN</div>
-        <div class="week-lbl">MAR</div>
-        <div class="week-lbl">MER</div>
-        <div class="week-lbl">JEU</div>
-        <div class="week-lbl">VEN</div>
-        <div class="week-lbl">SAM</div>
-        <div class="week-lbl">DIM</div>
+      <div class="grid g-2" style="margin-top:16px">
+        <div class="card">
+          <h2 class="sec" style="margin-top:0"><span class="tick"></span>Réussite par partie</h2>
+          <div class="theme-prog" id="theme-prog"></div>
+        </div>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <h2 class="sec" style="margin-top:0"><span class="tick" style="background:var(--violet)"></span>Historique</h2>
+            <button class="btn ghost sm" id="reset-btn">Réinitialiser</button>
+          </div>
+          <div class="hist" id="hist-list"></div>
+        </div>
       </div>
 
-      <div class="tracker-grid" id="tracker-grid"></div>
-      <div style="display:flex; gap:16px; margin-top:12px; flex-wrap:wrap;">
-        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)"><div style="width:12px;height:12px;border-radius:3px;background:rgba(61,214,140,0.12);border:1px solid var(--green)"></div>Fait</div>
-        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)"><div style="width:12px;height:12px;border-radius:3px;border:1px solid var(--accent)"></div>Aujourd'hui</div>
-        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)"><div style="width:12px;height:12px;border-radius:3px;background:rgba(248,113,113,0.06);border:1px solid rgba(248,113,113,0.2)"></div>Manqué</div>
-        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)"><div style="width:12px;height:12px;border-radius:3px;border:1px solid var(--border);opacity:0.3"></div>À venir</div>
+      <div class="card" id="jourj-card" style="margin-top:16px">
+        <h2 class="sec" style="margin-top:0"><span class="tick" style="background:var(--amber)"></span>Prêt pour le jour J ?</h2>
+        <p style="color:var(--text-mute);font-size:13px;margin:-6px 0 10px">Coche chaque compétence quand tu la maîtrises. Quand tout est coché, tu es prêt à passer un examen blanc complet en conditions réelles.</p>
+        <div id="jourj-list"></div>
+        <div style="margin-top:14px;padding:13px 15px;background:var(--amber-soft);border:1px solid var(--amber);border-radius:11px;font-size:13.5px;color:var(--text)">
+          🎯 <b>L'étape finale indispensable :</b> fais au moins <b>1 examen blanc complet chronométré</b> avant le jour J — c'est ton vrai indicateur de score.
+          <div style="margin-top:8px;display:flex;gap:9px;flex-wrap:wrap">
+            <a href="https://www.examenglish.com/TOEIC/" target="_blank" rel="noopener" class="btn ghost sm" style="text-decoration:none">Tests blancs gratuits →</a>
+            <a href="https://www.etsglobal.org/fr/fr" target="_blank" rel="noopener" class="btn ghost sm" style="text-decoration:none">Passer le TOEIC (ETS Global) →</a>
+          </div>
+        </div>
       </div>
-
-      <div style="margin-top:32px;">
-        <div class="page-eyebrow" style="margin-bottom:14px;">Historique des scores</div>
-        <div id="history-list" style="display:flex;flex-direction:column;gap:8px;"></div>
-      </div>
-    </div>
+    </section>
 
   </main>
+  </div>
 </div>
 
 <script>
-// ─── STATE ───────────────────────────────────────────
-const START = new Date("2026-05-22");
-const today = new Date();
-today.setHours(0,0,0,0);
-const DAY_NUM = Math.max(1, Math.floor((today - START) / 86400000) + 1);
+/* ============================================================ CONFIG ============================================================ */
+const API_ENDPOINT='/.netlify/functions/claude';
+const EXAM_DATE='2026-06-27';          // une semaine après le TOSA (20 juin)
+const STORE_KEY='toeic_v1';
 
-function loadState() {
-  try { return JSON.parse(localStorage.getItem('toeic_state') || 'null') || { doneDays: {}, scores: [] }; }
-  catch { return { doneDays: {}, scores: [] }; }
+/* ============================================================ PARTS ============================================================ */
+const PARTS=[
+  {id:'p1',short:'Partie 1',name:'Partie 1 — Photographies',section:'Listening',count:'6 questions',
+   desc:"Tu entends 4 phrases, tu choisis celle qui décrit le mieux une photo. Vocabulaire d'actions et de lieux.",
+   chips:['Actions en -ing','Lieux','Pièges sonores']},
+  {id:'p2',short:'Partie 2',name:'Partie 2 — Questions-Réponses',section:'Listening',count:'25 questions',
+   desc:"Tu entends une question, tu choisis la meilleure réponse parmi 3. La partie la plus rentable à travailler.",
+   chips:['Qui / Où / Quand','Réponses indirectes','3 choix']},
+  {id:'p3',short:'Partie 3',name:'Partie 3 — Conversations',section:'Listening',count:'39 questions',
+   desc:"De courtes conversations entre 2 ou 3 personnes, suivies de questions sur le contexte et les détails.",
+   chips:['Conversations','Qui fait quoi','Détails']},
+  {id:'p4',short:'Partie 4',name:'Partie 4 — Exposés',section:'Listening',count:'30 questions',
+   desc:"Des monologues : annonces, messages vocaux, présentations. Questions sur l'idée principale et les détails.",
+   chips:['Annonces','Messages vocaux','Idée principale']},
+  {id:'p5',short:'Partie 5',name:'Partie 5 — Phrases à compléter',section:'Reading',count:'30 questions',
+   desc:"Phrases à trous : grammaire et vocabulaire. 30 questions à traiter vite (≈ 20 s chacune).",
+   chips:['Temps verbaux','Prépositions','Word families']},
+  {id:'p6',short:'Partie 6',name:'Partie 6 — Textes à compléter',section:'Reading',count:'16 questions',
+   desc:"Textes courts (e-mails, notes) avec des blancs à compléter : mots, formes verbales, connecteurs.",
+   chips:['Connecteurs','Formes verbales','Cohérence']},
+  {id:'p7',short:'Partie 7',name:'Partie 7 — Compréhension écrite',section:'Reading',count:'54 questions',
+   desc:"Compréhension de textes (annonces, e-mails, articles), simples ou multiples. La partie la plus longue.",
+   chips:['E-mails / annonces','Idée principale','Détails']}
+];
+function partName(id){const p=PARTS.find(x=>x.id===id);return p?p.short:id;}
+
+/* ============================================================ QUESTION BANK ============================================================
+   Champs : t(partie), kind('listening'|'reading'), q(énoncé), o(options), c(index correct), e(explication FR)
+   Optionnels : audio(texte lu à voix haute), scene(description FR photo), passage(texte à lire)
+============================================================ */
+const BANK=[
+  /* ---- PARTIE 1 : Photographies (écoute, 4 options) ---- */
+  {t:'p1',kind:'listening',scene:"une femme assise à un bureau, en train de taper sur un ordinateur portable.",audio:"A. She's typing on a laptop. B. She's answering the phone. C. She's leaving the office. D. She's reading a newspaper.",q:"Quelle phrase décrit le mieux la photo ?",o:["She's typing on a laptop.","She's answering the phone.","She's leaving the office.","She's reading a newspaper."],c:0,e:"« typing on a laptop » = taper sur un ordinateur portable, ce qui correspond à la scène décrite."},
+  {t:'p1',kind:'listening',scene:"deux hommes qui se serrent la main dans une salle de réunion.",audio:"A. They're painting a wall. B. They're shaking hands. C. They're eating lunch. D. They're driving a car.",q:"Quelle phrase décrit le mieux la photo ?",o:["They're painting a wall.","They're shaking hands.","They're eating lunch.","They're driving a car."],c:1,e:"« shaking hands » = se serrer la main."},
+  {t:'p1',kind:'listening',scene:"des cartons empilés sur le sol d'un entrepôt.",audio:"A. A man is watering plants. B. People are swimming. C. Some boxes are stacked on the floor. D. A woman is cooking.",q:"Quelle phrase décrit le mieux la photo ?",o:["A man is watering plants.","People are swimming.","Some boxes are stacked on the floor.","A woman is cooking."],c:2,e:"« boxes are stacked on the floor » = des cartons empilés au sol."},
+  {t:'p1',kind:'listening',scene:"un serveur qui verse de l'eau dans un verre au restaurant.",audio:"A. A child is sleeping. B. They're boarding a plane. C. She's repairing a bike. D. A waiter is pouring water.",q:"Quelle phrase décrit le mieux la photo ?",o:["A child is sleeping.","They're boarding a plane.","She's repairing a bike.","A waiter is pouring water."],c:3,e:"« pouring water » = verser de l'eau ; « waiter » = serveur."},
+
+  /* ---- PARTIE 2 : Questions-Réponses (écoute, 3 options) ---- */
+  {t:'p2',kind:'listening',audio:"Where is the meeting room?",q:"Choisis la meilleure réponse à la question entendue.",o:["Down the hall, on the right.","Yes, at 3 p.m.","I had a meeting."],c:0,e:"« Where » attend un lieu : « down the hall, on the right » (au fond du couloir, à droite)."},
+  {t:'p2',kind:'listening',audio:"When does the store open?",q:"Choisis la meilleure réponse à la question entendue.",o:["On Main Street.","At nine o'clock.","Yes, it's open."],c:1,e:"« When » attend une heure : « at nine o'clock »."},
+  {t:'p2',kind:'listening',audio:"Who's in charge of the project?",q:"Choisis la meilleure réponse à la question entendue.",o:["Ms. Tanaka is.","In the morning.","By email."],c:0,e:"« Who » attend une personne : « Ms. Tanaka »."},
+  {t:'p2',kind:'listening',audio:"Would you like some coffee?",q:"Choisis la meilleure réponse à la question entendue.",o:["Yes, please.","It's on the desk.","He likes tea."],c:0,e:"À une proposition « Would you like…? », on répond « Yes, please. »"},
+  {t:'p2',kind:'listening',audio:"How do I get to the airport?",q:"Choisis la meilleure réponse à la question entendue.",o:["You can take the train.","It was great.","Two tickets."],c:0,e:"« How… get to » attend un moyen : « take the train »."},
+  {t:'p2',kind:'listening',audio:"Why was the flight delayed?",q:"Choisis la meilleure réponse à la question entendue.",o:["Because of the weather.","To Paris.","At gate 12."],c:0,e:"« Why » attend une cause : « because of the weather »."},
+  {t:'p2',kind:'listening',audio:"The report is due tomorrow, isn't it?",q:"Choisis la meilleure réponse à la question entendue.",o:["Yes, that's right.","On the shelf.","A new report."],c:0,e:"Le tag « isn't it? » demande une confirmation : « Yes, that's right. »"},
+  {t:'p2',kind:'listening',audio:"Could you send me the file?",q:"Choisis la meilleure réponse à la question entendue.",o:["Sure, right away.","It's a big file.","Yesterday."],c:0,e:"Demande polie → on accepte : « Sure, right away. »"},
+  {t:'p2',kind:'listening',audio:"Do you prefer the morning or the afternoon session?",q:"Choisis la meilleure réponse à la question entendue.",o:["The afternoon, please.","It's preferable.","Yes, I do."],c:0,e:"Question alternative (… or …) → on choisit une option, jamais « Yes/No »."},
+  {t:'p2',kind:'listening',audio:"Where did you put my keys?",q:"Choisis la meilleure réponse à la question entendue.",o:["On the kitchen table.","They're new keys.","At noon."],c:0,e:"« Where » → un lieu : « on the kitchen table »."},
+
+  /* ---- PARTIE 3 : Conversations (écoute, 4 options) ---- */
+  {t:'p3',kind:'listening',audio:"Man: Hi, I'd like to return this jacket. It's too small. Woman: No problem. Do you have the receipt? Man: Yes, here it is.",q:"What does the man want to do?",o:["Return a jacket","Buy a new shirt","Get a refund for shoes","Exchange a gift card"],c:0,e:"L'homme dit « I'd like to return this jacket » = il veut rendre une veste."},
+  {t:'p3',kind:'listening',audio:"Woman: The printer on the second floor isn't working again. Man: I'll call the technician. Woman: Thanks, we need it for the afternoon meeting.",q:"What is the problem?",o:["A printer is broken","The meeting is cancelled","The elevator is stuck","A computer is missing"],c:0,e:"« The printer … isn't working » = l'imprimante ne marche pas."},
+  {t:'p3',kind:'listening',audio:"Man: Are you coming to the training on Friday? Woman: I'd like to, but I'll be on a business trip. Man: No worries, I'll share my notes.",q:"Why can't the woman attend the training?",o:["She will be on a business trip","She is not interested","She has no notes","It is cancelled"],c:0,e:"« I'll be on a business trip » = elle sera en déplacement professionnel."},
+  {t:'p3',kind:'listening',audio:"Woman: Has the shipment from the supplier arrived? Man: Not yet. They said it would come on Wednesday. Woman: Okay, let's check again then.",q:"When is the shipment expected?",o:["On Wednesday","On Monday","Today","Next month"],c:0,e:"« it would come on Wednesday » = la livraison arriverait mercredi."},
+
+  /* ---- PARTIE 4 : Exposés / annonces (écoute, 4 options) ---- */
+  {t:'p4',kind:'listening',audio:"Attention shoppers. The store will close in fifteen minutes. Please bring your items to the checkout. Thank you for shopping with us.",q:"What are listeners asked to do?",o:["Go to the checkout","Leave immediately","Call customer service","Park their cars"],c:0,e:"« bring your items to the checkout » = se rendre en caisse."},
+  {t:'p4',kind:'listening',audio:"Good morning. This is a reminder that the team meeting has been moved to Conference Room B at 10 a.m. Please bring your monthly reports.",q:"What should listeners bring?",o:["Their monthly reports","Their laptops","Lunch","Name tags"],c:0,e:"« bring your monthly reports » = apporter ses rapports mensuels."},
+  {t:'p4',kind:'listening',audio:"Thank you for calling Bright Dental. Our office is currently closed. Our hours are Monday to Friday, nine to five. To leave a message, press one.",q:"How can the caller leave a message?",o:["Press one","Call back tomorrow","Send an email","Visit the office"],c:0,e:"« To leave a message, press one » = pour laisser un message, appuyez sur 1."},
+  {t:'p4',kind:'listening',audio:"Welcome aboard flight 207 to Chicago. Please make sure your seatbelt is fastened and your tray table is up. We will be departing shortly.",q:"Where is this announcement most likely heard?",o:["On an airplane","In a restaurant","At a library","In a hotel lobby"],c:0,e:"« flight 207 », « seatbelt », « departing » → on est dans un avion."},
+
+  /* ---- PARTIE 5 : Phrases à compléter (lecture, 4 options) ---- */
+  {t:'p5',kind:'reading',q:"The new employees ______ to attend the safety training.",o:["require","requires","are required","requiring"],c:2,e:"Voix passive : « are required to » (sont tenus de). Sujet pluriel → « are »."},
+  {t:'p5',kind:'reading',q:"Please submit your application ______ Friday.",o:["in","by","at","of"],c:1,e:"« by + date » = au plus tard le… (date limite)."},
+  {t:'p5',kind:'reading',q:"The manager will review the proposal ______ it is finished.",o:["because","when","despite","during"],c:1,e:"« when » = quand (relation de temps logique ici)."},
+  {t:'p5',kind:'reading',q:"Our company has seen a significant ______ in sales this year.",o:["increase","increased","increasingly","increasing"],c:0,e:"Après « a significant », il faut un NOM : « increase »."},
+  {t:'p5',kind:'reading',q:"She is responsible ______ managing the budget.",o:["of","for","to","with"],c:1,e:"Expression figée : « responsible for » = responsable de."},
+  {t:'p5',kind:'reading',q:"The conference room is ______ than the others.",o:["large","larger","largest","more large"],c:1,e:"Comparatif d'un adjectif court : « larger » (+ than)."},
+  {t:'p5',kind:'reading',q:"All staff must ______ their ID badges at the entrance.",o:["show","shows","showing","shown"],c:0,e:"Après le modal « must », le verbe est à la base : « show »."},
+  {t:'p5',kind:'reading',q:"The report was written ______ the marketing team.",o:["by","from","to","at"],c:0,e:"Voix passive : le complément d'agent est introduit par « by »."},
+  {t:'p5',kind:'reading',q:"We need to find a ______ solution to this problem.",o:["practical","practically","practice","practicality"],c:0,e:"Avant le nom « solution », il faut un ADJECTIF : « practical »."},
+  {t:'p5',kind:'reading',q:"He has worked here ______ 2018.",o:["for","since","during","by"],c:1,e:"« since + point de départ » avec le present perfect (« has worked »)."},
+  {t:'p5',kind:'reading',q:"The customer complained ______ the slow service.",o:["about","of","to","for"],c:0,e:"« complain about something » = se plaindre de quelque chose."},
+  {t:'p5',kind:'reading',q:"Neither the manager ______ the assistant was available.",o:["or","nor","and","but"],c:1,e:"Corrélation « neither … nor » (ni … ni)."},
+  {t:'p5',kind:'reading',q:"If we ______ the deadline, we will lose the contract.",o:["miss","missed","will miss","missing"],c:0,e:"1er conditionnel : « If » + présent simple, puis « will » + base."},
+  {t:'p5',kind:'reading',q:"The instructions were very ______, so everyone understood them easily.",o:["confusing","clear","difficult","unclear"],c:1,e:"Logique : « so everyone understood » → les instructions étaient « clear » (claires)."},
+
+  /* ---- PARTIE 6 : Textes à compléter (lecture, 4 options) ---- */
+  {t:'p6',kind:'reading',passage:"Dear Mr. Lee,\nThank you for your order. Your items ______ within three business days. We appreciate your business.",q:"Complète le blanc.",o:["ship","shipped","will be shipped","shipping"],c:2,e:"Futur passif : « will be shipped » (vos articles seront expédiés)."},
+  {t:'p6',kind:'reading',passage:"We are pleased to announce that the office cafeteria ______ renovated last month and is now open to all staff.",q:"Complète le blanc.",o:["is","was","will be","being"],c:1,e:"« last month » = passé → passif passé « was renovated »."},
+  {t:'p6',kind:'reading',passage:"Please remember to save your work regularly. ______, the system will back up all files automatically every hour.",q:"Choisis le connecteur qui convient.",o:["However","In addition","Because","Although"],c:1,e:"« In addition » (de plus) ajoute une information allant dans le même sens."},
+  {t:'p6',kind:'reading',passage:"All visitors must sign in at the front desk. They will then ______ a visitor badge for the day.",q:"Complète le blanc.",o:["receive","receives","received","receiving"],c:0,e:"Après « will », le verbe est à la base : « receive »."},
+
+  /* ---- PARTIE 7 : Compréhension écrite (lecture, 4 options) ---- */
+  {t:'p7',kind:'reading',passage:"NOTICE — The Riverside Library will be closed on Saturday, May 10th, for system maintenance. All books due that day may be returned the following Monday with no late fee. Online services will remain available.",q:"Why will the library be closed?",o:["For system maintenance","For a public holiday","For a book sale","For cleaning"],c:0,e:"Le texte dit « closed … for system maintenance »."},
+  {t:'p7',kind:'reading',passage:"NOTICE — The Riverside Library will be closed on Saturday, May 10th, for system maintenance. All books due that day may be returned the following Monday with no late fee. Online services will remain available.",q:"What happens to books due on May 10th?",o:["They can be returned Monday with no fee","They must be returned online","They are automatically renewed","A late fee will be charged"],c:0,e:"« may be returned the following Monday with no late fee »."},
+  {t:'p7',kind:'reading',passage:"NOTICE — The Riverside Library will be closed on Saturday, May 10th, for system maintenance. All books due that day may be returned the following Monday with no late fee. Online services will remain available.",q:"What remains available during the closure?",o:["Online services","The café","The parking lot","Printing"],c:0,e:"« Online services will remain available »."},
+  {t:'p7',kind:'reading',passage:"From: [email protected]\nTo: All Staff\nSubject: Parking\nStarting next week, the north parking lot will be reserved for visitors. Employees should use the south lot. For questions, contact the facilities team.",q:"What is the email mainly about?",o:["A change in parking rules","A new employee","A salary update","A holiday schedule"],c:0,e:"Le sujet est « Parking » et le message décrit un changement de règles."},
+  {t:'p7',kind:'reading',passage:"From: [email protected]\nTo: All Staff\nSubject: Parking\nStarting next week, the north parking lot will be reserved for visitors. Employees should use the south lot. For questions, contact the facilities team.",q:"Where should employees park?",o:["In the south lot","In the north lot","On the street","In the garage"],c:0,e:"« Employees should use the south lot »."},
+  {t:'p7',kind:'reading',passage:"From: [email protected]\nTo: All Staff\nSubject: Parking\nStarting next week, the north parking lot will be reserved for visitors. Employees should use the south lot. For questions, contact the facilities team.",q:"Who should be contacted with questions?",o:["The facilities team","The CEO","Human resources","Security"],c:0,e:"« For questions, contact the facilities team »."},
+
+  /* ---- Compléments : grammaire & vocabulaire (Partie 5) ---- */
+  {t:'p5',kind:'reading',q:"The meeting has been ______ until next week.",o:["postponed","postpone","postponing","postpones"],c:0,e:"« has been + participe passé » (passif) : « postponed »."},
+  {t:'p5',kind:'reading',q:"Employees are encouraged to work ______.",o:["efficiently","efficient","efficiency","efficacy"],c:0,e:"Après le verbe « work », il faut un ADVERBE : « efficiently »."},
+  {t:'p5',kind:'reading',q:"______ the rain, the ceremony took place outdoors.",o:["Despite","Although","Because","During"],c:0,e:"« Despite + nom » = malgré (« although » serait suivi d'une proposition)."},
+  {t:'p5',kind:'reading',q:"The new software is ______ to use than the old one.",o:["easier","easy","easiest","more easy"],c:0,e:"Comparatif d'un adjectif court : « easier » (+ than)."},
+  {t:'p5',kind:'reading',q:"Sales increased ______ 20% this quarter.",o:["by","of","in","at"],c:0,e:"On augmente « by » un pourcentage : « increased by 20% »."},
+  {t:'p5',kind:'reading',q:"The technician will ______ the equipment tomorrow.",o:["inspect","inspects","inspecting","inspected"],c:0,e:"Après « will », le verbe est à la base : « inspect »."},
+  {t:'p5',kind:'reading',q:"Our products are known ______ their quality.",o:["for","by","with","of"],c:0,e:"Expression figée : « known for » = connu pour."},
+  {t:'p5',kind:'reading',q:"She speaks English ______ than her colleague.",o:["more fluently","fluent","fluently","most fluently"],c:0,e:"Comparatif d'un adverbe long : « more fluently … than »."},
+  {t:'p5',kind:'reading',q:"The manager asked the team ______ the deadline.",o:["to meet","meet","meeting","met"],c:0,e:"« ask somebody TO do something » : « to meet »."},
+  {t:'p5',kind:'reading',q:"______ you have any questions, please contact us.",o:["If","Despite","Because","During"],c:0,e:"« If you have any questions » = formule conditionnelle standard."},
+
+  /* ---- Compléments : Partie 2 (écoute, 3 options) ---- */
+  {t:'p2',kind:'listening',audio:"Who's leading the workshop?",q:"Choisis la meilleure réponse à la question entendue.",o:["Mr. Alvarez is.","In room 3.","Next Tuesday."],c:0,e:"« Who » attend une personne : « Mr. Alvarez »."},
+  {t:'p2',kind:'listening',audio:"How long is the flight?",q:"Choisis la meilleure réponse à la question entendue.",o:["About two hours.","To Tokyo.","Yes, it is."],c:0,e:"« How long » attend une durée : « about two hours »."},
+  {t:'p2',kind:'listening',audio:"Where can I find the contract?",q:"Choisis la meilleure réponse à la question entendue.",o:["It's in the top drawer.","Last week.","By the manager."],c:0,e:"« Where » attend un lieu : « in the top drawer »."},
+  {t:'p2',kind:'listening',audio:"Should we start the meeting now?",q:"Choisis la meilleure réponse à la question entendue.",o:["Let's wait for John.","In the meeting room.","It was long."],c:0,e:"Réponse logique à une proposition : « Let's wait for John. »"},
+
+  /* ---- Compléments : Partie 7 (lecture, 4 options) ---- */
+  {t:'p7',kind:'reading',passage:"GRAND CAFÉ — Now hiring part-time servers. Evenings and weekends. No experience required; training is provided. Apply in person with a resume.",q:"What position is being advertised?",o:["Part-time server","Restaurant manager","Head chef","Cashier"],c:0,e:"« Now hiring part-time servers »."},
+  {t:'p7',kind:'reading',passage:"GRAND CAFÉ — Now hiring part-time servers. Evenings and weekends. No experience required; training is provided. Apply in person with a resume.",q:"What is required to apply?",o:["Apply in person with a resume","A college degree","Three years of experience","An online form"],c:0,e:"« Apply in person with a resume » ; « No experience required »."}
+];
+
+/* ============================================================ RESOURCES ============================================================ */
+const VIDEOS=[
+  {icon:'🏅',color:'var(--accent)',title:"TOEIC France (ETS officiel)",desc:"La chaîne de l'organisme officiel : conseils, présentation du test et nouveautés.",url:"https://www.youtube.com/channel/UCnOmhhUB47OVJqelZoxjuIw",tag:"Officiel"},
+  {icon:'🎧',color:'var(--violet)',title:"Entraînement TOEIC — Listening Test",desc:"Un test de compréhension orale complet en français, proche du vrai examen.",url:"https://www.youtube.com/watch?v=q4PjYnW_Ad4",tag:"YouTube"},
+  {icon:'▶',color:'var(--red)',title:"TOEIC Listening Practice Test (2026)",desc:"Test d'écoute complet et récent, avec les corrigés à la fin.",url:"https://www.youtube.com/watch?v=M_P2JpriyyI",tag:"Test complet"},
+  {icon:'📘',color:'var(--green)',title:"ISpeakSpokeSpoken — TOEIC",desc:"Guide clair du TOEIC en français, avec une méthode centrée sur l'oral.",url:"https://www.ispeakspokespoken.com/toeic-listening-reading/",tag:"Guide"},
+  {icon:'📊',color:'var(--accent)',title:"Prepstr — Guides &amp; vocabulaire",desc:"Stratégies partie par partie, grille de scores et 500 mots essentiels.",url:"https://www.getprepstr.com/toeic",tag:"Stratégie"},
+  {icon:'🎯',color:'var(--violet)',title:"digiSchool — Entraînement Listening",desc:"Exercices de compréhension orale conformes à l'examen officiel.",url:"https://www.digischool.fr/toeic/tests/listening",tag:"Exercices"}
+];
+const VOCAB=[
+  ['schedule','planning, emploi du temps','Bureau'],
+  ['invoice','facture','Finance'],
+  ['deadline','échéance, date limite','Bureau'],
+  ['supplier','fournisseur','Logistique'],
+  ['shipment','expédition, livraison','Logistique'],
+  ['warehouse','entrepôt','Logistique'],
+  ['refund','remboursement','Vente'],
+  ['receipt','reçu, ticket de caisse','Vente'],
+  ['staff','personnel, effectif','RH'],
+  ['applicant','candidat','RH'],
+  ['maintenance','entretien, maintenance','Technique'],
+  ['complaint','réclamation, plainte','Service client'],
+  ['estimate','devis, estimation','Finance'],
+  ['venue','lieu (d\'un événement)','Événementiel']
+];
+const GRAMMAR=[
+  ['Word families',"Le suffixe indique la nature du mot : -tion/-ment = nom, -ly = adverbe, -ous/-al = adjectif.","care → careful (adj) → carefully (adv)"],
+  ['Prépositions de temps',"in (mois / année), on (jour / date), at (heure précise).","in May · on Monday · at 5 p.m."],
+  ['Present perfect',"for + durée, since + point de départ.","for 3 years · since 2020"],
+  ['Voix passive',"be + participe passé (+ by pour l'auteur).","The report was sent by Anna."],
+  ['1er conditionnel',"If + présent simple, … will + base verbale.","If it rains, we will stay inside."],
+  ['Comparatif',"adjectif court + -er + than ; adjectif long → more … than.","bigger than · more useful than"],
+  ['Connecteurs',"however = cependant, therefore = donc, although = bien que, in addition = de plus.","—"]
+];
+const TIPS=[
+  ['P2',"Méfie-toi des réponses qui répètent un mot entendu dans la question : c'est souvent un piège."],
+  ['P3',"Lis les 3 questions AVANT d'écouter la conversation : tu sauras quoi repérer."],
+  ['P5',"Identifie d'abord la nature du mot attendu (nom, verbe, adjectif, adverbe) grâce à la phrase."],
+  ['P7',"Repère le type de document (e-mail, annonce…) et lis les questions avant de chercher dans le texte."],
+  ['⏱',"Reading : vise 10 min Partie 5, 10 min Partie 6, 55 min Partie 7. Ne reste jamais bloqué."]
+];
+const FACTS=[
+  ['200',"questions au total : 100 d'écoute (45 min) + 100 de lecture (75 min)."],
+  ['990',"score maximum (de 10 à 990). Moyenne en France : environ 730."],
+  ['B2',"correspond à un score d'environ 785 ; 945+ ≈ C1."],
+  ['0',"point négatif : réponds à TOUTES les questions, même au hasard."],
+  ['2 ans',"durée de validité officielle du score TOEIC."]
+];
+
+/* ============================================================ STORAGE ============================================================ */
+function loadStore(){
+  try{const raw=localStorage.getItem(STORE_KEY);if(raw)return JSON.parse(raw);}catch(e){}
+  return {partsDone:{},qcm:{byPart:{}},curDay:1,dayDone:{},jourJ:{},streak:{count:0,last:null},history:[]};
+}
+function saveStore(){try{localStorage.setItem(STORE_KEY,JSON.stringify(store));}catch(e){}}
+let store=loadStore();
+// normalisation (anciennes sauvegardes)
+if(!store.curDay)store.curDay=1;
+if(!store.dayDone)store.dayDone={};
+if(!store.jourJ)store.jourJ={};
+
+function todayStr(){return new Date().toISOString().slice(0,10);}
+function updateStreak(){
+  const t=todayStr();
+  if(store.streak.last===t)return;
+  const y=new Date(Date.now()-86400000).toISOString().slice(0,10);
+  store.streak.count=(store.streak.last===y)?(store.streak.count+1):1;
+  store.streak.last=t;saveStore();
+}
+function recordQcm(part,correct){
+  store.qcm.byPart[part]=store.qcm.byPart[part]||{a:0,c:0};
+  store.qcm.byPart[part].a++;if(correct)store.qcm.byPart[part].c++;saveStore();
+}
+function addHistory(type,detail,value){
+  store.history.unshift({d:Date.now(),type,detail,value});
+  store.history=store.history.slice(0,40);saveStore();
+}
+function totalQcm(){let a=0,c=0;for(const k in store.qcm.byPart){a+=store.qcm.byPart[k].a;c+=store.qcm.byPart[k].c;}return{a,c};}
+function partsDoneCount(){return PARTS.filter(p=>store.partsDone[p.id]).length;}
+function cecrl(){
+  const {a,c}=totalQcm(); if(a<5)return {lvl:'—',sc:''};
+  const acc=c/a*100;
+  if(acc>=85)return {lvl:'C1',sc:'≈ 945+'};
+  if(acc>=70)return {lvl:'B2',sc:'≈ 785+'};
+  if(acc>=55)return {lvl:'B1',sc:'≈ 550+'};
+  if(acc>=35)return {lvl:'A2',sc:'≈ 225+'};
+  return {lvl:'A1',sc:'< 225'};
 }
 
-function saveState(s) { localStorage.setItem('toeic_state', JSON.stringify(s)); }
-let STATE = loadState();
-
-// Mark days 1 and 7&8 as done (from Notion data)
-if (!STATE.doneDays[1]) STATE.doneDays[1] = { correct: 1, total: 1, exam: 505 };
-if (!STATE.doneDays[7]) STATE.doneDays[7] = true;
-if (!STATE.doneDays[8]) STATE.doneDays[8] = true;
-saveState(STATE);
-
-// ─── SESSIONS PROGRAM ────────────────────────────────
-const SESSIONS = {
-  1:  { title: 'Introduction TOEIC', sub: 'Format de l\'examen + Duolingo', steps: ['duolingo','intro_format','intro_format'] },
-  2:  { title: 'Temps du présent',   sub: 'Grammaire + Duolingo', steps: ['duolingo','grammar_present','grammar_present'] },
-  3:  { title: 'Vocabulaire Finance', sub: '50 mots Finance + Duolingo', steps: ['duolingo','vocab_finance','vocab_finance','vocab_finance'] },
-  4:  { title: 'Révision semaine 1', sub: 'Mix + Duolingo', steps: ['duolingo','grammar_mix','vocab_mix','grammar_mix'] },
-  5:  { title: 'Le passé',           sub: 'Grammaire passé + Duolingo', steps: ['duolingo','grammar_past','grammar_past'] },
-  6:  { title: 'Listening Part 1',   sub: 'Photos + Duolingo', steps: ['duolingo','listening_p1','listening_p1','listening_p1'] },
-  7:  { title: 'Vocabulaire RH',     sub: 'Ressources Humaines + Duolingo', steps: ['duolingo','vocab_rh','vocab_rh','vocab_rh'] },
-  8:  { title: 'Futur & Conditionnel', sub: 'Grammaire + Duolingo', steps: ['duolingo','grammar_future','grammar_future'] },
-  9:  { title: 'Listening Part 2',   sub: 'Questions-Réponses + Duolingo', steps: ['duolingo','listening_p2','listening_p2','listening_p2'] },
-  10: { title: 'Révision semaine 2', sub: 'Mix complet + Duolingo', steps: ['duolingo','grammar_mix','vocab_mix','listening_p1','grammar_mix'] },
-  11: { title: 'Voix passive',       sub: 'Grammaire + Duolingo', steps: ['duolingo','grammar_passive','grammar_passive'] },
-  12: { title: 'Vocabulaire Marketing', sub: 'Marketing & Ventes + Duolingo', steps: ['duolingo','vocab_marketing','vocab_marketing','vocab_marketing'] },
-  13: { title: 'Reading Part 5',     sub: 'Grammaire phrases + Duolingo', steps: ['duolingo','reading_p5','reading_p5','reading_p5'] },
-  14: { title: 'Vocabulaire Voyages', sub: 'Voyages d\'affaires + Duolingo', steps: ['duolingo','vocab_travel','vocab_travel','vocab_travel'] },
-  15: { title: 'Révision semaine 3', sub: 'Mix + Duolingo', steps: ['duolingo','grammar_mix','vocab_mix','listening_p2','reading_p5'] },
-  16: { title: 'Modaux',             sub: 'Grammaire modaux + Duolingo', steps: ['duolingo','grammar_modals','grammar_modals','grammar_modals'] },
-  17: { title: 'Vocabulaire Bureau', sub: 'Bureautique + Duolingo', steps: ['duolingo','vocab_office','vocab_office','vocab_office'] },
-  18: { title: 'Listening Part 3',   sub: 'Conversations + Duolingo', steps: ['duolingo','listening_p3','listening_p3','listening_p3'] },
-  19: { title: 'Reading Part 6',     sub: 'Textes à trous + Duolingo', steps: ['duolingo','reading_p6','reading_p6'] },
-  20: { title: 'Révision semaine 4 + Exam blanc', sub: 'Bilan Phase 1 + Duolingo', steps: ['duolingo','grammar_mix','vocab_mix','listening_p3','reading_p6'] },
-};
-
-const PROMPTS = {
-  grammar_present:  'grammaire TOEIC sur les temps du présent (simple, continu, perfect)',
-  grammar_past:     'grammaire TOEIC sur les temps du passé (simple, continu, perfect)',
-  grammar_future:   'grammaire TOEIC sur le futur et le conditionnel',
-  grammar_mix:      'grammaire TOEIC variée (temps, voix passive, conditionnels, modaux)',
-  grammar_passive:  'grammaire TOEIC sur la voix passive',
-  grammar_modals:   'grammaire TOEIC sur les modaux (can, could, should, must, would, may)',
-  vocab_finance:    'vocabulaire business TOEIC thème Finance & Comptabilité',
-  vocab_rh:         'vocabulaire business TOEIC thème Ressources Humaines',
-  vocab_marketing:  'vocabulaire business TOEIC thème Marketing & Ventes',
-  vocab_travel:     'vocabulaire business TOEIC thème Voyages d\'affaires',
-  vocab_office:     'vocabulaire business TOEIC thème Bureautique & Réunions',
-  vocab_mix:        'vocabulaire business TOEIC varié (finance, RH, voyages, marketing)',
-  listening_p1:     'Listening TOEIC Part 1 — description de photo (présente une scène de bureau ou de travail, propose 4 descriptions A/B/C/D dont une correcte)',
-  listening_p2:     'Listening TOEIC Part 2 — question-réponse courte (une question de type W-question ou Yes/No + 3 réponses A/B/C dont une logique)',
-  listening_p3:     'Listening TOEIC Part 3 — mini-conversation (résume une courte conversation entre 2 collègues, pose une question de compréhension avec 4 choix)',
-  reading_p5:       'Reading TOEIC Part 5 — phrase à compléter (une phrase avec un trou, 4 choix grammaticaux ou lexicaux)',
-  reading_p6:       'Reading TOEIC Part 6 — texte à trous (2-3 phrases d\'un email professionnel avec 1 trou, 4 choix)',
-  intro_format:     'connaissance du format TOEIC (parties, timing, types de questions, stratégies)',
-};
-
-const TAG_INFO = {
-  grammar_present: ['tag-grammar','Grammaire'],
-  grammar_past:    ['tag-grammar','Grammaire'],
-  grammar_future:  ['tag-grammar','Grammaire'],
-  grammar_mix:     ['tag-grammar','Grammaire'],
-  grammar_passive: ['tag-grammar','Grammaire'],
-  grammar_modals:  ['tag-grammar','Grammaire'],
-  vocab_finance:   ['tag-vocab','Vocabulaire'],
-  vocab_rh:        ['tag-vocab','Vocabulaire'],
-  vocab_marketing: ['tag-vocab','Vocabulaire'],
-  vocab_travel:    ['tag-vocab','Vocabulaire'],
-  vocab_office:    ['tag-vocab','Vocabulaire'],
-  vocab_mix:       ['tag-vocab','Vocabulaire'],
-  listening_p1:    ['tag-listening','Listening P1'],
-  listening_p2:    ['tag-listening','Listening P2'],
-  listening_p3:    ['tag-listening','Listening P3'],
-  reading_p5:      ['tag-reading','Reading P5'],
-  reading_p6:      ['tag-reading','Reading P6'],
-  intro_format:    ['tag-grammar','Format TOEIC'],
-};
-
-// ─── SESSION STATE ────────────────────────────────────
-let sessStepIdx = 0, sessCorrect = 0, sessTotal = 0, sessAnswered = false, sessCurrentCorrect = null;
-let sessSteps = [];
-
-// ─── NAVIGATION ──────────────────────────────────────
-function showView(id) {
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('view-' + id).classList.add('active');
-  const btns = document.querySelectorAll('.nav-item');
-  btns.forEach(b => { if (b.getAttribute('onclick').includes(id)) b.classList.add('active'); });
-
-  if (id === 'dashboard') renderDashboard();
-  if (id === 'session') initSession();
-  if (id === 'tracker') renderTracker();
-}
-
-// ─── DASHBOARD ───────────────────────────────────────
-function renderDashboard() {
-  const doneDays = Object.keys(STATE.doneDays).filter(k => STATE.doneDays[k]).length;
-  const pct = Math.round(DAY_NUM / 70 * 100);
-  const scores = STATE.scores || [];
-  const avg = scores.length > 0 ? Math.round(scores.reduce((a,b) => a + b.pct, 0) / scores.length) + '%' : '—';
-
-  document.getElementById('stat-day').textContent = DAY_NUM;
-  document.getElementById('stat-done').textContent = doneDays;
-  document.getElementById('stat-avg').textContent = avg;
-  document.getElementById('prog-pct').textContent = pct + '%';
-  document.getElementById('prog-fill').style.width = pct + '%';
-
-  // Streak
-  let streak = 0;
-  for (let i = DAY_NUM; i >= 1; i--) {
-    if (STATE.doneDays[i]) streak++; else break;
+/* ============================================================ TEXT-TO-SPEECH ============================================================ */
+const TTS={voice:null,rate:0.95,slow:false};
+function ttsSupported(){return typeof window.speechSynthesis!=='undefined'&&typeof SpeechSynthesisUtterance!=='undefined';}
+function loadVoices(){
+  if(!ttsSupported())return;
+  const vs=speechSynthesis.getVoices();
+  if(vs&&vs.length){
+    TTS.voice=vs.find(v=>/en[-_]US/i.test(v.lang))||vs.find(v=>/en[-_]GB/i.test(v.lang))||vs.find(v=>/^en/i.test(v.lang))||null;
   }
-  document.getElementById('streak-count').textContent = streak;
-
-  // Phase chips
-  const p1 = document.getElementById('phase1-chip');
-  const p2 = document.getElementById('phase2-chip');
-  const p3 = document.getElementById('phase3-chip');
-  [p1,p2,p3].forEach(c => { c.classList.remove('active','done'); });
-  if (DAY_NUM <= 21) p1.classList.add('active');
-  else if (DAY_NUM <= 21 + 28) { p1.classList.add('done'); p2.classList.add('active'); }
-  else { p1.classList.add('done'); p2.classList.add('done'); p3.classList.add('active'); }
-
-  // History
-  const hist = document.getElementById('dash-history');
-  if (scores.length === 0) {
-    hist.innerHTML = '<div style="color:var(--muted);font-size:13px;font-family:var(--font-mono);">Aucun score enregistré.</div>';
-  } else {
-    hist.innerHTML = scores.slice(-5).reverse().map(s => `
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:13px;">
-        <span style="color:var(--muted);font-family:var(--font-mono);">Jour ${s.day}</span>
-        <span style="color:var(--muted2);">${s.title}</span>
-        <span style="font-family:var(--font-mono);color:${s.pct>=80?'var(--green)':s.pct>=50?'var(--amber)':'var(--red)'};">${s.pct}%</span>
-      </div>`).join('');
-  }
 }
-
-// ─── SESSION ─────────────────────────────────────────
-function initSession() {
-  sessStepIdx = 0; sessCorrect = 0; sessTotal = 0; sessAnswered = false;
-  const sess = SESSIONS[((DAY_NUM - 1) % Object.keys(SESSIONS).length) + 1] || SESSIONS[1];
-  sessSteps = sess.steps;
-
-  document.getElementById('sess-eyebrow').textContent = `Phase 1 · Jour ${DAY_NUM}`;
-  document.getElementById('sess-title').textContent = sess.title;
-  document.getElementById('sess-sub').textContent = sess.sub;
-  document.getElementById('sess-day-label').textContent = `Jour ${DAY_NUM} / 70`;
-  updateSessUI();
-  loadSessStep();
+if(ttsSupported()){loadVoices();speechSynthesis.onvoiceschanged=loadVoices;}
+function speak(text){
+  if(!ttsSupported())return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang='en-US';u.rate=TTS.slow?0.7:0.95;
+  if(TTS.voice)u.voice=TTS.voice;
+  speechSynthesis.speak(u);
 }
+function stopSpeak(){if(ttsSupported())speechSynthesis.cancel();}
 
-function updateSessUI() {
-  const pct = sessSteps.length > 0 ? Math.round(sessStepIdx / sessSteps.length * 100) : 0;
-  document.getElementById('sess-bar').style.width = pct + '%';
-  document.getElementById('sess-prog').textContent = `${sessStepIdx} / ${sessSteps.length}`;
-  document.getElementById('sm-ok').textContent = sessCorrect;
-  document.getElementById('sm-ex').textContent = sessTotal;
-  document.getElementById('sm-pct').textContent = sessTotal > 0 ? Math.round(sessCorrect / sessTotal * 100) + '%' : '—';
+/* ============================================================ PROGRAMME JOUR PAR JOUR (42 jours / 6 semaines) ============================================================ */
+function ytSearch(q){return 'https://www.youtube.com/results?search_query='+encodeURIComponent('TOEIC '+q);}
+function vid(label,q){return {type:'video',label:label,url:ytSearch(q)};}
+function lnk(label,url){return {type:'link',label:label,url:url};}
+const PROGRAM=[
+  // ---- Semaine 1 : découverte + Partie 2 + bases ----
+  {d:1,wk:1,part:'p2',title:"Découverte du TOEIC",learn:"Comprendre le format (200 questions : 100 écoute + 100 lecture), le score (10–990) et la stratégie générale : répondre à TOUT, gérer son temps.",res:[vid("Comprendre le TOEIC","TOEIC format explication français"),lnk("ETS — à propos du TOEIC","https://www.etsglobal.org/fr/fr")]},
+  {d:2,wk:1,part:'p2',title:"Partie 2 — les mots interrogatifs",learn:"Repérer Who / What / Where / When / Why / How dès le début de la question : c'est ce qui détermine la bonne réponse.",res:[vid("Partie 2 stratégie","Part 2 strategy questions réponses"),lnk("Astuces Partie 2","https://www.ispeakspokespoken.com/toeic-listening-reading/")]},
+  {d:3,wk:1,part:'p2',title:"Partie 2 — réponses indirectes & pièges",learn:"Les bonnes réponses sont souvent indirectes (« I'm not sure »). Méfie-toi des réponses qui répètent un mot entendu.",res:[vid("Partie 2 pièges","Part 2 pièges réponses indirectes"),vid("Partie 2 entraînement","Part 2 practice with answers")]},
+  {d:4,wk:1,part:'p1',title:"Partie 1 — les photographies",learn:"Tu entends 4 phrases, tu choisis celle qui décrit la photo. Concentre-toi sur les verbes en -ing et les lieux.",res:[vid("Partie 1 méthode","Part 1 photographs strategy français"),lnk("Vocabulaire d'actions","https://www.getprepstr.com/toeic")]},
+  {d:5,wk:1,part:'p1',title:"Vocabulaire Bureau + pièges Partie 1",learn:"Apprends le vocabulaire du bureau et repère les pièges sonores (mots qui se ressemblent).",res:[vid("Partie 1 pièges sonores","Part 1 sound traps practice"),lnk("Vocabulaire bureau","https://www.getprepstr.com/toeic")]},
+  {d:6,wk:1,part:'p5',title:"Grammaire — natures de mots",learn:"Reconnaître nom / verbe / adjectif / adverbe grâce aux suffixes (-tion, -ly, -ous). Base indispensable de la Partie 5.",res:[vid("Word families","Part 5 word families nature des mots"),lnk("Word families","https://www.getprepstr.com/toeic")]},
+  {d:7,wk:1,part:'p2',mix:true,title:"Révision Semaine 1",learn:"Consolider : Parties 1 et 2, vocabulaire du bureau, natures de mots. Fais une session mixte pour faire le point.",res:[vid("Révision écoute","TOEIC listening practice débutant"),lnk("Guide TOEIC","https://www.ispeakspokespoken.com/toeic-listening-reading/")]},
+  // ---- Semaine 2 : Partie 5 (grammaire) ----
+  {d:8,wk:2,part:'p5',title:"Partie 5 — temps verbaux",learn:"Présent simple, passé, present perfect, futur : choisir le bon temps selon les indices de la phrase.",res:[vid("Temps verbaux anglais","Part 5 tenses temps verbaux"),lnk("Present perfect","https://www.getprepstr.com/toeic")]},
+  {d:9,wk:2,part:'p5',title:"Partie 5 — prépositions",learn:"Prépositions de temps (in / on / at), de lieu, et expressions figées (responsible for, by Friday).",res:[vid("Prépositions TOEIC","Part 5 prepositions in on at"),lnk("Prépositions de temps","https://www.getprepstr.com/toeic")]},
+  {d:10,wk:2,part:'p5',title:"Partie 5 — accord & voix passive",learn:"Accord sujet-verbe et voix passive (be + participe passé). Repérer qui fait l'action.",res:[vid("Voix passive anglais","Part 5 passive voice voix passive"),lnk("Voix passive","https://www.getprepstr.com/toeic")]},
+  {d:11,wk:2,part:'p5',title:"Partie 5 — comparatifs",learn:"Comparatifs et superlatifs : adjectif court + -er + than ; adjectif long → more … than.",res:[vid("Comparatifs anglais","Part 5 comparatives comparatif"),lnk("Comparatif","https://www.getprepstr.com/toeic")]},
+  {d:12,wk:2,part:'p5',title:"Partie 5 — pronoms & quantifieurs",learn:"Pronoms relatifs (who/which/that) et quantifieurs (much/many/few). Bien lire le contexte.",res:[vid("Pronoms relatifs","Part 5 relative pronouns quantifiers"),lnk("Pronoms","https://www.getprepstr.com/toeic")]},
+  {d:13,wk:2,part:'p5',title:"Vocabulaire Finance + Partie 5",learn:"Vocabulaire de la finance (invoice, estimate, refund) et collocations fréquentes au TOEIC.",res:[vid("Vocabulaire business","TOEIC business vocabulary finance"),lnk("500 mots TOEIC","https://www.getprepstr.com/toeic")]},
+  {d:14,wk:2,part:'p5',mix:true,title:"Révision Semaine 2",learn:"Consolider toute la grammaire de Partie 5. Vise la rapidité (≈ 20 s par phrase). Session mixte pour vérifier.",res:[vid("Partie 5 entraînement","Part 5 grammar practice"),lnk("Stratégie Reading","https://www.getprepstr.com/toeic")]},
+  // ---- Semaine 3 : Partie 3 (conversations) ----
+  {d:15,wk:3,part:'p3',title:"Partie 3 — lire les questions d'abord",learn:"Lis les 3 questions AVANT d'écouter : tu sais quoi repérer (qui, quoi, où, quand).",res:[vid("Partie 3 méthode","Part 3 conversations strategy français"),lnk("Astuces Partie 3","https://www.ispeakspokespoken.com/toeic-listening-reading/")]},
+  {d:16,wk:3,part:'p3',title:"Partie 3 — qui dit quoi",learn:"Suivre 2-3 locuteurs et repérer qui fait quoi. Attention aux changements de voix.",res:[vid("Partie 3 locuteurs","Part 3 who says what speakers"),vid("Partie 3 entraînement","Part 3 practice with answers")]},
+  {d:17,wk:3,part:'p3',title:"Partie 3 — détails (chiffres, dates)",learn:"Repérer les détails précis : heures, dates, lieux, montants. Ils tombent souvent en question.",res:[vid("Partie 3 détails","Part 3 details numbers dates"),lnk("Compréhension orale","https://www.digischool.fr/toeic/tests/listening")]},
+  {d:18,wk:3,part:'p3',title:"Partie 3 — intentions & sous-entendus",learn:"Comprendre l'implicite : pourquoi quelqu'un dit quelque chose, ce qu'il va probablement faire.",res:[vid("Partie 3 implicite","Part 3 implication intention"),lnk("Compréhension orale","https://www.digischool.fr/toeic/tests/listening")]},
+  {d:19,wk:3,part:'p3',title:"Vocabulaire Logistique + écoute",learn:"Vocabulaire logistique (shipment, supplier, warehouse) très présent dans les conversations pro.",res:[vid("Vocabulaire logistique","TOEIC logistics vocabulary"),lnk("Vocabulaire","https://www.getprepstr.com/toeic")]},
+  {d:20,wk:3,part:'p2',title:"Écoute mélangée (P1+P2+P3)",learn:"Enchaîne des questions des trois premières parties pour t'habituer au rythme de l'écoute.",res:[vid("Listening mix","TOEIC listening practice all parts"),lnk("Tests d'écoute","https://www.digischool.fr/toeic/tests/listening")]},
+  {d:21,wk:3,part:'p3',mix:true,title:"Révision Semaine 3",learn:"Consolider l'écoute (Parties 1 à 3) + vocabulaire logistique. Session mixte pour faire le point.",res:[vid("Révision écoute","TOEIC listening review"),lnk("Guide TOEIC","https://www.ispeakspokespoken.com/toeic-listening-reading/")]},
+  // ---- Semaine 4 : Partie 4 + Partie 6 ----
+  {d:22,wk:4,part:'p4',title:"Partie 4 — annonces & messages",learn:"Monologues : annonces, messages vocaux, présentations. Repère le type de document dès les premières phrases.",res:[vid("Partie 4 méthode","Part 4 talks announcements strategy"),lnk("Astuces Partie 4","https://www.ispeakspokespoken.com/toeic-listening-reading/")]},
+  {d:23,wk:4,part:'p4',title:"Partie 4 — idée principale vs détail",learn:"Distinguer l'idée générale (de quoi ça parle) des détails précis demandés en question.",res:[vid("Partie 4 idée principale","Part 4 main idea detail"),vid("Partie 4 entraînement","Part 4 practice with answers")]},
+  {d:24,wk:4,part:'p4',title:"Partie 4 — repérer le contexte",learn:"Identifier le lieu, le locuteur et l'audience (qui parle, à qui, où) pour mieux répondre.",res:[vid("Partie 4 contexte","Part 4 speaker context location"),lnk("Compréhension orale","https://www.digischool.fr/toeic/tests/listening")]},
+  {d:25,wk:4,part:'p6',title:"Partie 6 — textes à compléter",learn:"Petits textes (e-mails, notes) avec des blancs : mots, formes verbales, et surtout connecteurs.",res:[vid("Partie 6 méthode","Part 6 text completion strategy"),lnk("Connecteurs logiques","https://www.getprepstr.com/toeic")]},
+  {d:26,wk:4,part:'p6',title:"Partie 6 — formes verbales & cohérence",learn:"Choisir la forme verbale et la phrase qui s'insère le mieux : lire AVANT et APRÈS le blanc.",res:[vid("Partie 6 cohérence","Part 6 verb forms coherence sentence"),lnk("Connecteurs","https://www.getprepstr.com/toeic")]},
+  {d:27,wk:4,part:'p6',title:"Vocabulaire RH + Partie 6",learn:"Vocabulaire RH (staff, applicant, maintenance) fréquent dans les e-mails professionnels.",res:[vid("Vocabulaire RH","TOEIC HR vocabulary staff applicant"),lnk("Vocabulaire","https://www.getprepstr.com/toeic")]},
+  {d:28,wk:4,part:'p6',mix:true,title:"Révision Semaine 4",learn:"Consolider Partie 4 (écoute) et Partie 6 (lecture). Session mixte pour vérifier ta progression.",res:[vid("Révision","TOEIC review practice"),lnk("Guide TOEIC","https://www.ispeakspokespoken.com/toeic-listening-reading/")]},
+  // ---- Semaine 5 : Partie 7 + vitesse ----
+  {d:29,wk:5,part:'p7',title:"Partie 7 — types de documents",learn:"Reconnaître e-mail, annonce, article, formulaire : chaque type a ses questions typiques.",res:[vid("Partie 7 méthode","Part 7 reading comprehension strategy français"),lnk("Astuces Partie 7","https://www.ispeakspokespoken.com/toeic-listening-reading/")]},
+  {d:30,wk:5,part:'p7',title:"Partie 7 — idée principale",learn:"Trouver l'objet d'un document (« What is the purpose…? ») : souvent dans la 1ʳᵉ ligne ou le titre.",res:[vid("Partie 7 idée principale","Part 7 main idea purpose"),lnk("Compréhension écrite","https://www.getprepstr.com/toeic")]},
+  {d:31,wk:5,part:'p7',title:"Partie 7 — détails & inférence",learn:"Questions de détail (chercher l'info précise) et d'inférence (déduire ce qui n'est pas dit).",res:[vid("Partie 7 inférence","Part 7 detail inference questions"),vid("Partie 7 entraînement","Part 7 practice with answers")]},
+  {d:32,wk:5,part:'p7',title:"Partie 7 — textes multiples",learn:"Documents doubles/triples : croiser les informations entre 2 ou 3 textes pour répondre.",res:[vid("Partie 7 textes multiples","Part 7 multiple passages double"),lnk("Compréhension écrite","https://www.getprepstr.com/toeic")]},
+  {d:33,wk:5,part:'p7',title:"Partie 7 — gestion du temps",learn:"54 questions, ne reste jamais bloqué : marque une réponse et avance. Vise ~55 min sur la Partie 7.",res:[vid("Reading gestion du temps","TOEIC reading time management"),lnk("Stratégie & barème","https://www.getprepstr.com/toeic")]},
+  {d:34,wk:5,part:'p7',title:"Vocabulaire Service client + Partie 7",learn:"Vocabulaire du service client (complaint, refund, receipt) fréquent dans les textes de Partie 7.",res:[vid("Vocabulaire service client","TOEIC customer service vocabulary"),lnk("Vocabulaire","https://www.getprepstr.com/toeic")]},
+  {d:35,wk:5,part:'p7',mix:true,title:"Révision Semaine 5",learn:"Consolider toute la lecture (Parties 5, 6, 7) et la vitesse. Session mixte pour faire le point.",res:[vid("Reading entraînement","TOEIC reading practice"),lnk("Guide TOEIC","https://www.ispeakspokespoken.com/toeic-listening-reading/")]},
+  // ---- Semaine 6 : stratégie, vitesse & examens blancs ----
+  {d:36,wk:6,part:'p3',title:"Stratégie Listening complète",learn:"Enchaîne les 4 parties d'écoute d'affilée pour tenir 45 min de concentration sans décrocher.",res:[vid("Listening complet","TOEIC full listening practice test"),lnk("Tests d'écoute","https://www.digischool.fr/toeic/tests/listening")]},
+  {d:37,wk:6,part:'p7',title:"Stratégie Reading complète",learn:"Répartis les 75 min : ~10 min Partie 5, ~10 min Partie 6, ~55 min Partie 7. Entraîne-toi à ce rythme.",res:[vid("Reading complet","TOEIC full reading practice test"),lnk("Stratégie Reading","https://www.getprepstr.com/toeic")]},
+  {d:38,wk:6,part:'p2',mix:true,final:true,title:"Examen blanc — Listening",learn:"Simulation d'écoute en conditions. Fais une session mixte ici, puis enchaîne un test blanc officiel complet.",res:[vid("Examen blanc Listening","TOEIC listening full test"),lnk("Tests blancs gratuits","https://www.examenglish.com/TOEIC/")]},
+  {d:39,wk:6,part:'p5',mix:true,final:true,title:"Examen blanc — Reading",learn:"Simulation de lecture chronométrée. Session mixte ici, puis un test blanc officiel de Reading complet.",res:[vid("Examen blanc Reading","TOEIC reading full test"),lnk("Tests blancs gratuits","https://www.examenglish.com/TOEIC/")]},
+  {d:40,wk:6,part:'p5',title:"Grande révision du vocabulaire",learn:"Revois tous les thèmes de vocabulaire (bureau, finance, logistique, RH, service client) dans l'onglet Ressources.",res:[vid("Vocabulaire révision","TOEIC vocabulary review 500 words"),lnk("500 mots essentiels","https://www.getprepstr.com/toeic")]},
+  {d:41,wk:6,part:'p7',mix:true,final:true,title:"Examen blanc complet",learn:"Entraînement chronométré dans les conditions du test (2 h, écoute + lecture). C'est ton vrai indicateur de niveau.",res:[vid("Examen blanc complet","TOEIC full practice test 2 hours"),lnk("Tests blancs gratuits","https://www.examenglish.com/TOEIC/")]},
+  {d:42,wk:6,part:'p7',mix:true,final:true,title:"Derniers réglages + jour J",learn:"Revois tes points faibles, relis la checklist du jour J et repose-toi. Tu es prêt.",res:[vid("Conseils jour J","TOEIC conseils jour J réussir"),lnk("Passer le TOEIC (ETS)","https://www.etsglobal.org/fr/fr")]}
+];
+/* Activités concrètes par jour */
+const DRILLS={
+ 1:["Lis la grille de score du TOEIC (onglet Ressources → « Le test en bref »).","Lance une session mixte dans l'app pour découvrir les types de questions.","Retiens la règle d'or : on répond à TOUTES les questions, même au hasard."],
+ 2:["Lance l'écoute Partie 2 (onglet Aujourd'hui → Commencer) et fais 10 questions.","Pour chaque question, note le mot interrogatif entendu (Who/Where/When…).","Écoute 10 min d'anglais (podcast ou série en VO) et note 5 mots nouveaux."],
+ 3:["Refais 10 questions de Partie 2 en repérant les pièges (mots répétés).","Liste 5 réponses « indirectes » que tu as rencontrées (ex. « I'm not sure »).","Apprends 8 mots de vocabulaire Bureau (onglet Ressources)."],
+ 4:["Fais l'écoute Partie 1 (photographies) : 6 à 10 questions.","Décris à voix haute 3 photos en anglais avec un verbe en -ing.","Note 5 verbes d'action utiles (typing, pouring, stacking…)."],
+ 5:["Refais quelques Partie 1 en te concentrant sur les pièges sonores.","Apprends 10 mots du thème Bureau et écris 3 phrases avec.","Relis la règle « Word families » (onglet Ressources)."],
+ 6:["Fais 15 phrases de Partie 5 en mode libre (niveau Débutant).","Pour chaque phrase, identifie d'abord la nature du mot attendu.","Classe 6 mots par nature : nom / verbe / adjectif / adverbe."],
+ 7:["Lance une session mixte (6 questions) et vise plus de 70 %.","Note tes 2 types de questions les plus faibles.","Révise le vocabulaire Bureau appris cette semaine."],
+ 8:["Fais 15 Partie 5 ciblées sur les temps verbaux.","Écris une phrase au present perfect avec « for » et une avec « since ».","Apprends 8 mots de vocabulaire (au choix)."],
+ 9:["Fais 15 Partie 5 sur les prépositions.","Mémorise : in (mois/année), on (jour/date), at (heure).","Écris 5 phrases avec responsible for / interested in / good at."],
+ 10:["Fais 15 Partie 5 sur l'accord et la voix passive.","Transforme 3 phrases actives en passives (be + participe passé).","Apprends 8 mots de finance (invoice, estimate…)."],
+ 11:["Fais 15 Partie 5 sur les comparatifs.","Écris 3 comparatifs (court + -er + than) et 2 longs (more … than).","Révise les prépositions de la veille."],
+ 12:["Fais 15 Partie 5 (pronoms relatifs & quantifieurs).","Écris 3 phrases avec who / which / that.","Apprends 8 nouveaux mots."],
+ 13:["Apprends 12 mots de vocabulaire Finance et écris 4 phrases.","Fais 10 Partie 5 mêlant grammaire et vocabulaire.","Relis tes erreurs de grammaire de la semaine."],
+ 14:["Fais 20 Partie 5 en moins de 8 minutes (chrono).","Lance une session mixte et vise plus de 75 %.","Note les règles de grammaire encore floues."],
+ 15:["Avant d'écouter, lis les 3 questions : fais l'écoute Partie 3 (4 questions).","Note, pour chaque conversation, le lieu et les locuteurs.","Écoute 10 min d'anglais et résume en 2 phrases."],
+ 16:["Refais des Partie 3 en suivant qui dit quoi (note A / B).","Repère un changement d'avis ou une suggestion dans une conversation.","Apprends 8 mots de logistique."],
+ 17:["Fais des Partie 3 en notant tous les chiffres/dates/heures entendus.","Vérifie tes réponses avec les transcriptions.","Revois 10 mots de vocabulaire."],
+ 18:["Fais des Partie 3 et, pour chaque question « Why… ? », justifie ta réponse.","Repère une intention implicite (ce que la personne va faire).","Écoute 10 min d'anglais."],
+ 19:["Apprends 12 mots de Logistique (shipment, supplier, warehouse…).","Fais une écoute mélangée (P1 à P3), 8 questions.","Écris 4 phrases avec le vocabulaire du jour."],
+ 20:["Enchaîne 12 questions d'écoute (P1+P2+P3) sans pause.","Note ton pourcentage de réussite.","Réécoute les audios ratés avec la transcription."],
+ 21:["Lance une session mixte et vise plus de 75 %.","Identifie ta partie d'écoute la plus faible.","Révise le vocabulaire Logistique."],
+ 22:["Fais l'écoute Partie 4 (annonces/messages), 4 à 6 questions.","Note le type de document dès les 1res phrases (annonce, message…).","Écoute un message vocal en anglais et résume-le."],
+ 23:["Fais des Partie 4 en séparant idée principale et détails.","Pour chaque exposé, écris l'idée principale en 1 phrase.","Apprends 8 mots nouveaux."],
+ 24:["Fais des Partie 4 en notant lieu + locuteur + audience.","Vérifie avec les transcriptions.","Revois 10 mots de vocabulaire."],
+ 25:["Fais 12 questions de Partie 6 (mode libre).","Pour chaque blanc, lis la phrase AVANT et APRÈS.","Mémorise 6 connecteurs (however, therefore, although…)."],
+ 26:["Refais des Partie 6 en justifiant la forme verbale choisie.","Repère la phrase qui s'insère le mieux dans un texte.","Apprends 8 mots de RH."],
+ 27:["Apprends 12 mots RH (staff, applicant, maintenance…).","Fais 10 Partie 6 mêlant grammaire et connecteurs.","Écris un mini e-mail de 4 phrases en anglais."],
+ 28:["Lance une session mixte et vise plus de 75 %.","Note tes erreurs récurrentes en Partie 6.","Révise le vocabulaire RH."],
+ 29:["Fais 8 questions de Partie 7 (mode libre).","Pour chaque texte, identifie son type (e-mail, annonce…).","Lis un court article en anglais (5 min)."],
+ 30:["Fais des Partie 7 en cherchant d'abord l'objet du document.","Repère où se trouve l'idée principale (titre, 1re ligne).","Apprends 8 mots de vocabulaire."],
+ 31:["Fais des Partie 7 (questions de détail + inférence).","Pour une inférence, souligne l'indice du texte.","Revois 10 mots de vocabulaire."],
+ 32:["Fais des Partie 7 avec textes multiples (double/triple).","Entraîne-toi à croiser 2 textes pour une réponse.","Lis un article en anglais et résume-le."],
+ 33:["Fais 20 questions de Partie 7 en te chronométrant.","Si tu bloques 30 s, marque une réponse et avance.","Note ton temps moyen par question."],
+ 34:["Apprends 12 mots de Service client (complaint, refund…).","Fais 10 Partie 7 en repérant ce vocabulaire.","Écris 4 phrases avec les mots du jour."],
+ 35:["Fais un bloc Reading (P5+P6+P7) en respectant les temps.","Lance une session mixte et vise plus de 75 %.","Liste tes 3 points faibles en lecture."],
+ 36:["Enchaîne les 4 parties d'écoute dans l'app (le plus possible).","Tiens 45 min de concentration sans pause.","Note ton pourcentage global d'écoute."],
+ 37:["Fais un Reading complet en respectant 10/10/55 min.","Ne reste jamais bloqué : marque et avance.","Note les questions où tu perds du temps."],
+ 38:["Fais une session mixte « écoute » dans l'app.","Puis fais un test blanc de Listening complet (lien Ressources).","Note ton score estimé en écoute."],
+ 39:["Fais une session mixte « lecture » dans l'app.","Puis fais un test blanc de Reading chronométré (lien Ressources).","Note ton score estimé en lecture."],
+ 40:["Revois tout le vocabulaire (5 thèmes) dans l'onglet Ressources.","Refais les QCM de tes 2 parties les plus faibles.","Écris 10 phrases avec tes mots les moins sûrs."],
+ 41:["Fais un examen blanc COMPLET chronométré (2 h).","Respecte les conditions réelles (pas de pause, pas d'aide).","Note ton score et tes parties faibles."],
+ 42:["Relis la checklist « Prêt pour le jour J » (onglet Suivi).","Prépare ta pièce d'identité et vérifie l'heure/le lieu.","Repose-toi : tu as travaillé, fais-toi confiance."]
+};
+/* Vidéos de démonstration ciblées par jour [label, requête] */
+const DEMOS={
+ 1:[["Le TOEIC expliqué","TOEIC présentation déroulé français"],["Stratégie générale","TOEIC strategy tips score"]],
+ 2:[["Démo Partie 2","Part 2 questions réponses exemple"],["Mots interrogatifs","Part 2 wh questions practice"]],
+ 3:[["Pièges Partie 2","Part 2 traps tricks"],["Entraînement P2","Part 2 practice test answers"]],
+ 4:[["Démo Partie 1","Part 1 photographs example"],["Vocabulaire d'actions","Part 1 action verbs vocabulary"]],
+ 5:[["Pièges sonores P1","Part 1 similar sounds traps"],["P1 entraînement","Part 1 practice test answers"]],
+ 6:[["Natures de mots","Part 5 parts of speech word families"],["Suffixes anglais","English suffixes noun adjective adverb"]],
+ 7:[["Révision écoute","TOEIC listening practice beginner"],["QCM type","TOEIC sample questions"]],
+ 8:[["Temps verbaux","English tenses TOEIC Part 5"],["Present perfect","present perfect for since"]],
+ 9:[["Prépositions","prepositions in on at TOEIC"],["Prépositions figées","dependent prepositions responsible for"]],
+ 10:[["Voix passive","passive voice English explained"],["Accord sujet-verbe","subject verb agreement English"]],
+ 11:[["Comparatifs","comparatives superlatives English"],["Comparatif TOEIC","Part 5 comparison practice"]],
+ 12:[["Pronoms relatifs","relative pronouns who which that"],["Quantifieurs","much many few quantifiers"]],
+ 13:[["Vocabulaire finance","TOEIC finance vocabulary"],["Collocations TOEIC","TOEIC collocations Part 5"]],
+ 14:[["Partie 5 entraînement","Part 5 grammar practice test"],["P5 rapidité","Part 5 fast tips"]],
+ 15:[["Démo Partie 3","Part 3 conversation example"],["Lire les questions","Part 3 read questions first"]],
+ 16:[["Suivre les locuteurs","Part 3 multiple speakers"],["P3 entraînement","Part 3 practice answers"]],
+ 17:[["Détails Partie 3","Part 3 detail questions numbers"],["Écoute détails","listening for details English"]],
+ 18:[["Implicite Partie 3","Part 3 implication intention"],["Sous-entendus","inference listening English"]],
+ 19:[["Vocabulaire logistique","TOEIC logistics vocabulary supplier"],["Écoute pro","business English listening"]],
+ 20:[["Écoute mélangée","TOEIC listening practice all parts"],["Test d'écoute","TOEIC listening test answers"]],
+ 21:[["Révision écoute","TOEIC listening review"],["QCM type","TOEIC sample listening"]],
+ 22:[["Démo Partie 4","Part 4 talk announcement example"],["Messages vocaux","Part 4 voicemail practice"]],
+ 23:[["Idée principale P4","Part 4 main idea questions"],["P4 entraînement","Part 4 practice answers"]],
+ 24:[["Contexte Partie 4","Part 4 speaker context location"],["Annonces TOEIC","Part 4 announcement listening"]],
+ 25:[["Démo Partie 6","Part 6 text completion example"],["Connecteurs","linking words however therefore"]],
+ 26:[["Formes verbales P6","Part 6 verb form sentence insertion"],["P6 entraînement","Part 6 practice answers"]],
+ 27:[["Vocabulaire RH","TOEIC HR vocabulary staff applicant"],["E-mail pro","business email English example"]],
+ 28:[["Révision","TOEIC review listening reading"],["QCM type","TOEIC sample questions"]],
+ 29:[["Démo Partie 7","Part 7 reading example"],["Types de documents","Part 7 document types email notice"]],
+ 30:[["Idée principale P7","Part 7 main idea purpose"],["Lecture rapide","skimming scanning reading"]],
+ 31:[["Détail & inférence","Part 7 detail inference questions"],["P7 entraînement","Part 7 practice answers"]],
+ 32:[["Textes multiples","Part 7 double triple passages"],["Croiser les textes","Part 7 multiple passages strategy"]],
+ 33:[["Gestion du temps","TOEIC reading time management"],["Reading rythme","TOEIC reading pace tips"]],
+ 34:[["Vocabulaire service client","TOEIC customer service vocabulary"],["Réclamations","complaint refund English"]],
+ 35:[["Reading entraînement","TOEIC reading practice test"],["Reading révision","TOEIC reading review"]],
+ 36:[["Listening complet","TOEIC full listening test"],["Concentration","listening stamina practice"]],
+ 37:[["Reading complet","TOEIC full reading test"],["Plan 75 min","TOEIC reading 75 minutes plan"]],
+ 38:[["Test Listening complet","TOEIC listening full test answers"],["Conditions d'examen","TOEIC listening exam tips"]],
+ 39:[["Test Reading complet","TOEIC reading full test answers"],["Chronométrage","TOEIC reading timed test"]],
+ 40:[["Vocabulaire révision","TOEIC 500 vocabulary review"],["Mots fréquents","TOEIC most common words"]],
+ 41:[["Examen blanc complet","TOEIC full practice test 2 hours"],["Simulation TOEIC","TOEIC mock test complete"]],
+ 42:[["Conseils jour J","TOEIC exam day tips français"],["Réussir le TOEIC","TOEIC success tips"]]
+};
+function partProgress(id){const d=store.qcm.byPart[id];const a=d?d.a:0,c=d?d.c:0;const pct=a?Math.round(c/a*100):0;return {a,c,pct,ok:a>=5&&pct>=70};}
+function demoChips(dv){const d=DEMOS[dv];if(!d)return '';return d.map(x=>resChip({type:'video',label:x[0],url:ytSearch(x[1])})).join('');}
+function dayManips(dv){return DRILLS[dv]||[];}
+function resChip(r){
+  const ic=r.type==='video'?'▶':(r.type==='doc'?'📘':'🔗');
+  const col=r.type==='video'?'var(--red)':(r.type==='doc'?'var(--violet)':'var(--accent)');
+  return `<a href="${r.url}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;background:var(--surface-2);border:1px solid var(--border-soft);border-radius:10px;padding:9px 13px;color:var(--text);font-size:13px;transition:border-color .15s,background .15s" onmouseover="this.style.borderColor='${col}';this.style.background='var(--surface-3)'" onmouseout="this.style.borderColor='var(--border-soft)';this.style.background='var(--surface-2)'"><span style="color:${col};font-size:14px">${ic}</span>${r.label}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;color:var(--text-mute)"><path d="M7 17L17 7M7 7h10v10"/></svg></a>`;
 }
+let TODAY_VIEW=null;
+function curDayNum(){return Math.min(Math.max(store.curDay||1,1),PROGRAM.length);}
+function gotoDay(n){TODAY_VIEW=Math.max(1,Math.min(n,PROGRAM.length));renderToday();window.scrollTo({top:0,behavior:'smooth'});}
+function completeDay(){
+  const cur=curDayNum();
+  store.dayDone=store.dayDone||{};
+  store.dayDone[cur]=true;
+  if((store.curDay||1)<PROGRAM.length) store.curDay=(store.curDay||1)+1;
+  updateStreak(); saveStore();
+  TODAY_VIEW=curDayNum();
+  addHistory('jour','Jour '+cur+' terminé','✓');
+  renderToday(); updateNavBadge();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function practicePart(id){
+  const p=PARTS.find(x=>x.id===id);
+  if(p&&p.section==='Listening'){go('listening');const s=document.getElementById('listen-part');if(s)s.value=id;if(typeof genListen==='function')genListen();}
+  else{go('libre');const s=document.getElementById('libre-part');if(s)s.value=id||'';if(typeof genLibre==='function')genLibre();}
+}
+function launchMix(){go('session');if(typeof startSession==='function')startSession();}
+function renderToday(){
+  store.dayDone=store.dayDone||{};
+  if(!TODAY_VIEW)TODAY_VIEW=curDayNum();
+  const dv=TODAY_VIEW, day=PROGRAM[dv-1];
+  const part=PARTS.find(p=>p.id===day.part)||PARTS[0];
+  const isListen=part.section==='Listening';
+  const secColor=isListen?'var(--violet)':'var(--accent)';
+  const pr=partProgress(part.id);
+  const isCurrent=dv===curDayNum();
+  const done=!!store.dayDone[dv];
+  const host=document.getElementById('today-host');
+  const dl=daysLeft();
+  const dleftTxt=dl>0?(dl+' j avant l\'examen'):(dl===0?'examen aujourd\'hui':'à programmer');
+  const play='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 3l14 9-14 9V3z"/></svg>';
+  const arr='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+  const head='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/></svg>';
+  const dpill=(ok,label)=>`<span style="display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:${ok?'var(--green)':'var(--text-mute)'};background:var(--surface-3);padding:5px 11px;border-radius:20px">${ok?'✓':'○'} ${label}</span>`;
+  const card=(num,color,title,inner)=>`<div class="card" style="margin-top:14px;padding:20px 22px">
+    <div style="display:flex;align-items:center;gap:11px;margin-bottom:12px">
+      <div style="width:26px;height:26px;flex:0 0 26px;border-radius:50%;background:${color};color:#0b0f14;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px">${num}</div>
+      <div style="font-family:var(--display);font-weight:800;font-size:15px">${title}</div>
+    </div>${inner}</div>`;
 
-async function loadSessStep() {
-  updateSessUI();
-  const area = document.getElementById('sess-area');
-  if (sessStepIdx >= sessSteps.length) { showRecap(area); return; }
-  const step = sessSteps[sessStepIdx];
-  if (step === 'duolingo') {
-    area.innerHTML = `
-      <div class="duo-card">
-        <div class="duo-icon">🦜</div>
-        <div class="duo-title">15 min de Duolingo</div>
-        <div class="duo-sub">Ouvre Duolingo et complète ta leçon du jour.<br>Maintiens la streak — c'est la clé de la progression !</div>
-        <button class="btn primary" onclick="sessDuoFait()" style="margin:0 auto;">C'est fait !</button>
-      </div>`;
-    return;
-  }
-  sessAnswered = false;
-  area.innerHTML = '<div class="loading"><span class="dot-anim">Génération</span></div>';
-  const [tagClass, tagLabel] = TAG_INFO[step] || ['tag-grammar','Exercice'];
-  const prompt = `Tu es un expert TOEIC. Génère UN exercice de ${PROMPTS[step]}, niveau intermédiaire (objectif 850/990).
-Réponds UNIQUEMENT en JSON valide sans markdown ni texte autour. Format strict :
-{"question":"...","options":["A. ...","B. ...","C. ...","D. ..."],"correct_index":0,"explanation":"explication en français 1-2 phrases"}`;
-  try {
-    const res = await fetch('/.netlify/functions/claude', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 900, messages: [{ role: 'user', content: prompt }] })
-    });
-    const data = await res.json();
-    const raw = data.content.map(b => b.text || '').join('');
-    const ex = JSON.parse(raw.replace(/```json|```/g, '').trim());
-    sessCurrentCorrect = ex.correct_index;
-    sessTotal++;
-    area.innerHTML = `
-      <div class="ex-card">
-        <span class="ex-tag ${tagClass}">${tagLabel}</span>
-        <div class="ex-q">${ex.question}</div>
-        <div class="options">${ex.options.map((o,i) => `<button class="opt-btn" id="so-${i}" onclick="sessCheck(${i})">${o}</button>`).join('')}</div>
-        <div class="expl" id="sess-expl">${ex.explanation}</div>
+  let headHTML=`<div class="eyebrow">${isCurrent?'Ton programme du jour':'Révision d\'un jour précédent'}</div>
+    <h1 class="page" style="margin-bottom:4px">Jour ${dv} · ${day.title}</h1>
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:6px">
+      <span style="font-size:13px;color:var(--text-dim)"><b style="color:${secColor}">${part.short} · ${part.section}</b> <span style="font-family:var(--mono);color:var(--text-mute)">Semaine ${day.wk}</span></span>
+      <span style="font-size:12.5px;color:var(--text-mute)">🔥 ${store.streak.count} j de série</span>
+      <span style="font-size:12.5px;color:var(--text-mute)">⏳ ${dleftTxt}</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;margin:14px 0 2px">
+      <button class="btn ghost sm" id="day-prev" ${dv<=1?'disabled':''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>Jour précédent</button>
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-mute);margin-bottom:4px"><span>Jour ${dv} / ${PROGRAM.length}</span><span>${Math.round(dv/PROGRAM.length*100)}%</span></div>
+        <div class="bar"><i style="width:${dv/PROGRAM.length*100}%"></i></div>
       </div>
-      <div class="action-row">
-        <button class="btn primary" id="sess-next" onclick="sessNext()" style="display:none;">
-          ${sessStepIdx + 1 < sessSteps.length ? 'Suivant →' : 'Voir mon bilan →'}
-        </button>
-      </div>`;
-    updateSessUI();
-  } catch(e) {
-    area.innerHTML = `<div class="ex-card"><p style="color:var(--muted);font-size:14px;font-family:var(--font-mono);">Erreur — <button onclick="loadSessStep()" style="background:none;border:none;cursor:pointer;color:var(--accent2);font-size:14px;">Réessayer</button></p></div>`;
+      <button class="btn ghost sm" id="day-next" ${dv>=PROGRAM.length?'disabled':''}>Jour suivant<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+    </div>
+    ${!isCurrent?`<div style="margin-top:8px"><button class="btn ghost sm" id="day-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>Revenir au jour du jour (Jour ${curDayNum()})</button></div>`:''}
+    ${done?`<div style="margin-top:10px;display:inline-flex;align-items:center;gap:8px;background:var(--green-soft);color:var(--green);font-weight:700;font-size:13px;padding:7px 14px;border-radius:20px">✓ Journée déjà validée</div>`:''}`;
+
+  const bloc1=card('1','var(--violet)','Comprendre la notion',
+    `<p style="color:var(--text-dim);font-size:14.5px;line-height:1.55;margin:0 0 14px">${day.learn}</p>
+     <div style="font-size:12px;font-weight:700;color:var(--text-mute);text-transform:uppercase;letter-spacing:.04em;margin-bottom:9px">📚 Ressources pour maîtriser</div>
+     <div style="display:flex;flex-wrap:wrap;gap:9px">${(day.res||[]).map(resChip).join('')}</div>`);
+
+  let bloc2;
+  if(day.mix){
+    bloc2=card('2','var(--amber)','Mets-toi à l\'épreuve',
+      `<p style="color:var(--text-dim);font-size:14px;margin:0 0 14px">Fais une <b>session mixte</b> (6 questions : écoute + lecture) pour faire le point.</p>
+       <button class="btn primary" id="to-mix">${play}Lancer une session mixte</button>
+       ${day.final?`<div style="margin-top:14px;padding:12px 14px;background:var(--amber-soft);border:1px solid var(--amber);border-radius:10px;font-size:13px;color:var(--text)">🎯 <b>Le vrai test :</b> rien ne vaut un <b>examen blanc complet</b>. <a href="https://www.examenglish.com/TOEIC/" target="_blank" rel="noopener" style="color:var(--amber);font-weight:700">Tests gratuits →</a> · <a href="https://www.etsglobal.org/fr/fr" target="_blank" rel="noopener" style="color:var(--amber);font-weight:700">Passer le TOEIC (ETS) →</a></div>`:''}`);
+  }else{
+    bloc2=card('2','var(--accent)','S\'entraîner',
+      `<p style="color:var(--text-dim);font-size:14px;margin:0 0 12px">${isListen?'Entraîne ton oreille':'Travaille la'} sur « ${part.short} » directement dans l'app.</p>
+       <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px">
+         ${dpill(pr.ok,'Réussite QCM'+(pr.a?' '+pr.pct+'%':' —'))}
+         <span style="display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:${secColor};background:var(--surface-3);padding:5px 11px;border-radius:20px">${part.section}</span>
+       </div>
+       <button class="btn primary" id="to-practice">${isListen?head+'Entraîner mon oreille ('+part.short+')':play+'QCM '+part.short}</button>`);
   }
-}
 
-function sessCheck(idx) {
-  if (sessAnswered) return;
-  sessAnswered = true;
-  document.querySelectorAll('.opt-btn').forEach(b => b.disabled = true);
-  if (idx === sessCurrentCorrect) { document.getElementById('so-'+idx).classList.add('correct'); sessCorrect++; }
-  else { document.getElementById('so-'+idx).classList.add('wrong'); document.getElementById('so-'+sessCurrentCorrect).classList.add('correct'); }
-  document.getElementById('sess-expl').style.display = 'block';
-  document.getElementById('sess-next').style.display = 'flex';
-  updateSessUI();
-}
+  const manips=dayManips(dv), demos=demoChips(dv);
+  const bloc3=card('3','var(--green)','Ta pratique du jour',
+    `<p style="color:var(--text-dim);font-size:14px;margin:0 0 12px">Les actions concrètes pour <b>bien ancrer</b> la notion. Fais-les vraiment, pas juste les lire.</p>
+     ${manips.length?`<div style="font-size:12px;font-weight:700;color:var(--text-mute);text-transform:uppercase;letter-spacing:.04em;margin-bottom:7px">✍️ À faire aujourd'hui</div><ol style="margin:0 0 16px;padding-left:20px;line-height:1.85;color:var(--text);font-size:14px">${manips.map(m=>`<li>${m}</li>`).join('')}</ol>`:''}
+     ${demos?`<div style="font-size:12px;font-weight:700;color:var(--text-mute);text-transform:uppercase;letter-spacing:.04em;margin-bottom:9px">🎬 Vidéos de démonstration</div><div style="display:flex;flex-wrap:wrap;gap:9px;margin-bottom:8px">${demos}</div>`:''}
+     <div style="font-size:12px;color:var(--text-mute);margin-top:10px">💡 Vocabulaire et grammaire à réviser dans l'onglet <b>Ressources</b>.</div>`);
 
-function sessDuoFait() { sessStepIdx++; loadSessStep(); }
-function sessNext() { sessStepIdx++; loadSessStep(); }
-
-function showRecap(area) {
-  const pct = sessTotal > 0 ? Math.round(sessCorrect / sessTotal * 100) : 0;
-  const stars = pct >= 80 ? '⭐⭐⭐' : pct >= 50 ? '⭐⭐' : '⭐';
-  const msg = pct >= 80 ? 'Excellent — continue comme ça !' : pct >= 50 ? 'Bon effort, tu progresses !' : 'Continue, ça vient !';
-
-  // Save score
-  const sess = SESSIONS[((DAY_NUM - 1) % Object.keys(SESSIONS).length) + 1] || SESSIONS[1];
-  STATE.doneDays[DAY_NUM] = true;
-  STATE.scores = STATE.scores || [];
-  STATE.scores.push({ day: DAY_NUM, title: sess.title, correct: sessCorrect, total: sessTotal, pct });
-  saveState(STATE);
-
-  area.innerHTML = `
-    <div class="recap">
-      <div class="recap-stars">${stars}</div>
-      <div class="recap-score">${sessCorrect}/${sessTotal}</div>
-      <div class="recap-label">${msg} · Jour ${DAY_NUM} complété</div>
-      <div class="action-row" style="justify-content:center;">
-        <button class="btn" onclick="showView('tracker')">Voir mon suivi</button>
-        <button class="btn" onclick="showView('libre')">Mode libre →</button>
+  const blocCorrect=`<div class="card" style="margin-top:14px;padding:18px 22px;border:1px solid var(--accent)">
+      <div style="display:flex;align-items:center;gap:11px;flex-wrap:wrap">
+        <div style="width:26px;height:26px;flex:0 0 26px;border-radius:50%;background:var(--accent);color:#0b0f14;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px">✓</div>
+        <div style="flex:1;min-width:180px"><div style="font-family:var(--display);font-weight:800;font-size:15px">Faire corriger / expliquer par Claude</div>
+        <div style="color:var(--text-dim);font-size:13px;margin-top:1px">Une phrase, une règle ou une question qui te bloque ? Demande une explication.</div></div>
+        <button class="btn ghost sm" id="corr-toggle" style="margin-left:auto">Comment faire ?</button>
+      </div>
+      <div id="corr-how" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border-soft);font-size:13.5px;color:var(--text);line-height:1.6">
+        <ol style="margin:0;padding-left:20px;line-height:1.85">
+          <li>Fais les activités ci-dessus.</li>
+          <li>Reviens dans ta conversation Claude et écris : <b>« Explique-moi le Jour ${dv} »</b> ou ta question précise.</li>
+          <li>Tu peux :
+            <ul style="margin:5px 0;padding-left:18px">
+              <li><b>Grammaire / Partie 5-6</b> → colle la phrase ou ta réponse, Claude explique la règle.</li>
+              <li><b>Vocabulaire</b> → demande le sens, des exemples, des synonymes.</li>
+              <li><b>Écoute / lecture</b> → colle la transcription ou le passage et la question.</li>
+            </ul>
+          </li>
+          <li>Claude t'explique pourquoi c'est juste ou faux. <span style="color:var(--text-mute)">(Très fiable en grammaire/vocabulaire/lecture.)</span></li>
+        </ol>
       </div>
     </div>`;
-}
 
-// ─── MODE LIBRE ───────────────────────────────────────
-const LIBRE_PROMPTS = {
-  grammar: { general: 'grammaire TOEIC variée', finance: 'grammaire TOEIC sur des phrases financières', rh: 'grammaire TOEIC dans un contexte RH', marketing: 'grammaire TOEIC avec vocabulaire marketing', voyages: 'grammaire TOEIC dans des situations de voyage d\'affaires', bureautique: 'grammaire TOEIC dans un contexte bureautique' },
-  vocab:   { general: 'vocabulaire business TOEIC varié', finance: 'vocabulaire TOEIC Finance & Comptabilité', rh: 'vocabulaire TOEIC Ressources Humaines', marketing: 'vocabulaire TOEIC Marketing & Ventes', voyages: 'vocabulaire TOEIC Voyages d\'affaires', bureautique: 'vocabulaire TOEIC Bureautique' },
-  listening: { general: 'Listening TOEIC Part 2 question-réponse', finance: 'Listening TOEIC Part 2 contexte financier', rh: 'Listening TOEIC Part 2 contexte RH', marketing: 'Listening TOEIC Part 2 contexte marketing', voyages: 'Listening TOEIC Part 2 voyage d\'affaires', bureautique: 'Listening TOEIC Part 2 contexte bureautique' },
-  reading: { general: 'Reading TOEIC Part 5 phrase à compléter', finance: 'Reading TOEIC Part 5 contexte financier', rh: 'Reading TOEIC Part 5 contexte RH', marketing: 'Reading TOEIC Part 5 contexte marketing', voyages: 'Reading TOEIC Part 5 voyage d\'affaires', bureautique: 'Reading TOEIC Part 5 bureautique' },
-};
-const LIBRE_TAG = { grammar:['tag-grammar','Grammaire'], vocab:['tag-vocab','Vocabulaire'], listening:['tag-listening','Listening'], reading:['tag-reading','Reading'] };
-
-let libreAnswered = false, libreCorrect = null;
-
-async function genLibre() {
-  const type = document.getElementById('libre-type').value;
-  const theme = document.getElementById('libre-theme').value;
-  const diff = document.getElementById('libre-diff').value;
-  const area = document.getElementById('libre-area');
-  libreAnswered = false;
-  area.innerHTML = '<div class="loading"><span class="dot-anim">Génération</span></div>';
-  const promptText = LIBRE_PROMPTS[type][theme] || LIBRE_PROMPTS[type].general;
-  const [tagClass, tagLabel] = LIBRE_TAG[type];
-  const prompt = `Tu es un expert TOEIC. Génère UN exercice de ${promptText}, niveau ${diff} (objectif 850/990).
-Réponds UNIQUEMENT en JSON valide sans markdown. Format :
-{"question":"...","options":["A. ...","B. ...","C. ...","D. ..."],"correct_index":0,"explanation":"explication courte en français"}`;
-  try {
-    const res = await fetch('/.netlify/functions/claude', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 900, messages: [{ role: 'user', content: prompt }] })
-    });
-    const data = await res.json();
-    const raw = data.content.map(b => b.text || '').join('');
-    const ex = JSON.parse(raw.replace(/```json|```/g, '').trim());
-    libreCorrect = ex.correct_index;
-    area.innerHTML = `
-      <div class="ex-card">
-        <span class="ex-tag ${tagClass}">${tagLabel}</span>
-        <div class="ex-q">${ex.question}</div>
-        <div class="options">${ex.options.map((o,i) => `<button class="opt-btn" id="lo-${i}" onclick="libreCheck(${i})">${o}</button>`).join('')}</div>
-        <div class="expl" id="libre-expl">${ex.explanation}</div>
+  let valid='';
+  if(isCurrent){
+    valid=`<div class="card" style="margin-top:14px;padding:20px 22px;border:1px solid var(--accent-soft)">
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+        <div style="flex:1;min-width:200px">
+          <div style="font-family:var(--display);font-weight:800;font-size:15px">${done?'Journée validée ✓':'Tu as fini ta journée ?'}</div>
+          <div style="color:var(--text-dim);font-size:13.5px;margin-top:2px">${done?(dv<PROGRAM.length?'Passe au jour suivant quand tu veux.':'Tu es au bout du programme. Enchaîne les examens blancs !'):'Valide pour débloquer le Jour '+(dv+1)+'.'}</div>
+        </div>
+        ${!done?`<button class="btn primary" id="day-done" style="margin-left:auto;font-size:15px;padding:13px 20px">✓ J'ai terminé ma journée</button>`:(dv<PROGRAM.length?`<button class="btn primary" id="day-gonext" style="margin-left:auto">Aller au Jour ${dv+1} ${arr}</button>`:`<button class="btn primary" data-goto="suivi" style="margin-left:auto">Voir mon suivi</button>`)}
       </div>
-      <div class="action-row">
-        <button class="btn primary" id="libre-next" onclick="genLibre()" style="display:none;">Prochain exercice →</button>
-      </div>`;
-  } catch(e) {
-    area.innerHTML = `<div class="ex-card"><p style="color:var(--muted);font-size:14px;font-family:var(--font-mono);">Erreur — <button onclick="genLibre()" style="background:none;border:none;cursor:pointer;color:var(--accent2);">Réessayer</button></p></div>`;
+    </div>`;
   }
+
+  host.innerHTML=headHTML+bloc1+bloc2+bloc3+blocCorrect+valid;
+  const q=(id)=>host.querySelector(id);
+  if(q('#day-prev'))q('#day-prev').addEventListener('click',()=>gotoDay(dv-1));
+  if(q('#day-next'))q('#day-next').addEventListener('click',()=>gotoDay(dv+1));
+  if(q('#day-back'))q('#day-back').addEventListener('click',()=>gotoDay(curDayNum()));
+  if(q('#to-practice'))q('#to-practice').addEventListener('click',()=>practicePart(part.id));
+  if(q('#to-mix'))q('#to-mix').addEventListener('click',launchMix);
+  if(q('#corr-toggle'))q('#corr-toggle').addEventListener('click',()=>{const d=q('#corr-how');const open=d.style.display!=='none';d.style.display=open?'none':'block';q('#corr-toggle').textContent=open?'Comment faire ?':'Masquer';});
+  if(q('#day-done'))q('#day-done').addEventListener('click',completeDay);
+  if(q('#day-gonext'))q('#day-gonext').addEventListener('click',()=>gotoDay(dv+1));
+  host.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.goto)));
 }
 
-function libreCheck(idx) {
-  if (libreAnswered) return;
-  libreAnswered = true;
-  document.querySelectorAll('#libre-area .opt-btn').forEach(b => b.disabled = true);
-  if (idx === libreCorrect) document.getElementById('lo-'+idx).classList.add('correct');
-  else { document.getElementById('lo-'+idx).classList.add('wrong'); document.getElementById('lo-'+libreCorrect).classList.add('correct'); }
-  document.getElementById('libre-expl').style.display = 'block';
-  document.getElementById('libre-next').style.display = 'flex';
+/* ============================================================ ROUTER ============================================================ */
+const app=document.getElementById('app');
+function go(view){
+  stopSpeak();
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.view===view));
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  const el=document.getElementById('view-'+view);if(el)el.classList.add('active');
+  app.classList.remove('nav-open');
+  if(view==='today'){TODAY_VIEW=curDayNum();renderToday();}
+  if(view==='dashboard')renderDashboard();
+  if(view==='parcours')renderParcours();
+  if(view==='suivi')renderSuivi();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.getElementById('nav').addEventListener('click',e=>{const b=e.target.closest('.nav-item');if(b)go(b.dataset.view);});
+document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.goto)));
+document.getElementById('menuBtn').addEventListener('click',()=>app.classList.toggle('nav-open'));
+document.getElementById('scrim').addEventListener('click',()=>app.classList.remove('nav-open'));
+
+/* ============================================================ DASHBOARD ============================================================ */
+const DAILY_TIPS=[
+  "Écoute de l'anglais tous les jours (podcasts, séries en VO) : 15 min régulières valent mieux qu'une heure le dimanche.",
+  "Partie 2 : si une réponse répète un mot de la question, méfie-toi — c'est souvent un piège.",
+  "Pas de point négatif au TOEIC : réponds à TOUTES les questions, même en devinant.",
+  "Préposition de temps : « in » (mois/année), « on » (jour/date), « at » (heure).",
+  "Partie 5 : repère la nature du mot attendu (nom, verbe, adjectif, adverbe) avant de choisir.",
+  "Partie 7 : lis d'abord les questions, puis pars à la chasse aux réponses dans le texte.",
+  "Au Reading, ne reste jamais bloqué sur une question : marque une réponse et avance."
+];
+function daysLeft(){return Math.ceil((new Date(EXAM_DATE)-new Date(todayStr()))/86400000);}
+function renderDashboard(){
+  const d=daysLeft();
+  document.getElementById('d-days').textContent=d>0?d:(d===0?'0':'—');
+  document.getElementById('countdown').textContent=d>0?d+'j':(d===0?'J':'—');
+  const done=partsDoneCount();const pct=Math.round(done/PARTS.length*100);
+  document.getElementById('d-prog').textContent=pct+'%';
+  document.getElementById('prog-text').textContent=done+' partie'+(done>1?'s':'')+' sur '+PARTS.length;
+  document.getElementById('prog-pct').textContent=pct+'%';
+  document.getElementById('prog-bar').style.width=pct+'%';
+  const {a,c}=totalQcm();
+  document.getElementById('d-acc').textContent=a?Math.round(c/a*100)+'%':'—';
+  document.getElementById('d-level').textContent=cecrl().lvl;
+  document.getElementById('tip-text').innerHTML=DAILY_TIPS[new Date().getDate()%DAILY_TIPS.length];
 }
 
-// ─── TRACKER ─────────────────────────────────────────
-function renderTracker() {
-  const grid = document.getElementById('tracker-grid');
-  const startDay = new Date('2026-05-22');
-  const startDow = startDay.getDay(); // 5 = friday → offset
-  const mondayOffset = startDow === 0 ? 6 : startDow - 1;
+/* ============================================================ PARCOURS ============================================================ */
+const tickSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>';
+function renderParcours(){
+  const host=document.getElementById('parcours-list');host.className='grid stagger';
+  host.innerHTML=PARTS.map((p,i)=>{
+    const done=!!store.partsDone[p.id];
+    const isListen=p.section==='Listening';
+    return `<div class="theme-card ${done?'done':''}">
+      <div class="theme-head">
+        <div class="theme-num">${done?tickSvg:(i+1)}</div>
+        <div style="flex:1">
+          <div class="theme-title">${p.name}</div>
+          <div class="theme-sub"><span class="tag-sec ${isListen?'tag-listen':'tag-read'}">${p.section}</span><span>${p.count}</span></div>
+          <div class="theme-desc">${p.desc}</div>
+          <div class="chips">${p.chips.map(c=>`<span class="chip">${c}</span>`).join('')}</div>
+        </div>
+      </div>
+      <div class="theme-foot">
+        <button class="check-btn ${done?'on':''}" data-part="${p.id}"><span class="box">${tickSvg}</span>${done?'Partie maîtrisée':'Marquer comme terminé'}</button>
+        ${isListen
+          ? `<button class="btn ghost sm" data-listen="${p.id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/></svg>Écouter ${p.short}</button>`
+          : `<button class="btn ghost sm" data-libre="${p.id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>QCM ${p.short}</button>`}
+      </div>
+    </div>`;
+  }).join('');
+  host.querySelectorAll('.check-btn').forEach(b=>b.addEventListener('click',()=>{
+    const id=b.dataset.part;store.partsDone[id]=!store.partsDone[id];saveStore();updateNavBadge();renderParcours();
+  }));
+  host.querySelectorAll('[data-libre]').forEach(b=>b.addEventListener('click',()=>{go('libre');document.getElementById('libre-part').value=b.dataset.libre;}));
+  host.querySelectorAll('[data-listen]').forEach(b=>b.addEventListener('click',()=>{go('listening');document.getElementById('listen-part').value=b.dataset.listen;}));
+}
+function updateNavBadge(){document.getElementById('nav-parcours-badge').textContent=partsDoneCount()+'/'+PARTS.length;}
 
-  let cells = '';
-  // empty cells for alignment
-  for (let i = 0; i < mondayOffset; i++) cells += '<div></div>';
+/* ============================================================ QUIZ RUNNER ============================================================ */
+function shuffle(arr){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function seededPick(pool,n,seed){const a=pool.slice();let s=seed;for(let i=a.length-1;i>0;i--){s=(s*9301+49297)%233280;const j=Math.floor(s/233280*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a.slice(0,n);}
 
-  for (let d = 1; d <= 70; d++) {
-    const date = new Date('2026-05-22');
-    date.setDate(date.getDate() + d - 1);
-    const isToday = d === DAY_NUM;
-    const isPast = d < DAY_NUM;
-    const isFuture = d > DAY_NUM;
-    const isDone = !!STATE.doneDays[d];
-
-    let cls = 'day-cell';
-    if (isToday) cls += ' today';
-    else if (isDone) cls += ' done';
-    else if (isPast) cls += ' missed';
-    else cls += ' future';
-
-    cells += `<div class="${cls}" title="Jour ${d}">${d}</div>`;
+function runQuiz(host,questions,label,onDone){
+  let idx=0,score=0,answered=false;
+  const total=questions.length;
+  function render(){
+    stopSpeak();
+    if(idx>=total)return finish();
+    const q=questions[idx];answered=false;
+    const keys='ABCD'.slice(0,q.o.length);
+    const audioWarn=(q.audio&&!ttsSupported())?`<div class="audio-warn">🔇 La lecture audio n'est pas disponible sur ce navigateur. La transcription s'affichera après ta réponse.</div>`:'';
+    const audioBox=(q.audio&&ttsSupported())?`<div class="audio-box">
+        <button class="audio-play" id="audioBtn"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M5 3l14 9-14 9V3z"/></svg> Écouter l'audio</button>
+        <button class="speed-toggle" id="speedBtn">Débit : ${TTS.slow?'lent 🐢':'normal'}</button>
+        <span class="ablurb">${q.t==='p1'?'Tu vas entendre 4 phrases. Choisis celle qui correspond à la photo.':q.t==='p2'?'Écoute la question, puis choisis la meilleure réponse.':'Écoute l\'enregistrement, puis réponds.'}</span>
+      </div>`:'';
+    const scene=q.scene?`<div class="scene"><b>📷 Photo :</b> ${q.scene}</div>`:'';
+    const passage=q.passage?`<div class="passage"><div class="ptitle">Texte</div>${q.passage.replace(/\n/g,'<br>')}</div>`:'';
+    host.innerHTML=`<div class="quiz-shell">
+      <div class="quiz-top"><span class="q-tag">${label||partName(q.t)}</span><span class="q-count">Question ${idx+1} / ${total}</span></div>
+      <div class="q-progress"><i style="width:${idx/total*100}%"></i></div>
+      ${audioWarn}${audioBox}${scene}${passage}
+      <div class="q-text">${q.q}</div>
+      <div class="opts" id="opts">${q.o.map((o,i)=>`<button class="opt" data-i="${i}"><span class="key">${keys[i]}</span><span>${o}</span></button>`).join('')}</div>
+      <div class="explain" id="explain"><b>Explication —</b> ${q.e}</div>
+      ${q.audio?`<div class="transcript" id="transcript"><div class="tl">Transcription</div><span class="en">${q.audio}</span></div>`:''}
+      <div class="quiz-foot"><button class="btn primary" id="next" style="display:none">${idx+1<total?'Question suivante':'Voir le résultat'} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div>
+    </div>`;
+    if(q.audio&&ttsSupported()){
+      const ab=host.querySelector('#audioBtn');
+      ab.addEventListener('click',()=>{speak(q.audio);ab.classList.add('playing');setTimeout(()=>ab.classList.remove('playing'),Math.min(9000,q.audio.length*90));});
+      host.querySelector('#speedBtn').addEventListener('click',(e)=>{TTS.slow=!TTS.slow;e.target.textContent='Débit : '+(TTS.slow?'lent 🐢':'normal');speak(q.audio);});
+      // auto-play once on display
+      setTimeout(()=>{speak(q.audio);ab.classList.add('playing');setTimeout(()=>ab.classList.remove('playing'),Math.min(9000,q.audio.length*90));},250);
+    }
+    const opts=host.querySelector('#opts');
+    opts.querySelectorAll('.opt').forEach(btn=>btn.addEventListener('click',()=>{
+      if(answered)return;answered=true;stopSpeak();
+      const chosen=+btn.dataset.i,correct=q.c;
+      opts.querySelectorAll('.opt').forEach((b,i)=>{b.disabled=true;if(i===correct)b.classList.add('correct');if(i===chosen&&chosen!==correct)b.classList.add('wrong');});
+      if(chosen===correct)score++;
+      recordQcm(q.t,chosen===correct);
+      host.querySelector('#explain').classList.add('show');
+      const tr=host.querySelector('#transcript');if(tr)tr.classList.add('show');
+      host.querySelector('#next').style.display='inline-flex';
+    }));
+    host.querySelector('#next').addEventListener('click',()=>{idx++;render();});
   }
-  grid.innerHTML = cells;
-
-  // history
-  const scores = STATE.scores || [];
-  const hist = document.getElementById('history-list');
-  if (scores.length === 0) {
-    hist.innerHTML = '<div style="color:var(--muted);font-size:13px;font-family:var(--font-mono);">Aucun score enregistré.</div>';
-  } else {
-    hist.innerHTML = scores.slice().reverse().map(s => `
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:13px;">
-        <span style="color:var(--muted);font-family:var(--font-mono);min-width:60px;">Jour ${s.day}</span>
-        <span style="color:var(--muted2);flex:1;margin:0 12px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${s.title}</span>
-        <span style="font-family:var(--font-mono);font-size:12px;color:var(--muted2);">${s.correct}/${s.total}</span>
-        <span style="font-family:var(--font-mono);margin-left:12px;color:${s.pct>=80?'var(--green)':s.pct>=50?'var(--amber)':'var(--red)'};">${s.pct}%</span>
-      </div>`).join('');
+  function finish(){
+    stopSpeak();
+    const pct=Math.round(score/total*100);
+    const r=46,circ=2*Math.PI*r,off=circ*(1-score/total);
+    const col=pct>=80?'var(--green)':pct>=50?'var(--amber)':'var(--red)';
+    const msg=pct>=80?'Excellent, tu gères ! 🎉':pct>=50?'Bien, continue à t\'entraîner 💪':'À retravailler, ne lâche rien 📚';
+    host.innerHTML=`<div class="quiz-shell"><div class="result">
+      <div class="ring">
+        <svg viewBox="0 0 110 110" style="width:130px;height:130px;transform:rotate(-90deg)">
+          <circle cx="55" cy="55" r="${r}" fill="none" stroke="var(--surface-3)" stroke-width="9"/>
+          <circle cx="55" cy="55" r="${r}" fill="none" stroke="${col}" stroke-width="9" stroke-linecap="round" stroke-dasharray="${circ}" stroke-dashoffset="${off}" style="transition:stroke-dashoffset 1s ease"/>
+        </svg>
+        <div class="score" style="color:${col}">${score}/${total}</div>
+      </div>
+      <h3>${msg}</h3>
+      <p>${pct}% de bonnes réponses${label?' · '+label:''}</p>
+      <div class="cta-row" style="justify-content:center;margin-top:22px">
+        <button class="btn primary" id="again"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>Recommencer</button>
+        <button class="btn ghost" data-goto="suivi">Voir mon suivi</button>
+      </div>
+    </div></div>`;
+    host.querySelector('#again').addEventListener('click',()=>{idx=0;score=0;render();});
+    host.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.goto)));
+    if(onDone)onDone(score,total);
   }
+  render();
 }
 
-// ─── INIT ─────────────────────────────────────────────
-renderDashboard();
+/* ============================================================ API + GENERATION ============================================================ */
+function extractText(data){
+  if(!data)return '';
+  if(typeof data==='string')return data;
+  if(data.text)return data.text;
+  if(data.completion)return data.completion;
+  if(data.result)return typeof data.result==='string'?data.result:JSON.stringify(data.result);
+  if(Array.isArray(data.content))return data.content.filter(b=>b&&b.type==='text'&&b.text).map(b=>b.text).join('\n');
+  if(data.content&&data.content.text)return data.content.text;
+  return '';
+}
+function cleanJSON(s){return s.replace(/```json/gi,'').replace(/```/g,'').trim();}
+async function generateQCM(part,level,count){
+  const p=PARTS.find(x=>x.id===part);const label=p?p.name:part;
+  const isListen=p&&p.section==='Listening';
+  const prompt=`Tu es un préparateur au TOEIC. Génère ${count} questions de QCM de type "${label}", niveau ${level}.
+Réponds STRICTEMENT en JSON valide, sans texte ni balises markdown. Format EXACT :
+[{"q":"énoncé ou consigne en français si besoin","o":["option A","option B"${isListen&&part==='p2'?'':',"option C","option D"'}],"c":0,"e":"explication courte en français"${isListen?',"audio":"le texte anglais à écouter"':''}}]
+Règles : ${isListen?'le champ "audio" contient le texte anglais entendu ; ':''}les options sont en anglais, une seule bonne réponse, "c" = index (0-${part==='p2'?2:3}) de la bonne réponse, "e" en français et pédagogique. Évite les doublons.`;
+  const res=await fetch(API_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt})});
+  if(!res.ok)throw new Error('http');
+  const data=await res.json();const arr=JSON.parse(cleanJSON(extractText(data)));
+  if(!Array.isArray(arr)||!arr.length)throw new Error('format');
+  return arr.map(x=>({t:part,kind:isListen?'listening':'reading',q:x.q,o:x.o,c:x.c,e:x.e,audio:x.audio})).filter(x=>x.q&&Array.isArray(x.o)&&x.o.length>=2&&typeof x.c==='number');
+}
+function offlineFallback(part,count,kindFilter){
+  let pool=BANK;
+  if(part)pool=pool.filter(q=>q.t===part);
+  if(kindFilter)pool=pool.filter(q=>q.kind===kindFilter);
+  if(!pool.length)pool=kindFilter?BANK.filter(q=>q.kind===kindFilter):BANK;
+  return shuffle(pool).slice(0,Math.min(count,pool.length));
+}
+
+/* ============================================================ SESSION DU JOUR ============================================================ */
+function dateSeed(){const d=new Date();return d.getFullYear()*1000+(d.getMonth()+1)*40+d.getDate();}
+async function startSession(){
+  const host=document.getElementById('session-host');updateStreak();
+  host.innerHTML=`<div class="quiz-shell"><div class="loader"><div class="spinner"></div><div>Préparation de ta session du jour…</div></div></div>`;
+  let questions=null,fromAI=false;
+  try{
+    const part=PARTS[dateSeed()%PARTS.length].id;
+    questions=await generateQCM(part,'Débutant',6);fromAI=true;
+  }catch(e){questions=seededPick(BANK,6,dateSeed());}
+  runQuiz(host,questions,'Session du jour',(s,t)=>addHistory('session','Session du jour',s+'/'+t));
+  if(!fromAI)host.insertAdjacentHTML('beforeend',`<div class="muted-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>Session issue de la banque intégrée (mode hors-ligne).</div>`);
+}
+
+/* ============================================================ MODE LIBRE ============================================================ */
+function fillLibreParts(){
+  document.getElementById('libre-part').innerHTML='<option value="">Toutes les parties</option>'+PARTS.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+}
+async function genLibre(){
+  const part=document.getElementById('libre-part').value,level=document.getElementById('libre-level').value;
+  const host=document.getElementById('libre-host'),btn=document.getElementById('libre-gen');btn.disabled=true;
+  host.innerHTML=`<div class="quiz-shell"><div class="loader"><div class="spinner"></div><div>Génération du QCM…</div></div></div>`;
+  let questions=null,fromAI=false;
+  try{questions=await generateQCM(part||PARTS[0].id,level,6);fromAI=true;}
+  catch(e){questions=offlineFallback(part,6);}
+  btn.disabled=false;
+  const lbl=(part?partName(part):'Toutes parties')+' · '+level;
+  runQuiz(host,questions,lbl,(s,t)=>addHistory('libre',lbl,s+'/'+t));
+  if(!fromAI)host.insertAdjacentHTML('beforeend',`<div class="muted-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>QCM issu de la banque intégrée (mode hors-ligne).</div>`);
+}
+document.getElementById('libre-gen').addEventListener('click',genLibre);
+
+/* ============================================================ LISTENING ============================================================ */
+async function genListen(){
+  const part=document.getElementById('listen-part').value;
+  const host=document.getElementById('listen-host'),btn=document.getElementById('listen-gen');btn.disabled=true;
+  host.innerHTML=`<div class="quiz-shell"><div class="loader"><div class="spinner"></div><div>Préparation de l'écoute…</div></div></div>`;
+  let questions=null,fromAI=false;
+  try{questions=await generateQCM(part||'p2','Intermédiaire',6);fromAI=true;}
+  catch(e){questions=offlineFallback(part,6,'listening');}
+  btn.disabled=false;
+  if(!questions||!questions.length)questions=offlineFallback(part,6,'listening');
+  const lbl=(part?partName(part):'Écoute')+' 🎧';
+  runQuiz(host,questions,lbl,(s,t)=>addHistory('listening',(part?partName(part):'Listening'),s+'/'+t));
+  if(!fromAI)host.insertAdjacentHTML('beforeend',`<div class="muted-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>Écoute issue de la banque intégrée (mode hors-ligne).</div>`);
+}
+document.getElementById('listen-gen').addEventListener('click',genListen);
+
+/* ============================================================ RESSOURCES ============================================================ */
+function renderRessources(){
+  document.getElementById('videos-list').innerHTML=VIDEOS.map(v=>`
+    <a class="res-card" href="${v.url}" target="_blank" rel="noopener" style="text-decoration:none">
+      <div class="res-ic" style="background:${v.color}1f;color:${v.color}">${v.icon}</div>
+      <h4>${v.title}</h4><p>${v.desc}</p>
+      <span class="go">${v.tag} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+    </a>`).join('');
+  document.getElementById('vocab-table').innerHTML='<thead><tr><th>Mot anglais</th><th>Traduction</th><th>Thème</th></tr></thead><tbody>'+
+    VOCAB.map(v=>`<tr><td class="en">${v[0]}</td><td>${v[1]}</td><td>${v[2]}</td></tr>`).join('')+'</tbody>';
+  document.getElementById('grammar-table').innerHTML='<thead><tr><th>Point</th><th>Règle</th><th>Exemple</th></tr></thead><tbody>'+
+    GRAMMAR.map(g=>`<tr><td>${g[0]}</td><td>${g[1]}</td><td class="en">${g[2]}</td></tr>`).join('')+'</tbody>';
+  document.getElementById('tips-list').innerHTML=TIPS.map(t=>`<div class="tip-item"><span class="ti">${t[0]}</span><span>${t[1]}</span></div>`).join('');
+  document.getElementById('facts-list').innerHTML=FACTS.map(f=>`<div class="tip-item"><span class="ti">${f[0]}</span><span>${f[1]}</span></div>`).join('');
+}
+
+/* ============================================================ SUIVI ============================================================ */
+function timeAgo(ts){const s=Math.floor((Date.now()-ts)/1000);if(s<60)return "à l'instant";if(s<3600)return Math.floor(s/60)+' min';if(s<86400)return Math.floor(s/3600)+' h';return Math.floor(s/86400)+' j';}
+const HIST_ICON={session:['var(--amber)','⏱'],libre:['var(--accent)','▣'],listening:['var(--violet)','🎧'],jour:['var(--green)','📅']};
+function renderSuivi(){
+  const {a,c}=totalQcm();
+  document.getElementById('s-total').textContent=a;
+  document.getElementById('s-correct').textContent=c;
+  document.getElementById('s-level').textContent=cecrl().lvl;
+  // Réussite par partie, groupée par section
+  const secs=[['Listening','var(--violet)'],['Reading','var(--accent)']];
+  document.getElementById('theme-prog').innerHTML=secs.map(([sec,col])=>{
+    const rows=PARTS.filter(p=>p.section===sec).map(p=>{
+      const d=store.qcm.byPart[p.id];const pct=d&&d.a?Math.round(d.c/d.a*100):0;
+      return `<div class="tp-row"><span class="name">${p.short}</span><div class="bar"><i style="width:${pct}%;background:${col}"></i></div><span class="pct">${d&&d.a?pct+'%':'—'}</span></div>`;
+    }).join('');
+    return `<div style="margin:12px 0 4px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:${col}">${sec}</div>${rows}`;
+  }).join('');
+
+  // Checklist « Prêt pour le jour J »
+  const JOURJ=[
+    'Reconnaître vite les mots interrogatifs (Partie 2)',
+    'Lire les questions AVANT d\'écouter (Parties 3 & 4)',
+    'Repérer la nature du mot attendu en Partie 5 (nom/verbe/adj/adv)',
+    'Maîtriser les prépositions (in/on/at) et les connecteurs',
+    'Gérer mon temps en Reading (≈ 10 / 10 / 55 min)',
+    'Connaître 300+ mots de vocabulaire business',
+    'Répondre à TOUTES les questions (pas de point négatif)',
+    'Avoir fait au moins 1 examen blanc complet chronométré',
+    'Tenir 2 h de concentration',
+    'Connaître le format et le déroulé du test'
+  ];
+  const jl=document.getElementById('jourj-list');
+  if(jl){
+    const doneC=JOURJ.filter((_,i)=>store.jourJ['s'+i]).length;
+    const pct=Math.round(doneC/JOURJ.length*100);
+    jl.innerHTML=`<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-mute);margin-bottom:4px"><span>${doneC}/${JOURJ.length} compétences maîtrisées</span><span>${pct}%</span></div>
+      <div class="bar" style="margin-bottom:10px"><i style="width:${pct}%;background:var(--amber)"></i></div>`+
+      JOURJ.map((s,i)=>{
+      const on=!!store.jourJ['s'+i];
+      return `<label style="display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid var(--border-soft);cursor:pointer;font-size:14px">
+        <span class="jjbox" data-k="s${i}" style="width:20px;height:20px;flex:0 0 20px;border-radius:5px;border:2px solid ${on?'var(--green)':'var(--border)'};background:${on?'var(--green)':'transparent'};display:flex;align-items:center;justify-content:center;color:#0b0f14;font-size:12px;font-weight:800">${on?'✓':''}</span>
+        <span style="color:${on?'var(--text)':'var(--text-dim)'}">${s}</span>
+      </label>`;
+    }).join('');
+    jl.querySelectorAll('.jjbox').forEach(b=>b.addEventListener('click',(e)=>{e.preventDefault();const k=b.dataset.k;store.jourJ[k]=!store.jourJ[k];saveStore();renderSuivi();}));
+  }
+  const h=document.getElementById('hist-list');
+  if(!store.history.length){
+    h.innerHTML=`<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg><div>Aucune session pour le moment.<br>Lance une session du jour pour démarrer !</div></div>`;
+  }else{
+    h.innerHTML=store.history.map(it=>{const ic=HIST_ICON[it.type]||['var(--text-mute)','•'];
+      return `<div class="hist-row"><div class="hic" style="background:${ic[0]}1f;color:${ic[0]};font-weight:700">${ic[1]}</div><div class="hd"><div class="ht">${it.detail}</div><div class="hs">${timeAgo(it.d)}</div></div><div class="hv" style="color:${ic[0]}">${it.value}</div></div>`;
+    }).join('');
+  }
+}
+document.getElementById('reset-btn').addEventListener('click',()=>{
+  if(confirm('Réinitialiser toute ta progression et ton historique ? Cette action est définitive.')){
+    store={partsDone:{},qcm:{byPart:{}},curDay:1,dayDone:{},jourJ:{},streak:{count:0,last:null},history:[]};
+    saveStore();updateNavBadge();renderSuivi();renderDashboard();
+  }
+});
+
+/* ============================================================ INIT ============================================================ */
+function initSessionView(){
+  const host=document.getElementById('session-host');
+  host.innerHTML=`<div class="card" style="text-align:center;padding:34px">
+    <div style="font-size:40px;margin-bottom:8px">🎯</div>
+    <h2 class="sec" style="justify-content:center;margin-top:0"><span class="tick"></span>Prêt pour ta session ?</h2>
+    <p style="color:var(--text-dim);max-width:460px;margin:0 auto 22px">6 questions variées (écoute + lecture) sur l'ensemble du TOEIC. Compte environ 5 à 7 minutes.</p>
+    <button class="btn primary" id="start-session" style="margin:0 auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 3l14 9-14 9V3z"/></svg>Commencer</button>
+  </div>`;
+  document.getElementById('start-session').addEventListener('click',startSession);
+}
+function initListenView(){
+  const host=document.getElementById('listen-host');
+  const warn=!ttsSupported()?`<div class="audio-warn" style="margin-top:18px">🔇 Ton navigateur ne semble pas prendre en charge la lecture audio. Tu pourras quand même répondre et lire les transcriptions. Chrome, Edge ou Safari récents fonctionnent le mieux.</div>`:'';
+  host.innerHTML=`<div class="card" style="text-align:center;padding:34px">
+    <div style="font-size:40px;margin-bottom:8px">🎧</div>
+    <h2 class="sec" style="justify-content:center;margin-top:0"><span class="tick" style="background:var(--violet)"></span>Entraîne ton oreille</h2>
+    <p style="color:var(--text-dim);max-width:480px;margin:0 auto 8px">Choisis une partie ci-dessus puis clique sur « Commencer l'écoute ». L'audio se lance tout seul ; tu peux le réécouter ou le ralentir.</p>
+  </div>${warn}`;
+}
+function init(){
+  const ed=new Date(EXAM_DATE);
+  const months=['jan.','fév.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+  document.getElementById('exam-date').textContent=ed.getDate()+' '+months[ed.getMonth()];
+  updateStreak();
+  fillLibreParts();
+  updateNavBadge();
+  renderDashboard();
+  renderRessources();
+  initSessionView();
+  initListenView();
+  renderToday();
+  document.getElementById('streak-line').textContent='🔥 Série : '+store.streak.count+' jour'+(store.streak.count>1?'s':'');
+}
+init();
 </script>
 </body>
 </html>
