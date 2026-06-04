@@ -3,155 +3,204 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Boost CV — Master GFF 2027</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Objectif Certifications</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --bg: #080a0d;
-    --surface: #10131a;
-    --border: rgba(255,255,255,0.07);
-    --text: #e8eaf0;
-    --muted: #5a607a;
-    --muted2: #9298b0;
-    --toeic: #7c6dfa;
-    --toeic2: #a594ff;
-    --excel: #2d9e6b;
-    --excel2: #4dcc8f;
-    --amf: #f59e0b;
-    --amf2: #fbbf24;
-  }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-  }
-  .container { max-width: 560px; width: 100%; }
-  .header { text-align: center; margin-bottom: 48px; }
-  .eyebrow {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 12px;
-  }
-  h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: 36px;
-    font-weight: 800;
-    letter-spacing: -1px;
-    line-height: 1.1;
-    margin-bottom: 12px;
-  }
-  .sub { font-size: 15px; color: var(--muted2); line-height: 1.6; }
+:root{
+  --bg:#080b10; --bg2:#0a0f15;
+  --surface:#0f1620; --surface-2:#141d29;
+  --line:#1f2a38; --line-soft:#16202c;
+  --text:#eef3f8; --dim:#9aabbd; --mute:#5c6e82;
+  --green:#2fd27a; --green-2:#1faf63; --green-glow:rgba(47,210,122,.30);
+  --blue:#4d8dff; --blue-2:#2f6fe0; --blue-glow:rgba(77,141,255,.30);
+  --display:'Bricolage Grotesque',system-ui,sans-serif;
+  --body:'Schibsted Grotesk',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --radius:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--body); color:var(--text); min-height:100vh;
+  background:
+    radial-gradient(900px 600px at 12% 110%, rgba(47,210,122,.10), transparent 60%),
+    radial-gradient(900px 600px at 92% -10%, rgba(77,141,255,.12), transparent 60%),
+    linear-gradient(165deg, var(--bg), var(--bg2));
+  background-attachment:fixed;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:48px 22px; position:relative; overflow-x:hidden;
+}
+/* faint grid + grain overlay */
+body::before{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5;
+  background-image:
+    linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
+  background-size:64px 64px;
+  -webkit-mask-image:radial-gradient(circle at 50% 40%, #000 0%, transparent 78%);
+          mask-image:radial-gradient(circle at 50% 40%, #000 0%, transparent 78%);
+}
+body::after{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.04;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.wrap{position:relative; z-index:1; width:100%; max-width:1020px}
 
-  .cards { display: flex; flex-direction: column; gap: 14px; }
+/* header */
+.head{text-align:center; margin-bottom:42px}
+.mark{
+  width:54px; height:54px; border-radius:15px; margin:0 auto 22px;
+  background:linear-gradient(135deg, var(--green), var(--blue));
+  display:grid; place-items:center; color:#06140d; font-family:var(--display); font-weight:800; font-size:24px;
+  box-shadow:0 14px 40px -12px rgba(77,141,255,.5), 0 0 0 1px rgba(255,255,255,.06) inset;
+  animation:pop .7s cubic-bezier(.2,.9,.3,1.4) both;
+}
+.kick{
+  font-family:var(--mono); font-size:12px; font-weight:700; letter-spacing:.32em; text-transform:uppercase;
+  color:var(--mute); margin-bottom:16px; animation:fadeUp .7s .05s both;
+}
+h1{
+  font-family:var(--display); font-weight:800; line-height:1.02; letter-spacing:-.02em;
+  font-size:clamp(38px, 7vw, 68px); animation:fadeUp .7s .12s both;
+}
+h1 .em{
+  background:linear-gradient(100deg, var(--green) 10%, var(--blue) 90%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.sub{
+  max-width:600px; margin:20px auto 0; color:var(--dim); font-size:clamp(15px,2.2vw,18px); line-height:1.6;
+  animation:fadeUp .7s .2s both;
+}
 
-  .card {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 22px 24px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    text-decoration: none;
-    transition: all 0.18s;
-    position: relative;
-    overflow: hidden;
-  }
-  .card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity 0.18s;
-  }
-  .card.toeic::before { background: radial-gradient(ellipse at left, rgba(124,109,250,0.08), transparent 70%); }
-  .card.excel::before { background: radial-gradient(ellipse at left, rgba(45,158,107,0.08), transparent 70%); }
-  .card.amf::before { background: radial-gradient(ellipse at left, rgba(245,158,11,0.08), transparent 70%); }
-  .card:hover { border-color: rgba(255,255,255,0.15); transform: translateY(-1px); }
-  .card:hover::before { opacity: 1; }
+/* cards */
+.grid{display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:46px}
+.card{
+  position:relative; display:flex; flex-direction:column; text-decoration:none; color:inherit;
+  background:linear-gradient(180deg, var(--surface-2), var(--surface));
+  border:1px solid var(--line); border-radius:var(--radius); padding:30px 30px 26px; overflow:hidden;
+  transition:transform .35s cubic-bezier(.2,.8,.3,1), border-color .35s, box-shadow .35s;
+  animation:fadeUp .7s both;
+}
+.card.excel{animation-delay:.3s}
+.card.toeic{animation-delay:.4s}
+.card::before{ /* accent glow */
+  content:""; position:absolute; inset:0; opacity:.5; transition:opacity .35s; pointer-events:none;
+}
+.card.excel::before{background:radial-gradient(420px 220px at 18% -10%, var(--green-glow), transparent 60%)}
+.card.toeic::before{background:radial-gradient(420px 220px at 82% -10%, var(--blue-glow), transparent 60%)}
+.card .num{
+  position:absolute; top:22px; right:26px; font-family:var(--mono); font-size:13px; font-weight:700; color:var(--mute);
+}
+.ic{
+  width:50px; height:50px; border-radius:14px; display:grid; place-items:center; margin-bottom:20px;
+  box-shadow:0 0 0 1px rgba(255,255,255,.05) inset;
+}
+.ic svg{width:25px; height:25px; stroke-width:2}
+.excel .ic{background:rgba(47,210,122,.12); color:var(--green)}
+.toeic .ic{background:rgba(77,141,255,.14); color:var(--blue)}
+.tag{
+  font-family:var(--mono); font-size:11px; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
+  margin-bottom:10px;
+}
+.excel .tag{color:var(--green)} .toeic .tag{color:var(--blue)}
+.card h2{font-family:var(--display); font-weight:800; font-size:25px; line-height:1.12; letter-spacing:-.01em}
+.card p{color:var(--dim); font-size:14.5px; line-height:1.62; margin-top:12px}
+.chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:18px}
+.chip{
+  font-size:12px; font-weight:600; color:var(--dim);
+  background:rgba(255,255,255,.04); border:1px solid var(--line-soft); border-radius:20px; padding:5px 12px;
+}
+.cta{
+  margin-top:24px; display:inline-flex; align-items:center; gap:9px; align-self:flex-start;
+  font-family:var(--display); font-weight:700; font-size:15px; padding:12px 20px; border-radius:12px;
+  color:#06140d; transition:gap .3s, filter .3s;
+}
+.excel .cta{background:linear-gradient(135deg, var(--green), var(--green-2))}
+.toeic .cta{background:linear-gradient(135deg, var(--blue), var(--blue-2)); color:#04102b}
+.cta svg{width:18px; height:18px; stroke-width:2.4; transition:transform .3s}
+.card:hover{transform:translateY(-7px); border-color:rgba(255,255,255,.16);
+  box-shadow:0 30px 70px -34px rgba(0,0,0,.8)}
+.card.excel:hover{box-shadow:0 30px 70px -30px var(--green-glow)}
+.card.toeic:hover{box-shadow:0 30px 70px -30px var(--blue-glow)}
+.card:hover::before{opacity:1}
+.card:hover .cta{gap:14px; filter:brightness(1.06)}
+.card:hover .cta svg{transform:translateX(3px)}
 
-  .card-icon {
-    font-size: 28px;
-    flex-shrink: 0;
-    width: 52px; height: 52px;
-    background: rgba(255,255,255,0.04);
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-  }
+/* footer */
+.foot{
+  text-align:center; margin-top:40px; color:var(--mute); font-size:13px; line-height:1.6;
+  animation:fadeUp .7s .55s both;
+}
+.foot .dot{opacity:.5; margin:0 8px}
 
-  .card-body { flex: 1; }
-  .card-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 3px;
-  }
-  .card-sub { font-size: 13px; color: var(--muted2); }
+@keyframes fadeUp{from{opacity:0; transform:translateY(16px)} to{opacity:1; transform:none}}
+@keyframes pop{from{opacity:0; transform:scale(.7) rotate(-8deg)} to{opacity:1; transform:none}}
 
-  .card-badge {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    padding: 4px 10px;
-    border-radius: 20px;
-    flex-shrink: 0;
-  }
-  .card.toeic .card-badge { background: rgba(124,109,250,0.15); color: var(--toeic2); border: 1px solid rgba(124,109,250,0.3); }
-  .card.excel .card-badge { background: rgba(45,158,107,0.15); color: var(--excel2); border: 1px solid rgba(45,158,107,0.3); }
-  .card.amf .card-badge { background: rgba(245,158,11,0.12); color: var(--amf2); border: 1px solid rgba(245,158,11,0.25); }
-
-  .card.disabled { opacity: 0.45; pointer-events: none; cursor: default; }
-
-  .footer { text-align: center; margin-top: 40px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+@media (max-width:760px){
+  body{padding:40px 18px}
+  .grid{grid-template-columns:1fr; gap:16px}
+  .head{margin-bottom:34px}
+  .card{padding:26px 24px 24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important; transition:none !important}
+}
 </style>
 </head>
 <body>
-<div class="container">
-  <div class="header">
-    <div class="eyebrow">Boost CV · Master GFF 2027</div>
-    <h1>Tes certifications</h1>
-    <p class="sub">3 certifs · 1 été · Clique sur celle du jour.</p>
+  <div class="wrap">
+    <header class="head">
+      <div class="mark">C</div>
+      <div class="kick">Mon espace d'entraînement</div>
+      <h1>Objectif <span class="em">Certifications</span></h1>
+      <p class="sub">Deux préparations complètes pour valoriser ton profil : <b>Excel (TOSA)</b> et <b>anglais (TOEIC)</b>. Choisis ta prépa et avance, jour après jour.</p>
+    </header>
+
+    <div class="grid">
+      <a class="card excel" href="excel_app.html">
+        <span class="num">01</span>
+        <div class="ic">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18" opacity=".55"/></svg>
+        </div>
+        <div class="tag">Bureautique</div>
+        <h2>Excel — Certification TOSA</h2>
+        <p>Formules, tri &amp; filtres, graphiques, tableaux croisés dynamiques… Un programme guidé jour par jour pour viser le niveau Avancé.</p>
+        <div class="chips">
+          <span class="chip">Programme 40 jours</span>
+          <span class="chip">Exercices + examens blancs</span>
+          <span class="chip">Suivi de progression</span>
+        </div>
+        <span class="cta">Ouvrir la prépa Excel
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+
+      <a class="card toeic" href="toeic_app.html">
+        <span class="num">02</span>
+        <div class="ic">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        </div>
+        <div class="tag">Anglais</div>
+        <h2>Anglais — Certification TOEIC</h2>
+        <p>Listening &amp; Reading. Programme guidé jour par jour, écoute audio, QCM par partie et vocabulaire pour viser un score élevé.</p>
+        <div class="chips">
+          <span class="chip">Programme 42 jours</span>
+          <span class="chip">Écoute audio</span>
+          <span class="chip">QCM par partie</span>
+        </div>
+        <span class="cta">Ouvrir la prépa TOEIC
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+    </div>
+
+    <footer class="foot">
+      Une notion par jour, et on coche au fur et à mesure.
+      <span class="dot">•</span>
+      Ta progression est enregistrée sur cet appareil.
+    </footer>
   </div>
-
-  <div class="cards">
-    <a href="toeic_app.html" class="card toeic">
-      <div class="card-icon">🎯</div>
-      <div class="card-body">
-        <div class="card-title">TOEIC 850</div>
-        <div class="card-sub">22 mai → juillet 2026 · 70 jours</div>
-      </div>
-      <span class="card-badge">EN COURS</span>
-    </a>
-
-    <a href="excel_app.html" class="card excel">
-      <div class="card-icon">📊</div>
-      <div class="card-body">
-        <div class="card-title">Excel MOS / TOSA</div>
-        <div class="card-sub">1er → 20 juin 2026 · 20 jours</div>
-      </div>
-      <span class="card-badge">1 JUIN</span>
-    </a>
-
-    <a class="card amf disabled">
-      <div class="card-icon">🏛️</div>
-      <div class="card-body">
-        <div class="card-title">Certification AMF</div>
-        <div class="card-sub">Mi-juillet → mi-août 2026 · 3 semaines</div>
-      </div>
-      <span class="card-badge">MI-JUILLET</span>
-    </a>
-  </div>
-
-  <div class="footer">mathys · boost cv 2026</div>
-</div>
 </body>
 </html>
