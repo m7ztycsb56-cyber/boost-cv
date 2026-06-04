@@ -304,6 +304,10 @@ table.ss td input{
   .g-2,.g-3,.g-4{grid-template-columns:1fr}
   .tp-row{grid-template-columns:120px 1fr 48px}
 }
+.howto-card{transition:border-color .15s ease, transform .15s ease, background .15s ease}
+.howto-card:hover{border-color:var(--accent)!important; background:var(--surface-3)!important; transform:translateY(-1px)}
+[data-revise]{cursor:pointer}
+.ex-done{white-space:nowrap}
 </style>
 </head>
 <body>
@@ -324,7 +328,11 @@ table.ss td input{
 
     <div class="nav-label">Apprentissage</div>
     <nav class="nav" id="nav">
-      <button class="nav-item active" data-view="dashboard">
+      <button class="nav-item active" data-view="today">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        Aujourd'hui
+      </button>
+      <button class="nav-item" data-view="dashboard">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
         Tableau de bord
       </button>
@@ -343,6 +351,10 @@ table.ss td input{
       <button class="nav-item" data-view="pratique">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
         Exercices pratiques
+      </button>
+      <button class="nav-item" data-view="examen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3 8-8"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        Examen blanc
       </button>
       <button class="nav-item" data-view="ressources">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
@@ -380,11 +392,33 @@ table.ss td input{
   </div>
   <main class="main">
 
+    <!-- ===== AUJOURD'HUI ===== -->
+    <section class="view active" id="view-today">
+      <div id="today-host"></div>
+    </section>
+
     <!-- ===== DASHBOARD ===== -->
-    <section class="view active" id="view-dashboard">
-      <div class="eyebrow">Niveau débutant · Score visé 350+</div>
+    <section class="view" id="view-dashboard">
+      <div class="eyebrow">Objectif 800 · niveau Avancé · ~8 semaines</div>
       <h1 class="page">Salut Mathys 👋</h1>
-      <p class="lede">Voici ton tableau de bord. Avance pas à pas : suis le parcours, entraîne-toi avec les exercices Excel interactifs, puis valide chaque thème avec un QCM.</p>
+      <p class="lede">Ta prépa TOSA en un seul endroit. Le plus simple pour avancer : lance ta <b>séance du jour</b> ci-dessous — elle te guide en 3 étapes et fait progresser ton suivi automatiquement.</p>
+
+      <div class="card" id="dash-hero" style="margin-top:24px;border:1px solid var(--accent-soft)"></div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:14px">
+        <button class="howto-card" data-goto="session" style="text-align:left;cursor:pointer;background:var(--surface-2);border:1px solid var(--border-soft);border-radius:14px;padding:15px 16px;color:var(--text)">
+          <div style="font-size:12px;font-weight:800;color:var(--accent);margin-bottom:5px">1 · SÉANCE DU JOUR</div>
+          <div style="font-size:13px;color:var(--text-dim);line-height:1.5">Le cœur de ta prépa : QCM + exercices + manipulation Excel, guidés pas à pas.</div>
+        </button>
+        <button class="howto-card" data-goto="suivi" style="text-align:left;cursor:pointer;background:var(--surface-2);border:1px solid var(--border-soft);border-radius:14px;padding:15px 16px;color:var(--text)">
+          <div style="font-size:12px;font-weight:800;color:var(--blue);margin-bottom:5px">2 · SUIVI</div>
+          <div style="font-size:13px;color:var(--text-dim);line-height:1.5">Ta progression module par module et la prochaine étape conseillée. Tu peux y refaire un module.</div>
+        </button>
+        <button class="howto-card" data-goto="examen" style="text-align:left;cursor:pointer;background:var(--surface-2);border:1px solid var(--border-soft);border-radius:14px;padding:15px 16px;color:var(--text)">
+          <div style="font-size:12px;font-weight:800;color:var(--amber);margin-bottom:5px">3 · EXAMEN BLANC</div>
+          <div style="font-size:13px;color:var(--text-dim);line-height:1.5">Teste-toi en conditions réelles, chronométré, avec un score estimé et la correction.</div>
+        </button>
+      </div>
 
       <div class="grid g-4 stagger" style="margin-top:30px">
         <div class="stat">
@@ -420,8 +454,9 @@ table.ss td input{
             <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text-dim);margin-bottom:9px"><span id="prog-text">0 thème sur 6</span><span id="prog-pct" style="font-family:var(--mono);font-weight:700;color:var(--accent)">0%</span></div>
             <div class="bar"><i id="prog-bar" style="width:0%"></i></div>
           </div>
+          <div style="font-size:12px;color:var(--text-mute);margin-top:10px">Un module est validé quand son <b>QCM</b>, ses <b>exercices</b> et sa <b>manipulation Excel</b> sont faits.</div>
           <div class="cta-row" style="margin-top:22px">
-            <button class="btn primary" data-goto="session"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 3l14 9-14 9V3z"/></svg>Lancer la session du jour</button>
+            <button class="btn primary" data-goto="suivi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>Voir mon suivi</button>
             <button class="btn ghost" data-goto="parcours"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>Continuer le parcours</button>
           </div>
         </div>
@@ -446,9 +481,9 @@ table.ss td input{
 
     <!-- ===== SESSION ===== -->
     <section class="view" id="view-session">
-      <div class="eyebrow">Entraînement quotidien</div>
+      <div class="eyebrow">Séance guidée quotidienne</div>
       <h1 class="page">Session du jour</h1>
-      <p class="lede">5 questions fraîches chaque jour, sur l'ensemble du programme. Idéal pour 5 minutes de révision matinale.</p>
+      <p class="lede">Une séance complète en 3 étapes : <b>connaissances</b> (QCM), <b>pratique</b> (exercices) et <b>manipulation dans Excel</b> — exactement les compétences évaluées au TOSA. Le thème s'adapte à ta progression.</p>
       <div style="margin-top:26px" id="session-host"></div>
     </section>
 
@@ -485,6 +520,14 @@ table.ss td input{
       <div class="grid g-3" id="files-list"></div>
     </section>
 
+    <!-- ===== EXAMEN BLANC ===== -->
+    <section class="view" id="view-examen">
+      <div class="eyebrow">Conditions réelles · chronométré</div>
+      <h1 class="page">Examen blanc</h1>
+      <p class="lede">Un test chronométré qui imite l'examen TOSA : questions tirées de tout le programme, aucune correction pendant l'épreuve, puis un score estimé sur 1000, ton niveau, et la correction détaillée à la fin.</p>
+      <div id="examen-host"></div>
+    </section>
+
     <!-- ===== RESSOURCES ===== -->
     <section class="view" id="view-ressources">
       <div class="eyebrow">Vidéos · outils · antisèches</div>
@@ -503,9 +546,9 @@ table.ss td input{
 
     <!-- ===== SUIVI ===== -->
     <section class="view" id="view-suivi">
-      <div class="eyebrow">Statistiques</div>
+      <div class="eyebrow">Progression guidée</div>
       <h1 class="page">Ton suivi</h1>
-      <p class="lede">Tes résultats par thème et l'historique de tes sessions. Tout est enregistré sur cet appareil.</p>
+      <p class="lede">Ta progression module par module sur les 3 dimensions du TOSA, et ce qu'il te reste à faire. Tout est enregistré sur cet appareil.</p>
 
       <div class="grid g-3 stagger" style="margin-top:28px">
         <div class="stat"><div class="num" id="s-total">0</div><div class="lab">questions répondues</div><div class="spark">∑</div></div>
@@ -513,18 +556,33 @@ table.ss td input{
         <div class="stat"><div class="num" id="s-ex" style="color:var(--blue)">0</div><div class="lab">exercices réussis</div><div class="spark">★</div></div>
       </div>
 
-      <div class="grid g-2" style="margin-top:16px">
-        <div class="card">
-          <h2 class="sec" style="margin-top:0"><span class="tick"></span>Réussite par thème</h2>
-          <div class="theme-prog" id="theme-prog"></div>
-        </div>
-        <div class="card">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <h2 class="sec" style="margin-top:0"><span class="tick" style="background:var(--blue)"></span>Historique</h2>
-            <button class="btn ghost sm" id="reset-btn">Réinitialiser</button>
+      <div class="card" id="next-step-card" style="margin-top:16px"></div>
+
+      <div class="card" style="margin-top:16px">
+        <h2 class="sec" style="margin-top:0"><span class="tick"></span>Progression — plan sur 8 semaines</h2>
+        <p style="color:var(--text-mute);font-size:13px;margin:-6px 0 6px">Tes 11 modules regroupés par semaine. Chaque module se valide sur 3 dimensions : <b>QCM</b> (5 questions), <b>exercices</b> et <b>manipulation dans Excel</b>. Le bouton <b>Réviser / Refaire</b> relance la séance de ce module.</p>
+        <div id="module-prog"></div>
+      </div>
+
+      <div class="card" id="jourj-card" style="margin-top:16px">
+        <h2 class="sec" style="margin-top:0"><span class="tick" style="background:var(--amber)"></span>Prêt pour le jour J ?</h2>
+        <p style="color:var(--text-mute);font-size:13px;margin:-6px 0 10px">Coche chaque compétence quand tu sais la faire <b>de tête, dans le vrai Excel</b>. Quand tout est coché, tu es prêt à passer un examen blanc officiel.</p>
+        <div id="jourj-list"></div>
+        <div style="margin-top:14px;padding:13px 15px;background:var(--amber)1a;border:1px solid var(--amber);border-radius:11px;font-size:13.5px;color:var(--text)">
+          🎯 <b>L'étape finale indispensable :</b> passe 1 à 2 <b>examens blancs officiels</b> (~10 jours avant le jour J). C'est le seul vrai prédicteur de ton score.
+          <div style="margin-top:8px;display:flex;gap:9px;flex-wrap:wrap">
+            <a href="https://www.tosa.org/FR/certification-microsoft-excel?sbj_id=57" target="_blank" rel="noopener" class="btn ghost sm" style="text-decoration:none">Examen officiel TOSA →</a>
+            <a href="https://www.isograd.com/FR/tosa.php" target="_blank" rel="noopener" class="btn ghost sm" style="text-decoration:none">Trouver un centre (Isograd) →</a>
           </div>
-          <div class="hist" id="hist-list"></div>
         </div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h2 class="sec" style="margin-top:0"><span class="tick" style="background:var(--blue)"></span>Historique</h2>
+          <button class="btn ghost sm" id="reset-btn">Réinitialiser</button>
+        </div>
+        <div class="hist" id="hist-list"></div>
       </div>
     </section>
 
@@ -541,31 +599,46 @@ table.ss td input{
 // du texte pour un POST { prompt }. Le site fonctionne aussi 100%
 // hors-ligne grâce à la banque de questions intégrée.
 const API_ENDPOINT = '/.netlify/functions/claude';
-const EXAM_DATE = '2026-06-20';
+const EXAM_DATE = '2026-07-29';   // ~8 semaines : objectif 800 (niveau Avancé). À ajuster à ta vraie date d'inscription.
 const STORE_KEY = 'tosa_excel_v1';
 
 /* ============================================================
    THEMES & PARCOURS
    ============================================================ */
 const THEMES = [
-  {id:'interface', short:'Interface', name:'Interface & navigation', days:'Jours 1-2', color:'var(--accent)',
+  {id:'interface', short:'Interface', name:'Interface & navigation', days:'Semaine 1', color:'var(--accent)',
    desc:"Le ruban, les onglets, la cellule active, la saisie et les déplacements rapides au clavier.",
-   chips:['Ruban & onglets','Cellule / plage / classeur','Saisie','Ctrl + flèches','Annuler / Rétablir']},
-  {id:'miseEnForme', short:'Mise en forme', name:'Mise en forme', days:'Jours 3-4', color:'var(--blue)',
+   chips:['Ruban & onglets','Cellule / plage / classeur','Saisie','Ctrl + flèches']},
+  {id:'miseEnForme', short:'Mise en forme', name:'Mise en forme', days:'Semaine 1', color:'var(--blue)',
    desc:"Formats de nombre, police, bordures, alignement, fusion et reproduction de la mise en forme.",
-   chips:['Format nombre / %','Gras, bordures','Fusionner & centrer','Largeur colonne','Pinceau']},
-  {id:'formules', short:'Formules', name:'Formules de base', days:'Jours 5-10', color:'var(--accent)',
-   desc:"Le cœur du TOSA : SOMME, MOYENNE, MIN, MAX, NB, références relatives/absolues et recopie.",
-   chips:['= pour commencer','SOMME / MOYENNE','MIN / MAX / NB','Références $','Poignée de recopie']},
-  {id:'tri', short:'Tri & filtres', name:'Tri & filtres', days:'Jours 11-13', color:'var(--amber)',
-   desc:"Trier des données croissant/décroissant, tri multi-niveaux et filtres automatiques.",
+   chips:['Format nombre / %','Bordures','Fusionner','Mise en forme conditionnelle']},
+  {id:'formules', short:'Formules', name:'Formules de base', days:'Semaine 2', color:'var(--accent)',
+   desc:"SOMME, MOYENNE, MIN, MAX, NB, NBVAL, références relatives/absolues ($) et recopie.",
+   chips:['= pour commencer','SOMME / MOYENNE','MIN / MAX / NB','Références $']},
+  {id:'tri', short:'Tri & filtres', name:'Tri & filtres', days:'Semaine 3', color:'var(--amber)',
+   desc:"Trier croissant/décroissant, tri multi-niveaux et filtres automatiques.",
    chips:['Tri A→Z / Z→A','Tri multi-critères','Filtre automatique','Ctrl+Maj+L']},
-  {id:'graphiques', short:'Graphiques', name:'Graphiques', days:'Jours 14-15', color:'var(--blue)',
+  {id:'graphiques', short:'Graphiques', name:'Graphiques', days:'Semaine 3', color:'var(--blue)',
    desc:"Choisir le bon type de graphique, le créer et soigner ses éléments (titre, légende, axes).",
    chips:['Histogramme','Courbe','Secteurs','Titre & légende']},
-  {id:'gestion', short:'Gestion', name:'Gestion & impression', days:'Jours 16-18', color:'var(--accent)',
-   desc:"Feuilles, figer les volets, formats de fichier (.xlsx / .csv) et impression. Puis révisions.",
-   chips:['Feuilles','Figer les volets','.xlsx / .csv','Impression','Examens blancs']}
+  {id:'logique', short:'Logique', name:'Fonctions logiques', days:'Semaine 4', color:'var(--accent)',
+   desc:"La fonction SI (et SI imbriqués), ET, OU, SIERREUR : la base du raisonnement conditionnel.",
+   chips:['⭐ Avancé','SI','ET / OU','SI imbriqué','SIERREUR']},
+  {id:'conditionnelles', short:'Calculs SI', name:'Calculs conditionnels', days:'Semaine 5', color:'var(--blue)',
+   desc:"Compter et additionner selon un critère : NB.SI, SOMME.SI, MOYENNE.SI. Incontournable au TOSA avancé.",
+   chips:['⭐ Avancé','NB.SI','SOMME.SI','MOYENNE.SI','Critères']},
+  {id:'recherche', short:'RECHERCHEV', name:'Recherche (RECHERCHEV)', days:'Semaine 6', color:'var(--amber)',
+   desc:"Aller chercher une valeur dans un tableau grâce à RECHERCHEV : LA fonction star du niveau avancé.",
+   chips:['⭐ Avancé','RECHERCHEV','Table de référence','Correspondance exacte']},
+  {id:'texte', short:'Texte', name:'Fonctions texte', days:'Semaine 6', color:'var(--accent)',
+   desc:"Manipuler du texte : GAUCHE, DROITE, STXT, NBCAR, MAJUSCULE/MINUSCULE, CONCATENER et l'opérateur &.",
+   chips:['⭐ Avancé','GAUCHE / DROITE','STXT','MAJUSCULE','CONCATENER']},
+  {id:'tcd', short:'TCD', name:'Tableaux croisés dynamiques', days:'Semaine 7', color:'var(--blue)',
+   desc:"Créer un tableau croisé dynamique pour synthétiser de grandes listes : le gros morceau du TOSA avancé.",
+   chips:['⭐ Avancé','Créer un TCD','Lignes / Colonnes / Valeurs','Synthèse']},
+  {id:'gestion', short:'Gestion', name:'Gestion, impression & révisions', days:'Semaine 8', color:'var(--accent)',
+   desc:"Feuilles, figer les volets, formats de fichier (.xlsx / .csv), impression. Puis révisions et examens blancs.",
+   chips:['Feuilles','Impression','.xlsx / .csv','Examens blancs']}
 ];
 
 /* ============================================================
@@ -628,7 +701,159 @@ const BANK = [
   {t:'gestion',q:"Pour renommer une feuille, le plus simple est de :",o:["Double-cliquer sur l'onglet","Faire Ctrl + R","La supprimer puis recréer","Passer par Insertion"],c:0,e:"Double-clic sur le nom de l'onglet, puis on saisit le nouveau nom."},
   {t:'gestion',q:"L'aperçu avant impression permet de :",o:["Modifier les formules","Voir le rendu papier avant d'imprimer","Trier","Créer un graphique"],c:1,e:"Il montre la mise en page imprimée (sauts de page, marges…)."},
   {t:'gestion',q:"Le format .csv est surtout utile pour :",o:["Conserver les graphiques","Échanger des données simples (texte séparé par des séparateurs)","Ajouter des macros","La mise en forme avancée"],c:1,e:"Le CSV ne garde que les données brutes, sans mise en forme ni graphiques."},
-  {t:'gestion',q:"Le raccourci pour ouvrir la boîte d'impression :",o:["Ctrl + P","Ctrl + S","Ctrl + I","Ctrl + G"],c:0,e:"Ctrl + P (Print) ouvre l'aperçu et les options d'impression."}
+  {t:'gestion',q:"Le raccourci pour ouvrir la boîte d'impression :",o:["Ctrl + P","Ctrl + S","Ctrl + I","Ctrl + G"],c:0,e:"Ctrl + P (Print) ouvre l'aperçu et les options d'impression."},
+
+  // ---- Interface (compléments) ----
+  {t:'interface',q:"La zone en haut à gauche qui affiche le nom de la cellule active (ex. B3) s'appelle :",o:["La Zone Nom","La barre de formule","Le ruban","La barre d'état"],c:0,e:"La Zone Nom (à gauche de la barre de formule) indique la référence de la cellule active et permet de s'y déplacer."},
+  {t:'interface',q:"Pour sélectionner plusieurs cellules NON adjacentes :",o:["On maintient Ctrl en cliquant sur chacune","On maintient Maj","On double-clique","On appuie sur Tab"],c:0,e:"La touche Ctrl enfoncée permet d'ajouter des cellules éparses à la sélection."},
+  {t:'interface',q:"Pour insérer une ligne au-dessus de la ligne 5 :",o:["Clic droit sur l'en-tête de la ligne 5 > Insérer","Ctrl + S","Double-clic sur la cellule","Menu Données"],c:0,e:"Clic droit sur le numéro de ligne puis « Insérer » : la nouvelle ligne se place au-dessus."},
+  {t:'interface',q:"La touche Échap (Esc) pendant une saisie :",o:["Annule ce qu'on est en train de taper","Valide la saisie","Supprime la cellule","Enregistre"],c:0,e:"Échap abandonne la saisie en cours et restaure l'ancien contenu."},
+  {t:'interface',q:"Ctrl + Origine (Home) amène la sélection :",o:["En cellule A1","À la dernière cellule","En bas de la colonne","Sur la feuille suivante"],c:0,e:"Ctrl + Origine ramène directement en haut à gauche, en A1."},
+  {t:'interface',q:"La barre d'état (en bas) peut afficher automatiquement :",o:["La somme et la moyenne des cellules sélectionnées","Les formules","Les graphiques","Les marges"],c:0,e:"En sélectionnant des nombres, la barre d'état affiche somme, moyenne et nombre sans écrire de formule."},
+  {t:'interface',q:"Pour passer d'une feuille à la suivante au clavier :",o:["Ctrl + Page suivante","Ctrl + S","Alt + Tab","Ctrl + Z"],c:0,e:"Ctrl + Page suivante / précédente change de feuille."},
+  {t:'interface',q:"Une colonne est désignée par :",o:["Une lettre (A, B, C…)","Un chiffre","Une couleur","Un symbole"],c:0,e:"Les colonnes sont des lettres, les lignes des chiffres."},
+  {t:'interface',q:"Pour valider une saisie et rester sur la même cellule :",o:["Ctrl + Entrée","Entrée","Tab","Échap"],c:0,e:"Ctrl + Entrée valide sans déplacer la sélection."},
+
+  // ---- Mise en forme (compléments) ----
+  {t:'miseEnForme',q:"Pour aligner un nombre à droite dans une cellule :",o:["Accueil > Alignement à droite","Insertion > Graphique","Données > Trier","Formules"],c:0,e:"Les boutons d'alignement (gauche / centre / droite) sont dans Accueil > Alignement."},
+  {t:'miseEnForme',q:"Le format « Comptabilité » se distingue surtout par :",o:["L'alignement des symboles € et des décimales en colonne","La couleur du texte","La police","Rien du tout"],c:0,e:"Le format Comptabilité aligne symboles monétaires et décimales pour des colonnes lisibles."},
+  {t:'miseEnForme',q:"Pour afficher 1234567 sous la forme 1 234 567 :",o:["Utiliser le séparateur de milliers","Mettre en gras","Changer la police","Fusionner"],c:0,e:"Le séparateur de milliers regroupe les chiffres par 3."},
+  {t:'miseEnForme',q:"La mise en forme conditionnelle « barres de données » :",o:["Affiche une mini-barre proportionnelle à la valeur dans la cellule","Trie les données","Calcule une somme","Crée un graphique séparé"],c:0,e:"Les barres de données dessinent une jauge colorée dans la cellule, selon la valeur."},
+  {t:'miseEnForme',q:"« Mettre sous forme de tableau » applique :",o:["Un style complet (bandes, en-têtes) et active les filtres","Seulement une bordure","Un tri définitif","Un graphique"],c:0,e:"Cette commande met en forme la plage et ajoute les filtres automatiquement."},
+  {t:'miseEnForme',q:"Le bouton « Augmenter les décimales » :",o:["Affiche plus de chiffres après la virgule (la valeur réelle ne change pas)","Arrondit la vraie valeur","Multiplie par 10","Change la police"],c:0,e:"Il modifie seulement l'affichage : la valeur stockée reste identique."},
+  {t:'miseEnForme',q:"Effacer UNIQUEMENT la mise en forme (sans le contenu) :",o:["Accueil > Effacer > Effacer les formats","Touche Suppr","Couper","Fusionner"],c:0,e:"« Effacer les formats » retire couleurs/bordures mais garde les valeurs."},
+  {t:'miseEnForme',q:"Pour incliner le texte d'une cellule en diagonale :",o:["Accueil > Orientation","Insertion > Forme","Données > Trier","Révision"],c:0,e:"Le bouton « Orientation » (groupe Alignement) fait pivoter le texte."},
+  {t:'miseEnForme',q:"Pour ajouter une bordure autour d'une plage :",o:["Accueil > Bordures","Insertion > Tableau","Affichage > Quadrillage","Données"],c:0,e:"Le menu Bordures (groupe Police) propose contours et bordures intérieures."},
+  {t:'miseEnForme',q:"Le quadrillage gris affiché à l'écran :",o:["Ne s'imprime pas par défaut","S'imprime toujours","Remplace les bordures","Empêche la saisie"],c:0,e:"Pour des traits imprimés, il faut ajouter de vraies bordures."},
+
+  // ---- Formules (compléments) ----
+  {t:'formules',q:"Pour calculer 20 % de la valeur en B2 :",o:["=B2*20%","=B2+20%","=20%/B2","=SOMME(B2;20)"],c:0,e:"Multiplier par 20 % (soit 0,2) : =B2*20%."},
+  {t:'formules',q:"=B2/C2 calcule :",o:["B2 divisé par C2","B2 fois C2","La somme","Le reste"],c:0,e:"La barre oblique / est l'opérateur de division."},
+  {t:'formules',q:"Le résultat de =(10+2)*3 est :",o:["36","16","32","60"],c:0,e:"Parenthèses d'abord : 10+2=12, puis ×3 = 36."},
+  {t:'formules',q:"L'erreur #DIV/0! signifie :",o:["Une division par zéro (ou par une cellule vide)","Une référence introuvable","Un texte au lieu d'un nombre","Une formule trop longue"],c:0,e:"#DIV/0! apparaît quand on divise par 0 ou par une cellule vide."},
+  {t:'formules',q:"L'erreur #VALEUR! survient souvent quand :",o:["On fait un calcul sur du texte","On divise par zéro","La cellule est vide","On trie les données"],c:0,e:"#VALEUR! signale un type incompatible, ex. additionner un nombre et du texte."},
+  {t:'formules',q:"Pour additionner les cellules non adjacentes B2, B5 et B8 :",o:["=SOMME(B2;B5;B8)","=SOMME(B2:B8)","=B2:B8","=SOMME(B2-B8)"],c:0,e:"On sépare les arguments par des points-virgules : =SOMME(B2;B5;B8)."},
+  {t:'formules',q:"En recopiant =A1+A2 de la ligne 1 vers la ligne 2, on obtient :",o:["=A2+A3","=A1+A2","=B1+B2","=A3+A4"],c:0,e:"Les références relatives s'adaptent : A1→A2 et A2→A3."},
+  {t:'formules',q:"La touche F4 sur une référence dans une formule :",o:["Ajoute les $ (passe en référence absolue)","Supprime la formule","Trie","Ouvre l'aide"],c:0,e:"F4 bascule entre relatif, absolu ($A$1) et mixtes."},
+  {t:'formules',q:"Pour compter les cellules contenant du texte OU des nombres (non vides) :",o:["=NBVAL(A1:A10)","=NB(A1:A10)","=SOMME(A1:A10)","=MAX(A1:A10)"],c:0,e:"NBVAL compte toutes les cellules non vides ; NB ne compte que les nombres."},
+  {t:'formules',q:"Dans =$A1, lorsqu'on recopie vers la droite :",o:["La colonne A reste fixe, la ligne peut changer","Tout change","Tout reste fixe","Erreur"],c:0,e:"Le $ devant A fige la colonne ; la ligne reste relative : c'est une référence mixte."},
+  {t:'formules',q:"=MOYENNE(2;4;6) donne :",o:["4","12","6","3"],c:0,e:"(2+4+6)/3 = 12/3 = 4."},
+  {t:'formules',q:"Pour soustraire C2 de B2 :",o:["=B2-C2","=SOMME(B2;C2)","=B2*C2","=C2-B2"],c:0,e:"=B2-C2. (C2-B2 donnerait l'opposé.)"},
+  {t:'formules',q:"=SOMME(B2:B4)*2 avec B2=1, B3=2, B4=3 vaut :",o:["12","6","8","18"],c:0,e:"Somme = 6, puis ×2 = 12."},
+  {t:'formules',q:"L'opérateur de multiplication dans une formule est :",o:["*","la lettre x","×","·"],c:0,e:"L'astérisque * sert à multiplier."},
+  {t:'formules',q:"Une cellule affiche ######## : cela signifie que :",o:["La colonne est trop étroite pour le nombre","La formule est fausse","Il manque un =","Division par zéro"],c:0,e:"Les ### veulent juste dire « colonne trop étroite » : on l'élargit."},
+  {t:'formules',q:"=ARRONDI(2,5;0) donne :",o:["3","2","2,5","0"],c:0,e:"Arrondi à 0 décimale : 2,5 → 3."},
+  {t:'formules',q:"Pour qu'une formule pointe toujours vers B1 même après recopie :",o:["$B$1","B1","B$1 seulement","$B1 seulement"],c:0,e:"$B$1 fige la colonne ET la ligne : référence totalement absolue."},
+  {t:'formules',q:"Le résultat de =MIN(8;3;5) est :",o:["3","8","5","16"],c:0,e:"MIN renvoie la plus petite valeur, ici 3."},
+
+  // ---- Tri & filtres (compléments) ----
+  {t:'tri',q:"Avant de trier un tableau muni d'en-têtes, il faut :",o:["Cocher « Mes données ont des en-têtes »","Fusionner les cellules","Vider les colonnes","Convertir en .csv"],c:0,e:"Cette option évite que la ligne de titres soit triée avec les données."},
+  {t:'tri',q:"Trier des dates du plus récent au plus ancien est un tri :",o:["Décroissant","Croissant","Alphabétique","Par couleur"],c:0,e:"Pour les dates, « décroissant » va du plus récent au plus ancien."},
+  {t:'tri',q:"Pour n'afficher que les lignes dont le montant dépasse 100 :",o:["Un filtre numérique « supérieur à »","Un tri","Une fusion","Une bordure"],c:0,e:"Les filtres numériques proposent « supérieur à », « entre », etc."},
+  {t:'tri',q:"L'icône en forme d'entonnoir sur un en-tête signifie :",o:["Qu'un filtre est actif sur cette colonne","Que la colonne est triée","Que la cellule est verrouillée","Une erreur"],c:0,e:"L'entonnoir indique qu'un filtre masque une partie des lignes."},
+  {t:'tri',q:"Pour réafficher toutes les lignes après un filtre :",o:["Données > Effacer (le filtre)","Supprimer les colonnes","Forcément Ctrl + Z","Fusionner"],c:0,e:"« Effacer » réaffiche toutes les lignes sans supprimer de données."},
+  {t:'tri',q:"Peut-on trier un tableau selon la couleur des cellules ?",o:["Oui, par couleur de remplissage ou de police","Non, jamais","Seulement en .csv","Seulement les nombres"],c:0,e:"Excel permet de trier et filtrer par couleur."},
+  {t:'tri',q:"Un tri de Z à A correspond à :",o:["Un tri décroissant (alphabétique inversé)","Un tri croissant","Un filtre","Une fusion"],c:0,e:"Z→A = ordre alphabétique inversé, donc décroissant."},
+  {t:'tri',q:"Dans un tri à plusieurs niveaux, le 1er critère est :",o:["Appliqué en premier (critère principal)","Le moins important","Ignoré","Toujours alphabétique"],c:0,e:"Le 1er niveau trie d'abord ; les suivants départagent les égalités."},
+
+  // ---- Graphiques (compléments) ----
+  {t:'graphiques',q:"Pour comparer l'évolution de 2 produits sur 12 mois :",o:["Un graphique en courbes (2 séries)","Un camembert","Une seule barre","Aucun"],c:0,e:"Deux courbes montrent clairement deux évolutions dans le temps."},
+  {t:'graphiques',q:"Un graphique en secteurs (camembert) convient quand :",o:["Les parts forment un tout (100 %)","On suit une évolution","Il y a beaucoup de séries","On compare des dates"],c:0,e:"Le camembert illustre la répartition d'un ensemble."},
+  {t:'graphiques',q:"Pour ajouter un titre à un graphique :",o:["Outils de graphique > Ajouter un élément > Titre","Données > Trier","Insertion > Fonction","Accueil > Police"],c:0,e:"Titre, légende et étiquettes s'ajoutent via « Ajouter un élément de graphique »."},
+  {t:'graphiques',q:"Les « étiquettes de données » servent à :",o:["Afficher la valeur exacte sur chaque barre/point","Trier","Changer les couleurs","Filtrer"],c:0,e:"Elles affichent les valeurs directement sur le graphique."},
+  {t:'graphiques',q:"Pour changer le type d'un graphique déjà créé :",o:["Clic droit > Modifier le type de graphique","Le supprimer et tout recommencer","Données > Filtrer","C'est impossible"],c:0,e:"On peut changer le type à tout moment via « Modifier le type de graphique »."},
+  {t:'graphiques',q:"Un histogramme empilé permet de voir :",o:["Le total et la part de chaque catégorie dans une même barre","Une seule évolution","Un camembert","Un tri"],c:0,e:"Les segments empilés montrent la contribution de chaque série au total."},
+  {t:'graphiques',q:"La légende d'un graphique :",o:["Peut être déplacée (haut, bas, droite…) ou masquée","Reste toujours en haut","N'est jamais modifiable","Sert à trier"],c:0,e:"On positionne ou masque la légende via les éléments de graphique."},
+  {t:'graphiques',q:"Pour créer un graphique, on commence par :",o:["Sélectionner la plage (titres + valeurs) puis Insertion > Graphique","Insérer un graphique vide","Trier d'abord","Imprimer"],c:0,e:"On sélectionne les données (en-têtes compris) avant d'insérer le graphique."},
+
+  // ---- Gestion & impression (compléments) ----
+  {t:'gestion',q:"Pour enregistrer un classeur sous un NOUVEAU nom :",o:["Fichier > Enregistrer sous","Ctrl + S","Fichier > Imprimer","Fermer"],c:0,e:"« Enregistrer sous » crée une copie ; Ctrl + S écrase le fichier actuel."},
+  {t:'gestion',q:"Pour qu'un tableau tienne sur une seule page à l'impression :",o:["Mise en page > Ajuster à 1 page","Changer la police","Fusionner toutes les cellules","Supprimer des colonnes"],c:0,e:"Les options « Ajuster à » réduisent l'échelle pour tenir sur le nombre de pages voulu."},
+  {t:'gestion',q:"Définir une « zone d'impression » permet :",o:["D'imprimer uniquement la plage choisie","De trier","De verrouiller le fichier","D'ajouter un graphique"],c:0,e:"La zone d'impression limite l'impression aux cellules sélectionnées."},
+  {t:'gestion',q:"Pour répéter la ligne de titres sur chaque page imprimée :",o:["Mise en page > Imprimer les titres","Figer les volets","Fusionner","Filtrer"],c:0,e:"« Imprimer les titres » répète une ligne sur toutes les pages ; « Figer les volets » n'agit qu'à l'écran."},
+  {t:'gestion',q:"Pour dupliquer une feuille dans le même classeur :",o:["Clic droit sur l'onglet > Déplacer ou copier > « Créer une copie »","Ctrl + N","La supprimer","Fusionner"],c:0,e:"« Déplacer ou copier » avec « Créer une copie » duplique la feuille."},
+  {t:'gestion',q:"Pour changer la couleur d'un onglet de feuille :",o:["Clic droit sur l'onglet > Couleur d'onglet","Accueil > Police","Données > Trier","C'est impossible"],c:0,e:"Le clic droit sur l'onglet propose « Couleur d'onglet »."},
+  {t:'gestion',q:"L'orientation « Paysage » à l'impression signifie :",o:["La page est plus large que haute","La page est plus haute que large","Sans marges","En noir et blanc"],c:0,e:"Paysage = horizontal, pratique pour les tableaux larges."},
+  {t:'gestion',q:"Pour forcer le passage à la page suivante à un endroit précis :",o:["Insérer un saut de page (Mise en page > Sauts de page)","Appuyer sur Entrée","Ctrl + S","Fusionner"],c:0,e:"Le saut de page manuel force le changement de page à l'endroit choisi."},
+  {t:'gestion',q:"Enregistrer au format PDF sert surtout à :",o:["Partager un document non modifiable, fidèle à la mise en page","Ajouter des formules","Trier plus vite","Réduire le nombre de feuilles"],c:0,e:"Le PDF fige la mise en page et empêche la modification : idéal pour l'envoi."},
+  {t:'gestion',q:"Le raccourci pour créer un nouveau classeur :",o:["Ctrl + N","Ctrl + O","Ctrl + P","Ctrl + W"],c:0,e:"Ctrl + N (New). Ctrl + O ouvre, Ctrl + W ferme, Ctrl + P imprime."},
+
+  // ---- Fonctions logiques (SI, ET, OU, SIERREUR) ----
+  {t:'logique',q:"À quoi sert la fonction SI ?",o:["Trier des données","Afficher un résultat différent selon qu'une condition est vraie ou fausse","Compter des cellules","Créer un graphique"],c:1,e:"SI teste une condition et renvoie une valeur si elle est vraie, une autre si elle est fausse."},
+  {t:'logique',q:"Quelle est la syntaxe correcte de SI ?",o:["=SI(condition;valeur_si_vrai;valeur_si_faux)","=SI(valeur;condition)","=SI(condition:valeur)","=SI()"],c:0,e:"En Excel français : =SI(test ; résultat si VRAI ; résultat si FAUX), arguments séparés par des points-virgules."},
+  {t:'logique',q:'=SI(A1>=10;"Reçu";"Recalé") affiche « Reçu » quand :',o:["A1 est supérieur ou égal à 10","A1 est inférieur à 10","A1 vaut 0","jamais"],c:0,e:"La condition A1>=10 étant vraie, c'est la 1re valeur (« Reçu ») qui s'affiche."},
+  {t:'logique',q:"Pour vérifier que DEUX conditions sont vraies en même temps, on utilise :",o:["ET","OU","NON","SI tout seul"],c:0,e:"ET(cond1;cond2) renvoie VRAI seulement si toutes les conditions sont vraies."},
+  {t:'logique',q:"=OU(A1>10;B1>10) renvoie VRAI si :",o:["les deux conditions sont vraies","au moins une condition est vraie","aucune n'est vraie","A1 = B1"],c:1,e:"OU est vrai dès qu'au moins une des conditions est vraie."},
+  {t:'logique',q:"À quoi sert SIERREUR ?",o:["Créer une erreur","Afficher une valeur de remplacement si la formule renvoie une erreur","Trier","Arrondir"],c:1,e:"=SIERREUR(formule;valeur_de_secours) évite d'afficher #N/A, #DIV/0!, etc."},
+  {t:'logique',q:"Que calcule =SI(A1>1000;A1*5%;0) ?",o:["toujours 5 % de A1","5 % de A1 seulement si A1 dépasse 1000, sinon 0","A1 + 5","une erreur"],c:1,e:"Une prime de 5 % conditionnée : versée uniquement si A1 > 1000."},
+  {t:'logique',q:"Qu'est-ce qu'un SI imbriqué ?",o:["Deux feuilles liées","Un SI placé dans le résultat d'un autre SI, pour gérer plus de 2 cas","Un graphique","Un filtre"],c:1,e:"Ex : =SI(note>=16;\"Très bien\";SI(note>=10;\"Reçu\";\"Recalé\"))."},
+  {t:'logique',q:'Le résultat de =SI(5>3;"Oui";"Non") est :',o:['« Oui »','« Non »','5','3'],c:0,e:"5 > 3 est vrai, donc la formule renvoie « Oui »."},
+  {t:'logique',q:"Dans une condition, « différent de » s'écrit :",o:["<>","!=","=/=","><"],c:0,e:"En Excel, l'opérateur « différent de » est <> (ex. A1<>0)."},
+
+  // ---- Calculs conditionnels (NB.SI, SOMME.SI, MOYENNE.SI) ----
+  {t:'conditionnelles',q:"À quoi sert NB.SI ?",o:["Compter les cellules qui répondent à un critère","Tout additionner","Trier","Créer un TCD"],c:0,e:"NB.SI compte uniquement les cellules respectant le critère donné."},
+  {t:'conditionnelles',q:"Quelle est la syntaxe de NB.SI ?",o:["=NB.SI(plage;critère)","=NB.SI(critère)","=NB.SI(plage)","=NB(plage;critère)"],c:0,e:"=NB.SI(plage_à_examiner ; critère)."},
+  {t:'conditionnelles',q:'=NB.SI(A1:A20;"Paris") compte :',o:["le nombre de cellules contenant « Paris »","la somme des valeurs","la moyenne","les cellules vides"],c:0,e:"Il compte les cellules de la plage égales à « Paris »."},
+  {t:'conditionnelles',q:"À quoi sert SOMME.SI ?",o:["Additionner les valeurs qui répondent à un critère","Compter","Trier","Arrondir"],c:0,e:"SOMME.SI additionne seulement les valeurs respectant le critère."},
+  {t:'conditionnelles',q:'=SOMME.SI(B1:B10;">100") additionne :',o:["les valeurs supérieures à 100","toutes les valeurs","le nombre de valeurs","les valeurs inférieures à 100"],c:0,e:"Seules les valeurs strictement supérieures à 100 sont additionnées."},
+  {t:'conditionnelles',q:'Dans =SOMME.SI(A1:A10;"Nord";B1:B10), que fait Excel ?',o:["Il additionne les valeurs de B quand A vaut « Nord »","Il compte les « Nord »","Il additionne la colonne A","Il trie"],c:0,e:"1re plage = critère (colonne A), 3e plage = valeurs à additionner (colonne B)."},
+  {t:'conditionnelles',q:"À quoi sert MOYENNE.SI ?",o:["Calculer la moyenne des valeurs répondant à un critère","La somme","Le nombre total","Le maximum"],c:0,e:"MOYENNE.SI fait la moyenne des seules valeurs qui respectent le critère."},
+  {t:'conditionnelles',q:"Pour compter les cellules dont la valeur est ≥ 50 :",o:['=NB.SI(plage;">=50")','=NB(plage;50)','=SOMME.SI(plage;50)','=NB.SI(plage;50)'],c:0,e:"Le critère « >=50 » se met entre guillemets : =NB.SI(plage;\">=50\")."},
+  {t:'conditionnelles',q:'Dans un critère, « >10 » signifie :',o:["supérieur ou égal à 10","strictement supérieur à 10","égal à 10","inférieur à 10"],c:1,e:"« >10 » = strictement supérieur (10 exclu). « >=10 » inclurait 10."},
+  {t:'conditionnelles',q:"NB.SI et SOMME.SI sont surtout utiles pour :",o:["mettre en forme","analyser une liste par catégories/critères","imprimer","changer la police"],c:1,e:"Ce sont les outils de base pour faire des bilans conditionnels sur une liste."},
+
+  // ---- Recherche (RECHERCHEV) ----
+  {t:'recherche',q:"À quoi sert RECHERCHEV ?",o:["Retrouver une valeur dans un tableau à partir d'un identifiant","Trier","Compter","Mettre en forme"],c:0,e:"RECHERCHEV va chercher une donnée dans une table à partir d'une valeur clé."},
+  {t:'recherche',q:"Quelle est la syntaxe de RECHERCHEV ?",o:["=RECHERCHEV(valeur_cherchée;table;n°_colonne;FAUX)","=RECHERCHEV(table;valeur)","=RECHERCHEV(valeur)","=RECHERCHE(table)"],c:0,e:"=RECHERCHEV(ce qu'on cherche ; la table ; la colonne à renvoyer ; FAUX pour exact)."},
+  {t:'recherche',q:"Le dernier argument FAUX (ou 0) signifie :",o:["on veut une correspondance EXACTE","une correspondance approximative","un tri croissant","peu importe"],c:0,e:"FAUX impose une correspondance exacte — recommandé dans la majorité des cas."},
+  {t:'recherche',q:"RECHERCHEV cherche la valeur dans :",o:["la PREMIÈRE colonne de la table indiquée","la dernière colonne","n'importe quelle colonne","la première ligne"],c:0,e:"La valeur cherchée doit toujours se trouver dans la 1re colonne (à gauche) de la table."},
+  {t:'recherche',q:"Le « n° de colonne » de RECHERCHEV correspond :",o:["au rang de la colonne à renvoyer dans la table","au numéro de ligne","à la largeur","à un pourcentage"],c:0,e:"C'est la position (1, 2, 3…) de la colonne dont on veut la valeur, comptée dans la table."},
+  {t:'recherche',q:"Si RECHERCHEV ne trouve pas la valeur (mode exact), elle renvoie :",o:["#N/A","0","la première valeur","VRAI"],c:0,e:"#N/A (non disponible) signale que la valeur cherchée est absente de la 1re colonne."},
+  {t:'recherche',q:"Pour éviter l'affichage de #N/A, on combine souvent RECHERCHEV avec :",o:["SIERREUR","SOMME","un tri","NB"],c:0,e:"=SIERREUR(RECHERCHEV(...);\"Introuvable\") affiche un texte propre en cas d'absence."},
+  {t:'recherche',q:"Pour figer la table quand on recopie un RECHERCHEV, on utilise :",o:["des références absolues ($)","rien","un tri","la fusion"],c:0,e:"On met des $ sur la table (ex. $A$2:$C$50) pour qu'elle ne se décale pas à la recopie."},
+  {t:'recherche',q:"RECHERCHEV est typiquement utilisée pour :",o:["retrouver le prix d'un produit à partir de son code","trier des dates","compter des cellules","créer un graphique"],c:0,e:"Exemple classique : un catalogue où l'on cherche le prix via une référence produit."},
+  {t:'recherche',q:"Pour que RECHERCHEV fonctionne, la valeur cherchée doit être :",o:["dans la 1re colonne (à gauche) de la table","dans la dernière colonne","tout en bas","forcément sur une autre feuille"],c:0,e:"RECHERCHEV regarde de gauche à droite : la clé est à gauche, le résultat à droite."},
+
+  // ---- Fonctions texte ----
+  {t:'texte',q:'=GAUCHE("Excel";3) renvoie :',o:['« Exc »','« cel »','« Exce »','« E »'],c:0,e:"GAUCHE extrait les n premiers caractères : ici les 3 premiers de « Excel »."},
+  {t:'texte',q:'=DROITE("Bonjour";4) renvoie :',o:['« jour »','« Bonj »','« our »','« r »'],c:0,e:"DROITE extrait les n derniers caractères : ici les 4 derniers."},
+  {t:'texte',q:'=NBCAR("Paris") renvoie :',o:["5","4","6","1"],c:0,e:"NBCAR compte les caractères : P-a-r-i-s = 5."},
+  {t:'texte',q:'=MAJUSCULE("tosa") renvoie :',o:['« TOSA »','« tosa »','« Tosa »','« tosa! »'],c:0,e:"MAJUSCULE met tout le texte en majuscules."},
+  {t:'texte',q:"L'opérateur & sert à :",o:["assembler (concaténer) du texte","additionner","comparer","diviser"],c:0,e:"& colle des morceaux de texte : =A1&B1 réunit le contenu de A1 et B1."},
+  {t:'texte',q:'=A1&" "&B1 produit :',o:["le contenu de A1, un espace, puis B1","la somme A1+B1","A1 moins B1","une erreur"],c:0,e:"On concatène A1, une chaîne espace \" \" et B1 (ex. prénom + nom)."},
+  {t:'texte',q:"À quoi sert STXT (MID) ?",o:["extraire des caractères au milieu d'un texte","compter","arrondir","trier"],c:0,e:"=STXT(texte;position_de_départ;nombre_de_caractères)."},
+  {t:'texte',q:'=MINUSCULE("EXCEL") renvoie :',o:['« excel »','« EXCEL »','« Excel »','5'],c:0,e:"MINUSCULE met tout en minuscules."},
+  {t:'texte',q:"CONCATENER (ou CONCAT) permet de :",o:["réunir plusieurs textes en un seul","séparer un texte","compter","trier"],c:0,e:"=CONCATENER(A1;B1) ou =CONCAT(A1;B1) assemble plusieurs textes."},
+  {t:'texte',q:'=GAUCHE("FR2024";2) donne :',o:['« FR »','« 20 »','« 24 »','« FR2 »'],c:0,e:"Les 2 premiers caractères de « FR2024 » sont « FR »."},
+
+  // ---- Tableaux croisés dynamiques (TCD) ----
+  {t:'tcd',q:"À quoi sert un tableau croisé dynamique (TCD) ?",o:["Synthétiser et regrouper rapidement de grandes listes de données","Mettre en forme une cellule","Créer une bordure","Imprimer"],c:0,e:"Le TCD résume une grande liste (totaux, moyennes…) par catégories, sans formule."},
+  {t:'tcd',q:"Pour créer un TCD, on passe par :",o:["Insertion > Tableau croisé dynamique","Accueil > Police","Données > Trier","Révision"],c:0,e:"Le TCD se crée depuis l'onglet Insertion."},
+  {t:'tcd',q:"Avant de créer un TCD, il faut idéalement :",o:["des données organisées en tableau avec des en-têtes de colonnes","des cellules fusionnées","un graphique","aucune donnée"],c:0,e:"Une liste propre avec une ligne d'en-têtes est indispensable."},
+  {t:'tcd',q:"Dans un TCD, la zone « Valeurs » contient en général :",o:["les nombres à calculer (somme, moyenne…)","les titres","les couleurs","seulement les filtres"],c:0,e:"On y place les champs chiffrés à agréger (CA, quantités…)."},
+  {t:'tcd',q:"Placer « Région » dans la zone Lignes d'un TCD permet de :",o:["regrouper les données par région","trier l'alphabet","colorer les cellules","imprimer"],c:0,e:"Les valeurs seront synthétisées ligne par ligne, une par région."},
+  {t:'tcd',q:"Par défaut, un champ numérique placé dans « Valeurs » est :",o:["additionné (Somme)","trié","supprimé","mis en gras"],c:0,e:"Excel propose la Somme par défaut ; on peut la changer."},
+  {t:'tcd',q:"Peut-on changer le calcul d'un champ de valeurs (Somme → Moyenne, Nombre…) ?",o:["Oui, on choisit Somme, Moyenne, Nombre, Max…","Non, c'est toujours la somme","Seulement le total général","Jamais"],c:0,e:"Un clic sur le champ permet de choisir le type de synthèse."},
+  {t:'tcd',q:"Si les données source changent, le TCD :",o:["doit être actualisé (clic droit > Actualiser)","se met toujours à jour instantanément","se supprime","devient un graphique"],c:0,e:"Un TCD ne se recalcule pas seul : il faut l'actualiser."},
+  {t:'tcd',q:"Un TCD est particulièrement utile pour :",o:["faire un bilan par catégorie (ex. ventes par région et par mois)","écrire une seule formule","mettre une bordure","changer la police"],c:0,e:"C'est l'outil idéal pour croiser des dimensions (région × mois, etc.)."},
+  {t:'tcd',q:"La zone « Filtres » d'un TCD permet de :",o:["n'afficher qu'une partie des données (ex. une seule année)","additionner","trier l'alphabet","créer une formule"],c:0,e:"Le filtre du TCD restreint l'ensemble des données prises en compte."},
+   {t:'logique',q:"=SI(15>=10;\"Reçu\";\"Recalé\") renvoie :",o:["Reçu","Recalé","VRAI","15"],c:0,e:"La condition 15>=10 est vraie, donc la valeur « si vrai » est renvoyée."},
+   {t:'logique',q:"Dans =SI(ET(A1>0;A1<100);\"OK\";\"Hors plage\"), ET sert à :",o:["exiger que les deux conditions soient vraies","accepter au moins une condition","additionner A1","compter"],c:0,e:"ET n'est vrai que si TOUTES les conditions sont vraies."},
+   {t:'logique',q:"Pour gérer plus de deux cas (TB / Reçu / Recalé), on utilise :",o:["des SI imbriqués","un seul SI","NB.SI","RECHERCHEV obligatoirement"],c:0,e:"On imbrique un SI dans la partie « sinon » d'un autre SI."},
+   {t:'logique',q:"=SIERREUR(10/0;\"-\") affiche :",o:["-","#DIV/0!","0","Erreur"],c:0,e:"SIERREUR intercepte l'erreur et renvoie la valeur de remplacement."},
+   {t:'conditionnelles',q:"=NB.SI(B2:B10;\">=10\") compte :",o:["les cellules supérieures ou égales à 10","la somme des cellules","la moyenne","le nombre total de cellules"],c:0,e:"NB.SI compte les cellules qui respectent le critère."},
+   {t:'conditionnelles',q:"Dans =SOMME.SI(plage;critère;plage_somme), la 3ᵉ partie est :",o:["la plage réellement additionnée","le critère","le résultat","inutile"],c:0,e:"On peut additionner une plage différente de celle où s'applique le critère."},
+   {t:'conditionnelles',q:"Pour la moyenne des seules ventes « Nord », on utilise :",o:["MOYENNE.SI","MOYENNE","NB.SI","SI"],c:0,e:"MOYENNE.SI fait la moyenne des valeurs respectant un critère."},
+   {t:'conditionnelles',q:"Un critère texte dans NB.SI s'écrit :",o:["entre guillemets, ex. \"Nord\"","sans rien","avec un =","entre parenthèses seulement"],c:0,e:"Les critères texte se mettent entre guillemets."},
+   {t:'recherche',q:"Le dernier argument FAUX de RECHERCHEV signifie :",o:["correspondance exacte","correspondance approximative","colonne 4","tri obligatoire"],c:0,e:"FAUX (ou 0) impose une correspondance exacte."},
+   {t:'recherche',q:"Dans =RECHERCHEV(B2;Tab!$A$2:$C$6;3;FAUX), le 3 indique :",o:["la 3ᵉ colonne de la table à renvoyer","la 3ᵉ ligne","3 décimales","3 résultats"],c:0,e:"Le numéro de colonne se compte à partir de la 1ʳᵉ colonne de la table."},
+   {t:'recherche',q:"Pourquoi figer la table avec des $ ($A$2:$C$6) ?",o:["pour recopier la formule sans décaler la table","pour arrondir","pour trier","pour colorer"],c:0,e:"Les $ rendent la référence absolue : elle ne bouge pas à la recopie."},
+   {t:'recherche',q:"RECHERCHEV renvoie #N/A quand :",o:["la valeur cherchée est introuvable","la table est triée","le résultat est 0","la colonne est en gras"],c:0,e:"#N/A signale que la valeur n'a pas été trouvée ; SIERREUR peut l'habiller."},
+   {t:'texte',q:"=GAUCHE(\"Clavier\";3) renvoie :",o:["Cla","ier","Clavier","3"],c:0,e:"GAUCHE extrait les n premiers caractères (ici 3)."},
+   {t:'texte',q:"=SUPPRESPACE(\"  Paris  \") renvoie :",o:["Paris (sans espaces en trop)","  Paris  ","PARIS","Erreur"],c:0,e:"SUPPRESPACE retire les espaces inutiles en début, fin et doublons."},
+   {t:'texte',q:"=NBCAR(\"Excel\") renvoie :",o:["5","4","Excel","1"],c:0,e:"NBCAR compte le nombre de caractères."},
+   {t:'texte',q:"Pour mettre un texte tout en majuscules :",o:["MAJUSCULE","NOMPROPRE","MINUSCULE","CONCAT"],c:0,e:"MAJUSCULE convertit en capitales ; NOMPROPRE met une majuscule par mot."},
+   {t:'tcd',q:"Pour afficher la part de chaque région en % dans un TCD :",o:["Afficher les valeurs > % du total général","changer la police","trier A→Z","ajouter une bordure"],c:0,e:"Les TCD proposent d'afficher les valeurs en % du total."}
 ];
 
 /* ============================================================
@@ -726,6 +951,274 @@ const EXERCISES = [
     ],
     target:{r:6,c:1}, ref:'=NBVAL(B2:B6)',
     hint:"Tape <code>=NBVAL(B2:B6)</code>. NBVAL compte 3 cellules non vides (les vides ne comptent pas)."
+  },
+  {
+    id:'ex_pct', theme:'formules', title:"7 · Un pourcentage",
+    goal:"Dans <b>B3</b>, calcule une <b>remise de 15 %</b> sur le montant. Tu peux écrire <code>=B2*15%</code> (ou <code>=B2*0,15</code>).",
+    data:[
+      [T('Article'),T('Montant (€)')],
+      [T('Prix HT'),N(200)],
+      [T('Remise 15 %'),null]
+    ],
+    target:{r:2,c:1}, ref:'=B2*15%',
+    hint:"<code>=B2*15%</code> : 15 % de 200 = 30. En Excel, « 15% » vaut 0,15."
+  },
+  {
+    id:'ex_ttc', theme:'formules', title:"8 · La référence absolue ($)",
+    goal:"Dans <b>B4</b>, calcule le <b>prix TTC</b> = prix HT × (1 + taux de TVA). Utilise une <b>référence absolue</b> pour le taux : <code>=B2*(1+$B$3)</code>.",
+    data:[
+      [T('Article'),T('Valeur')],
+      [T('Prix HT'),N(50)],
+      [T('Taux TVA'),N(0.2)],
+      [T('Prix TTC'),null]
+    ],
+    target:{r:3,c:1}, ref:'=B2*(1+$B$3)',
+    hint:"<code>=B2*(1+$B$3)</code>. Les <code>$</code> figent la cellule du taux (B3) pour pouvoir recopier la formule sans qu'elle bouge. 50 × 1,2 = 60."
+  },
+  {
+    id:'ex_arrondi', theme:'formules', title:"9 · Arrondir avec ARRONDI",
+    goal:"Dans <b>B3</b>, <b>arrondis le prix à 2 décimales</b> avec <code>ARRONDI</code>.",
+    data:[
+      [T('Donnée'),T('Valeur')],
+      [T('Prix calculé'),N(12.678)],
+      [T('Arrondi 2 déc.'),null]
+    ],
+    target:{r:2,c:1}, ref:'=ARRONDI(B2;2)',
+    hint:"<code>=ARRONDI(B2;2)</code> garde 2 chiffres après la virgule : 12,678 → 12,68."
+  },
+  {
+    id:'ex_reste', theme:'formules', title:"10 · Une soustraction (budget)",
+    goal:"Dans <b>B4</b>, calcule ce qu'il <b>reste</b> = revenus − dépenses.",
+    data:[
+      [T('Poste'),T('Montant (€)')],
+      [T('Revenus'),N(1500)],
+      [T('Dépenses'),N(1120)],
+      [T('Reste'),null]
+    ],
+    target:{r:3,c:1}, ref:'=B2-B3',
+    hint:"<code>=B2-B3</code> : 1500 − 1120 = 380."
+  },
+  {
+    id:'ex_produit', theme:'formules', title:"11 · Une multiplication (quantité × prix)",
+    goal:"Dans <b>B4</b>, calcule le <b>total</b> = quantité × prix unitaire.",
+    data:[
+      [T('Article'),T('Valeur')],
+      [T('Quantité'),N(12)],
+      [T('Prix unitaire (€)'),N(4)],
+      [T('Total'),null]
+    ],
+    target:{r:3,c:1}, ref:'=B2*B3',
+    hint:"<code>=B2*B3</code> : 12 × 4 = 48. (On peut aussi écrire <code>=PRODUIT(B2;B3)</code>.)"
+  },
+  {
+    id:'ex_somme_ligne', theme:'formules', title:"12 · Une somme sur une ligne",
+    goal:"Dans <b>E2</b>, calcule le <b>total du trimestre</b> en additionnant les 3 mois (sur la même ligne).",
+    data:[
+      [T('Produit'),T('Jan'),T('Fév'),T('Mar'),T('Total')],
+      [T('Stylos'),N(120),N(95),N(140),null]
+    ],
+    target:{r:1,c:4}, ref:'=SOMME(B2:D2)',
+    hint:"<code>=SOMME(B2:D2)</code> : une plage peut aussi être horizontale. 120 + 95 + 140 = 355."
+  },
+  {
+    id:'ex_etendue', theme:'formules', title:"13 · L'étendue (MAX − MIN)",
+    goal:"Dans <b>B6</b>, calcule l'<b>écart</b> entre la température la plus haute et la plus basse.",
+    data:[
+      [T('Jour'),T('Temp. °C')],
+      [T('Lun'),N(12)],
+      [T('Mar'),N(18)],
+      [T('Mer'),N(9)],
+      [T('Jeu'),N(21)],
+      [T('Écart'),null]
+    ],
+    target:{r:5,c:1}, ref:'=MAX(B2:B5)-MIN(B2:B5)',
+    hint:"<code>=MAX(B2:B5)-MIN(B2:B5)</code> : on combine deux fonctions, 21 − 9 = 12."
+  },
+  {
+    id:'ex_moyenne3', theme:'formules', title:"14 · Moyenne de plusieurs notes",
+    goal:"Dans <b>E2</b>, calcule la <b>moyenne des 3 matières</b> de Léa.",
+    data:[
+      [T('Élève'),T('Maths'),T('Anglais'),T('Histoire'),T('Moyenne')],
+      [T('Léa'),N(15),N(12),N(18),null]
+    ],
+    target:{r:1,c:4}, ref:'=MOYENNE(B2:D2)',
+    hint:"<code>=MOYENNE(B2:D2)</code> : (15 + 12 + 18) ÷ 3 = 15."
+  },
+  {
+    id:'ex_remise_pct', theme:'formules', title:"15 · Prix après une remise de 25 %",
+    goal:"Dans <b>B3</b>, calcule le <b>prix après une remise de 25 %</b>.",
+    data:[
+      [T('Article'),T('Montant (€)')],
+      [T('Prix initial'),N(80)],
+      [T('Prix après -25 %'),null]
+    ],
+    target:{r:2,c:1}, ref:'=B2-B2*25%',
+    hint:"<code>=B2-B2*25%</code> (ou <code>=B2*(1-25%)</code>) : 80 − 20 = 60."
+  },
+  {
+    id:'ex_tva', theme:'formules', title:"16 · Le montant de la TVA",
+    goal:"Dans <b>B3</b>, calcule le <b>montant de la TVA à 20 %</b> sur le montant HT.",
+    data:[
+      [T('Facture'),T('Montant (€)')],
+      [T('Montant HT'),N(200)],
+      [T('TVA 20 %'),null]
+    ],
+    target:{r:2,c:1}, ref:'=B2*20%',
+    hint:"<code>=B2*20%</code> : 20 % de 200 = 40."
+  },
+  {
+    id:'ex_somme_mixte', theme:'formules', title:"17 · SOMME qui ignore le texte",
+    goal:"Dans <b>B6</b>, calcule le <b>total de la semaine</b>. Le jour « fermé » ne doit pas poser de problème.",
+    data:[
+      [T('Jour'),T('CA (€)')],
+      [T('Lun'),N(300)],
+      [T('Mar'),T('fermé')],
+      [T('Mer'),N(250)],
+      [T('Jeu'),N(180)],
+      [T('Total'),null]
+    ],
+    target:{r:5,c:1}, ref:'=SOMME(B2:B5)',
+    hint:"<code>=SOMME(B2:B5)</code> : SOMME ignore automatiquement le texte « fermé ». 300 + 250 + 180 = 730."
+  },
+  {
+    id:'ex_total_general', theme:'formules', title:"18 · Le total général",
+    goal:"Dans <b>B5</b>, additionne les <b>sous-totaux</b> de chaque rayon.",
+    data:[
+      [T('Rayon'),T('Sous-total (€)')],
+      [T('Alimentaire'),N(1200)],
+      [T('Textile'),N(800)],
+      [T('High-tech'),N(2500)],
+      [T('Total général'),null]
+    ],
+    target:{r:4,c:1}, ref:'=SOMME(B2:B4)',
+    hint:"<code>=SOMME(B2:B4)</code> : 1200 + 800 + 2500 = 4500."
+  },
+  {
+    id:'ex_solde', theme:'formules', title:"19 · Un solde (+ et −)",
+    goal:"Dans <b>B5</b>, calcule le <b>nouveau solde</b> = solde initial + versement − retrait.",
+    data:[
+      [T('Compte'),T('Montant (€)')],
+      [T('Solde initial'),N(500)],
+      [T('Versement'),N(200)],
+      [T('Retrait'),N(150)],
+      [T('Nouveau solde'),null]
+    ],
+    target:{r:4,c:1}, ref:'=B2+B3-B4',
+    hint:"<code>=B2+B3-B4</code> : 500 + 200 − 150 = 550. On enchaîne plusieurs opérateurs."
+  },
+  {
+    id:'ex_part', theme:'formules', title:"20 · Une part en pourcentage",
+    goal:"Dans <b>B4</b>, calcule la <b>part du Nord</b> = ventes du Nord ÷ total. (Le résultat 0,25 se lit « 25 % » une fois la cellule mise au format pourcentage.)",
+    data:[
+      [T('Région'),T('Ventes (€)')],
+      [T('Nord'),N(150)],
+      [T('Total'),N(600)],
+      [T('Part du Nord'),null]
+    ],
+    target:{r:3,c:1}, ref:'=B2/B3',
+    hint:"<code>=B2/B3</code> : 150 ÷ 600 = 0,25, soit 25 % après mise au format pourcentage."
+  },
+  {
+    id:'ex_si', theme:'logique', title:"21 · La fonction SI (prime)",
+    goal:"Dans <b>B4</b>, verse une <b>prime de 5 % des ventes</b> SI les ventes (B3) dépassent l'objectif (B2), sinon <b>0</b>.",
+    data:[
+      [T('Élément'),T('Valeur (€)')],
+      [T('Objectif'),N(1000)],
+      [T('Ventes'),N(1300)],
+      [T('Prime'),null]
+    ],
+    target:{r:3,c:1}, ref:'=SI(B3>B2;B3*5%;0)',
+    hint:"<code>=SI(B3&gt;B2;B3*5%;0)</code> : si 1300 &gt; 1000, on calcule 5 % de 1300 = 65, sinon 0."
+  },
+  {
+    id:'ex_si_texte', theme:'logique', title:"22 · SI avec du texte (Reçu / Recalé)",
+    goal:"Dans <b>B3</b>, affiche <b>« Reçu »</b> si la note (B2) est ≥ 10, sinon <b>« Recalé »</b>. (Mets le texte entre guillemets.)",
+    data:[
+      [T('Élève'),T('Note /20')],
+      [T('Note'),N(12)],
+      [T('Résultat'),null]
+    ],
+    target:{r:2,c:1}, ref:'=SI(B2>=10;"Reçu";"Recalé")',
+    hint:"<code>=SI(B2&gt;=10;\"Reçu\";\"Recalé\")</code> : les valeurs texte se mettent entre guillemets."
+  },
+  {
+    id:'ex_nbsi', theme:'conditionnelles', title:"23 · Compter avec NB.SI",
+    goal:"Dans <b>B7</b>, compte <b>combien de vendeurs sont dans la région « Nord »</b>.",
+    data:[
+      [T('Vendeur'),T('Région')],
+      [T('V1'),T('Nord')],
+      [T('V2'),T('Sud')],
+      [T('V3'),T('Nord')],
+      [T('V4'),T('Nord')],
+      [T('V5'),T('Sud')],
+      [T('Nb Nord'),null]
+    ],
+    target:{r:6,c:1}, ref:'=NB.SI(B2:B6;"Nord")',
+    hint:"<code>=NB.SI(B2:B6;\"Nord\")</code> : compte les cellules égales à « Nord » → 3."
+  },
+  {
+    id:'ex_sommesi', theme:'conditionnelles', title:"24 · Additionner avec SOMME.SI",
+    goal:"Dans <b>C7</b>, additionne les <b>ventes réalisées dans la région « Nord »</b> (la région est en colonne B, les ventes en colonne C).",
+    data:[
+      [T('Vendeur'),T('Région'),T('Ventes (€)')],
+      [T('V1'),T('Nord'),N(1200)],
+      [T('V2'),T('Sud'),N(800)],
+      [T('V3'),T('Nord'),N(1500)],
+      [T('V4'),T('Sud'),N(600)],
+      [T('V5'),T('Nord'),N(900)],
+      [T('Total Nord'),E(),null]
+    ],
+    target:{r:6,c:2}, ref:'=SOMME.SI(B2:B6;"Nord";C2:C6)',
+    hint:"<code>=SOMME.SI(B2:B6;\"Nord\";C2:C6)</code> : on examine la région (B), on additionne les ventes (C). 1200 + 1500 + 900 = 3600."
+  },
+  {
+    id:'ex_nbsi_nombre', theme:'conditionnelles', title:"25 · NB.SI avec un critère chiffré",
+    goal:"Dans <b>B7</b>, compte <b>combien d'élèves ont la moyenne</b> (note ≥ 10).",
+    data:[
+      [T('Élève'),T('Note /20')],
+      [T('A'),N(14)],
+      [T('B'),N(8)],
+      [T('C'),N(17)],
+      [T('D'),N(9)],
+      [T('E'),N(11)],
+      [T('Nb reçus'),null]
+    ],
+    target:{r:6,c:1}, ref:'=NB.SI(B2:B6;">=10")',
+    hint:"<code>=NB.SI(B2:B6;\"&gt;=10\")</code> : le critère chiffré se met entre guillemets. 14, 17 et 11 → 3."
+  },
+  {
+    id:'ex_recherchev', theme:'recherche', title:"26 · RECHERCHEV (trouver un prix)",
+    goal:"Dans <b>B6</b>, retrouve le <b>prix du produit dont le code est 103</b> avec RECHERCHEV. La table est <code>A1:C4</code> et le prix est la <b>3ᵉ colonne</b>.",
+    data:[
+      [T('Code'),T('Produit'),T('Prix (€)')],
+      [N(101),T('Clavier'),N(20)],
+      [N(102),T('Souris'),N(10)],
+      [N(103),T('Écran'),N(150)],
+      [E(),E(),E()],
+      [T('Prix du code 103'),null]
+    ],
+    target:{r:5,c:1}, ref:'=RECHERCHEV(103;A1:C4;3;FAUX)',
+    hint:"<code>=RECHERCHEV(103;A1:C4;3;FAUX)</code> : on cherche 103 dans la 1ʳᵉ colonne, on renvoie la 3ᵉ (le prix) → 150. FAUX = correspondance exacte."
+  },
+  {
+    id:'ex_concat', theme:'texte', title:"27 · Assembler du texte (&)",
+    goal:"Dans <b>C2</b>, assemble le <b>prénom (A2)</b> et le <b>nom (B2)</b> séparés par un espace.",
+    data:[
+      [T('Prénom'),T('Nom'),T('Nom complet')],
+      [T('Marie'),T('Durand'),null]
+    ],
+    target:{r:1,c:2}, ref:'=A2&" "&B2',
+    hint:"<code>=A2&\" \"&B2</code> (ou <code>=CONCATENER(A2;\" \";B2)</code>) → « Marie Durand »."
+  },
+  {
+    id:'ex_majuscule', theme:'texte', title:"28 · Mettre en MAJUSCULES",
+    goal:"Dans <b>B2</b>, transforme le code en <b>majuscules</b>.",
+    data:[
+      [T('Code'),T('Code (maj.)')],
+      [T('fr2024'),null]
+    ],
+    target:{r:1,c:1}, ref:'=MAJUSCULE(A2)',
+    hint:"<code>=MAJUSCULE(A2)</code> → « FR2024 »."
   }
 ];
 
@@ -771,10 +1264,15 @@ function loadStore(){
     const raw=localStorage.getItem(STORE_KEY);
     if(raw) return JSON.parse(raw);
   }catch(e){}
-  return {themesDone:{}, qcm:{byTheme:{}}, exDone:{}, streak:{count:0,last:null}, history:[]};
+  return {themesDone:{}, qcm:{byTheme:{}}, exDone:{}, excelDone:{}, curDay:1, dayDone:{}, jourJ:{}, streak:{count:0,last:null}, history:[], exams:[]};
 }
 function saveStore(){ try{localStorage.setItem(STORE_KEY,JSON.stringify(store));}catch(e){} }
 let store=loadStore();
+// normalisation (anciennes sauvegardes)
+if(!store.curDay)store.curDay=1;
+if(!store.dayDone)store.dayDone={};
+if(!store.excelDone)store.excelDone={};
+if(!store.jourJ)store.jourJ={};
 
 function todayStr(){ return new Date().toISOString().slice(0,10); }
 function updateStreak(){
@@ -797,21 +1295,331 @@ function addHistory(type,detail,value){
   saveStore();
 }
 function totalQcm(){let a=0,c=0;for(const k in store.qcm.byTheme){a+=store.qcm.byTheme[k].a;c+=store.qcm.byTheme[k].c;}return{a,c};}
-function themesDoneCount(){return THEMES.filter(t=>store.themesDone[t.id]).length;}
+function moduleDone(id){return !!store.themesDone[id] || (typeof isThemeComplete==='function' && isThemeComplete(id));}
+function themesDoneCount(){return THEMES.filter(t=>moduleDone(t.id)).length;}
+
+/* ============================================================
+   PROGRAMME JOUR PAR JOUR (40 jours sur 8 semaines)
+   ============================================================ */
+function ytSearch(q){return 'https://www.youtube.com/results?search_query='+encodeURIComponent('Excel '+q+' tutoriel français');}
+function msSearch(q){return 'https://support.microsoft.com/fr-fr/search?query='+encodeURIComponent(q);}
+function vid(label,q){return {type:'video',label:label,url:ytSearch(q)};}
+function docu(label,q){return {type:'doc',label:label,url:msSearch(q)};}
+function lnk(label,url){return {type:'link',label:label,url:url};}
+const PROGRAM=[
+  // ---- Semaine 1 ----
+  {d:1,wk:1,theme:'interface',title:"Le ruban & la navigation",learn:"Repérer le ruban et les onglets, la cellule active, et te déplacer vite avec Ctrl + flèches.",res:[vid("Découvrir l'interface d'Excel","interface ruban débutant"),docu("Aide Microsoft : prise en main d'Excel","prise en main Excel")]},
+  {d:2,wk:1,theme:'interface',title:"Saisie, sélection, lignes & colonnes",learn:"Saisir et corriger (F2), sélectionner (Maj/Ctrl), insérer ou supprimer des lignes/colonnes, gérer les feuilles.",res:[vid("Saisir et sélectionner des données","saisie sélection cellules débutant"),docu("Insérer ou supprimer des lignes et colonnes","insérer supprimer lignes colonnes")]},
+  {d:3,wk:1,theme:'miseEnForme',title:"Les formats de nombre",learn:"Appliquer les formats Monétaire (€), Pourcentage (%), séparateur de milliers et nombre de décimales.",res:[vid("Formats de nombre (€, %, décimales)","format nombre monétaire pourcentage"),docu("Mettre en forme des nombres","format des nombres cellule")]},
+  {d:4,wk:1,theme:'miseEnForme',title:"Police, bordures & alignement",learn:"Gras et couleurs, bordures, alignement, fusionner et centrer, reproduire la mise en forme (pinceau).",res:[vid("Bordures, couleurs et alignement","bordures alignement fusionner cellules"),docu("Appliquer ou supprimer des bordures","ajouter bordures cellules")]},
+  {d:5,wk:1,theme:'miseEnForme',title:"Mise en forme conditionnelle",learn:"Faire ressortir des valeurs avec des règles et des barres de données. Puis révision de la semaine.",res:[vid("Mise en forme conditionnelle","mise en forme conditionnelle barres de données"),docu("Mise en forme conditionnelle","mise en forme conditionnelle")]},
+  // ---- Semaine 2 ----
+  {d:6,wk:2,theme:'formules',title:"Ta première formule",learn:"Commencer par =, utiliser + - * /, respecter les priorités et les parenthèses.",res:[vid("Créer une formule de calcul","première formule calcul opérateurs"),docu("Vue d'ensemble des formules","créer une formule simple")]},
+  {d:7,wk:2,theme:'formules',title:"SOMME et MOYENNE",learn:"Additionner une plage et calculer une moyenne avec SOMME et MOYENNE.",res:[vid("Fonctions SOMME et MOYENNE","SOMME MOYENNE plage"),docu("Fonction SOMME","fonction SOMME"),docu("Fonction MOYENNE","fonction MOYENNE")]},
+  {d:8,wk:2,theme:'formules',title:"MIN, MAX, NB, NBVAL",learn:"Trouver le plus petit/grand et compter des cellules avec MIN, MAX, NB et NBVAL.",res:[vid("MIN, MAX, NB et NBVAL","MIN MAX NB NBVAL compter"),docu("Fonction NB","fonction NB"),docu("Fonction NBVAL","fonction NBVAL")]},
+  {d:9,wk:2,theme:'formules',title:"Références absolues ($)",learn:"Comprendre relatif vs absolu, figer une cellule avec $ (touche F4) et recopier sans tout casser.",res:[vid("Références absolues et relatives ($)","référence absolue relative dollar F4"),docu("Références de cellule (relatives/absolues)","référence absolue relative")]},
+  {d:10,wk:2,theme:'formules',title:"Pourcentages & ARRONDI",learn:"Calculer un pourcentage, une remise ou une TVA, et arrondir proprement avec ARRONDI. Puis révision.",res:[vid("Calculer un pourcentage","pourcentage remise TVA calcul"),docu("Fonction ARRONDI","fonction ARRONDI")]},
+  // ---- Semaine 3 ----
+  {d:11,wk:3,theme:'tri',title:"Trier des données",learn:"Trier en croissant/décroissant et faire un tri à plusieurs niveaux, sans casser le tableau.",res:[vid("Trier des données","trier croissant décroissant multi niveaux"),docu("Trier des données","trier des données")]},
+  {d:12,wk:3,theme:'tri',title:"Les filtres",learn:"Activer les filtres automatiques, filtrer par texte ou par nombre, puis tout réafficher.",res:[vid("Filtrer des données","filtre automatique filtrer données"),docu("Filtrer des données","filtrer une plage ou un tableau")]},
+  {d:13,wk:3,theme:'graphiques',title:"Créer un histogramme",learn:"Sélectionner les bonnes données et insérer un histogramme ; choisir le bon type de graphique.",res:[vid("Créer un graphique","créer histogramme graphique"),docu("Créer un graphique du début à la fin","créer un graphique")]},
+  {d:14,wk:3,theme:'graphiques',title:"Courbes, secteurs & habillage",learn:"Courbe pour une évolution, secteurs pour des parts ; ajouter titre, légende et étiquettes de données.",res:[vid("Personnaliser un graphique","graphique courbe secteurs titre légende étiquettes"),docu("Ajouter un titre de graphique","ajouter titre graphique")]},
+  {d:15,wk:3,theme:'tri',exam:true,title:"Révision : tri, filtres & graphiques",learn:"Consolider la semaine, puis te tester avec un examen blanc de 10 questions.",res:[lnk("Chaîne Excel TOSA (révision)","https://www.youtube.com/channel/UC_K9jzldTHHTA51qbQTapDw")]},
+  // ---- Semaine 4 ----
+  {d:16,wk:4,theme:'logique',title:"La fonction SI",learn:"Afficher un résultat selon qu'une condition est vraie ou fausse : =SI(test ; vrai ; faux).",res:[vid("La fonction SI expliquée","fonction SI condition débutant"),docu("Fonction SI","fonction SI")]},
+  {d:17,wk:4,theme:'logique',title:"Comparaisons & SI avec texte",learn:"Utiliser > < >= <= <> et renvoyer du texte entre guillemets dans un SI.",res:[vid("SI avec du texte","fonction SI texte reçu recalé"),docu("Opérateurs de calcul (comparaison)","opérateurs de comparaison")]},
+  {d:18,wk:4,theme:'logique',title:"ET et OU dans un SI",learn:"Combiner plusieurs conditions avec ET (toutes vraies) et OU (au moins une).",res:[vid("Fonctions ET et OU","fonction ET OU dans SI"),docu("Fonction ET","fonction ET"),docu("Fonction OU","fonction OU")]},
+  {d:19,wk:4,theme:'logique',title:"Les SI imbriqués",learn:"Gérer plus de deux cas en plaçant un SI dans le résultat d'un autre SI.",res:[vid("SI imbriqués","SI imbriqués plusieurs conditions"),docu("Fonction SI imbriquée","SI imbriquée")]},
+  {d:20,wk:4,theme:'logique',title:"SIERREUR + révision",learn:"Éviter les erreurs affichées (#DIV/0!, #N/A) avec SIERREUR, puis réviser la semaine.",res:[vid("La fonction SIERREUR","SIERREUR gérer une erreur"),docu("Fonction SIERREUR","fonction SIERREUR")]},
+  // ---- Semaine 5 ----
+  {d:21,wk:5,theme:'conditionnelles',title:"NB.SI",learn:"Compter les cellules qui répondent à un critère : =NB.SI(plage ; critère).",res:[vid("La fonction NB.SI","NB.SI compter selon critère"),docu("Fonction NB.SI","fonction NB.SI")]},
+  {d:22,wk:5,theme:'conditionnelles',title:"SOMME.SI",learn:"Additionner selon un critère, avec une plage de somme séparée si besoin.",res:[vid("La fonction SOMME.SI","SOMME.SI additionner selon critère"),docu("Fonction SOMME.SI","fonction SOMME.SI")]},
+  {d:23,wk:5,theme:'conditionnelles',title:"MOYENNE.SI",learn:"Faire la moyenne des seules valeurs qui respectent un critère.",res:[vid("La fonction MOYENNE.SI","MOYENNE.SI moyenne selon critère"),docu("Fonction MOYENNE.SI","fonction MOYENNE.SI")]},
+  {d:24,wk:5,theme:'conditionnelles',title:"Maîtriser les critères",learn:"Écrire des critères avancés (>, <, >=, <>, texte) correctement entre guillemets.",res:[vid("Critères dans NB.SI / SOMME.SI","critères NB.SI SOMME.SI supérieur à"),docu("Utiliser des critères de calcul","critères fonction SI ENS")]},
+  {d:25,wk:5,theme:'conditionnelles',exam:true,title:"Révision : calculs conditionnels",learn:"Cas pratiques NB.SI/SOMME.SI/MOYENNE.SI, puis examen blanc de 10 questions.",res:[lnk("QCM TOSA (playlist)","https://www.youtube.com/playlist?list=PL_G2VMXmS-pbGvU5nZfYIC1--g5kWeywT")]},
+  // ---- Semaine 6 ----
+  {d:26,wk:6,theme:'recherche',title:"RECHERCHEV — le principe",learn:"Comprendre à quoi sert RECHERCHEV et sa syntaxe : valeur, table, n° de colonne, FAUX.",res:[vid("RECHERCHEV pour débutants","RECHERCHEV débutant expliqué"),docu("Fonction RECHERCHEV","fonction RECHERCHEV")]},
+  {d:27,wk:6,theme:'recherche',title:"RECHERCHEV — exact + $",learn:"Forcer la correspondance exacte (FAUX) et figer la table avec des $ pour pouvoir recopier.",res:[vid("RECHERCHEV correspondance exacte","RECHERCHEV exacte FAUX dollar table"),docu("Corriger l'erreur #N/A","RECHERCHEV N/A corriger")]},
+  {d:28,wk:6,theme:'recherche',title:"RECHERCHEV + SIERREUR",learn:"Afficher un message propre quand la valeur cherchée n'existe pas, grâce à SIERREUR.",res:[vid("RECHERCHEV et SIERREUR","RECHERCHEV SIERREUR introuvable"),docu("Fonction SIERREUR","fonction SIERREUR")]},
+  {d:29,wk:6,theme:'texte',title:"GAUCHE, DROITE, STXT, NBCAR",learn:"Extraire des caractères (début, fin, milieu) et compter la longueur d'un texte.",res:[vid("Fonctions texte GAUCHE/DROITE/STXT","GAUCHE DROITE STXT NBCAR"),docu("Fonctions de texte","fonctions texte GAUCHE DROITE STXT")]},
+  {d:30,wk:6,theme:'texte',title:"MAJUSCULE, CONCATENER & révision",learn:"Changer la casse et assembler du texte avec & ou CONCATENER. Puis révision.",res:[vid("Concaténer du texte (&)","concaténer texte MAJUSCULE CONCATENER"),docu("Fonction CONCAT","fonction CONCAT")]},
+  // ---- Semaine 7 ----
+  {d:31,wk:7,theme:'tcd',title:"Créer un TCD",learn:"Insérer un tableau croisé dynamique et placer des champs en Lignes et en Valeurs.",res:[vid("Tableau croisé dynamique pour débutants","tableau croisé dynamique débutant"),docu("Créer un tableau croisé dynamique","créer un tableau croisé dynamique")]},
+  {d:32,wk:7,theme:'tcd',title:"Croiser deux dimensions",learn:"Ajouter un champ en Colonnes pour croiser deux dimensions (ex. région × produit).",res:[vid("TCD : lignes, colonnes, valeurs","tableau croisé dynamique lignes colonnes valeurs"),docu("Disposer les champs d'un TCD","champs tableau croisé dynamique")]},
+  {d:33,wk:7,theme:'tcd',title:"Calculs & actualisation",learn:"Changer la synthèse (Somme, Moyenne, Nombre) et actualiser le TCD quand les données changent.",res:[vid("Modifier les calculs d'un TCD","tableau croisé dynamique moyenne nombre actualiser"),docu("Actualiser les données d'un TCD","actualiser tableau croisé dynamique")]},
+  {d:34,wk:7,theme:'tcd',title:"Filtres & regroupements",learn:"Filtrer un TCD (segments) et regrouper des données (par mois, par tranches).",res:[vid("Filtrer et regrouper un TCD","tableau croisé dynamique filtre segment regrouper"),docu("Grouper des données dans un TCD","grouper données tableau croisé dynamique")]},
+  {d:35,wk:7,theme:'tcd',exam:true,title:"Révision : tableaux croisés dynamiques",learn:"Cas pratiques de synthèse, puis examen blanc de 10 questions.",res:[lnk("Morpheus Formation (Excel)","https://www.morpheus-formation.fr/blog/excel/formation-youtube/")]},
+  // ---- Semaine 8 ----
+  {d:36,wk:8,theme:'gestion',title:"Feuilles & figer les volets",learn:"Gérer plusieurs feuilles et figer les volets pour garder les en-têtes visibles en défilant.",res:[vid("Figer les volets","figer les volets première ligne"),docu("Figer des volets","figer des volets")]},
+  {d:37,wk:8,theme:'gestion',title:"Mise en page & impression",learn:"Zone d'impression, orientation, ajuster à 1 page, aperçu (Ctrl+P) et export en PDF.",res:[vid("Imprimer et mise en page","mise en page impression zone aperçu"),docu("Définir une zone d'impression","définir zone d'impression")]},
+  {d:38,wk:8,theme:'gestion',exam:true,title:"Examen blanc — 20 questions",learn:"Te mettre en conditions : lance un examen blanc de 20 questions dans l'app.",res:[lnk("TOSA — format officiel de l'examen","https://www.tosa.org/FR/certification-microsoft-excel?sbj_id=57")]},
+  {d:39,wk:8,theme:'gestion',title:"Révision ciblée",learn:"Repère tes modules les plus faibles dans le Suivi et clique « Refaire » pour les retravailler.",res:[lnk("Chaîne Excel TOSA (révision)","https://www.youtube.com/channel/UC_K9jzldTHHTA51qbQTapDw")]},
+  {d:40,wk:8,theme:'gestion',exam:true,title:"Examen blanc complet — 35 questions",learn:"Simulation finale dans les conditions du TOSA (35 questions), puis checklist du jour J.",res:[lnk("TOSA — site officiel","https://www.tosa.org/FR/certification-microsoft-excel?sbj_id=57")]}
+];
+/* Manips Excel détaillées par jour (gestes concrets à refaire dans Excel) */
+const DRILLS={
+ 1:["Clique A1, puis Ctrl+↓ et Ctrl+→ pour atteindre les bords ; reviens en A1 avec Ctrl+Origine.","Sélectionne B2:B7 et lis Somme/Moyenne/Nb dans la barre d'état (en bas).","Clic droit sur la ligne 3 → Insérer ; tape un essai ; Ctrl+Z pour annuler.","Double-clique l'onglet « Ventes », renomme-le « Semaine 1 », puis clic droit → Couleur d'onglet.","Affichage → Figer les volets → Figer la ligne supérieure ; fais défiler pour vérifier.","Zoom avec Ctrl+molette, puis remets 100 % (curseur en bas à droite)."],
+ 2:["Sélectionne A2 puis Maj+clic A7 (plage continue) ; ajoute B5 avec Ctrl+clic (sélection éparse).","Appuie sur F2 dans une cellule pour la modifier, Échap pour annuler.","Clic droit sur l'en-tête de colonne B → Insérer une colonne, puis Supprimer.","Tape 1 et 2 dans deux cellules, sélectionne-les et tire la poignée → 3, 4, 5…","Ctrl+C sur la colonne Ventes, puis Collage spécial → Valeurs ailleurs.","Annule tout avec Ctrl+Z plusieurs fois, puis Ctrl+Y pour rétablir."],
+ 3:["Sélectionne D2:D9 (Prix) → Accueil → menu Nombre → Monétaire (€).","Ajuste à 2 décimales avec les boutons « Ajouter / Réduire décimale ».","Sur C2:C9 (Quantité) applique le séparateur de milliers (format Nombre).","Dans une cellule libre tape 0,2 puis applique le format Pourcentage → 20 %.","Tape une date et change son format en jj/mm/aaaa.","Accueil → Effacer → Effacer les formats pour repartir à zéro."],
+ 4:["Sélectionne A1:E1 : gras (Ctrl+B), centré, fond gris (Couleur de remplissage).","Sélectionne A1:E9 → Bordures → Toutes les bordures, puis Bordure extérieure épaisse.","Fusionne A11:C11 et tape un titre (Fusionner et centrer), puis annule la fusion.","Double-clique la bordure d'en-tête de colonne pour l'ajuster automatiquement.","Utilise le pinceau « Reproduire la mise en forme » d'une cellule à une autre.","Applique un style prêt à l'emploi (Accueil → Styles de cellules) aux en-têtes."],
+ 5:["Sélectionne C2:C9 → Mise en forme conditionnelle → Barres de données.","Ajoute une règle « Mettre en surbrillance → Supérieur à » 100 sur les prix.","Applique un jeu d'icônes sur D2:D9.","Surligne les lignes où la catégorie contient « Informatique » (règle de texte).","Mise en forme conditionnelle → Gérer les règles : modifie puis supprime une règle.","Efface les règles d'une sélection (Effacer les règles des cellules sélectionnées)."],
+ 6:["En D2 tape =120+85 (→ 205).","Teste les priorités : =(10+2)*3 (→ 36) puis =10+2*3 (→ 16).","Commence par =, clique B2, tape +, clique B3, Entrée (formule par clic).","Édite avec F2 et observe les cellules surlignées en couleur.","Recopie une formule vers le bas et regarde l'adaptation des références.","Affiche les formules (Ctrl+²) puis rebascule sur les résultats."],
+ 7:["En B8 : =SOMME(B2:B7) (→ 990).","En B9 : =MOYENNE(B2:B7) (→ 165).","Place-toi en B8 et utilise la Somme automatique (Σ).","Sélectionne B2:B7 et recoupe avec la somme de la barre d'état.","Ajoute « Dimanche 90 » et adapte la plage à B2:B8 pour mettre à jour le total.","Recopie =MOYENNE dans une autre colonne avec la poignée."],
+ 8:["En B10 : =MAX(B2:B7) (→ 260) ; en B11 : =MIN(B2:B7) (→ 85).","=NB(B2:B7) (→ 6) puis =NBVAL(A2:A7) (→ 6).","Vide une cellule de la plage et observe NB vs NBVAL.","Étendue : =MAX(B2:B7)-MIN(B2:B7).","Bonus : =GRANDE.VALEUR(B2:B7;2) pour la 2ᵉ plus grande valeur.","Recopie et compare les résultats."],
+ 9:["En D1 tape « Taux TVA », en D2 tape 0,2.","En C2 : =B2*D2 puis clique D2 et appuie sur F4 → =B2*$D$2.","Recopie C2 vers C3:C7 ; contrôle avec F2 que $D$2 ne bouge pas.","Teste une référence mixte =B$2 et recopie pour voir ce qui se fige.","Compare : recopie =B2*D2 sans $ et observe les erreurs.","Bonus : nomme la cellule « TVA » (zone Nom) et écris =B2*TVA."],
+ 10:["En E2 : =B2*15% (remise) ; recopie.","=B2-B2*25% pour un prix après 25 % de remise.","Part de chaque jour : =B2/$B$8 puis format Pourcentage.","=ARRONDI(12,678;2) (→ 12,68) ; =ARRONDI(2,345;1) (→ 2,3).","Compare =ARRONDI.SUP et =ARRONDI.INF.","Vérifie que la somme des parts fait 100 %."],
+ 11:["Données → Trier → Catégorie (A→Z), coche « Mes données ont des en-têtes ».","Tri à 2 niveaux : Catégorie (A→Z) + Ajouter un niveau → Prix (décroissant).","Tri rapide : clique dans une colonne puis bouton A→Z.","Annule avec Ctrl+Z et observe l'ordre initial.","Tri par couleur de cellule (si tu en as coloré).","Bonus : tri par liste personnalisée (Info → Mobilier → Fourniture)."],
+ 12:["Données → Filtrer (Ctrl+Maj+L) : des flèches apparaissent.","Filtre Catégorie = Informatique → 3 lignes (Clavier, Souris, Écran).","Filtre numérique sur Prix : « Supérieur à » 50.","Filtre textuel : « Commence par » C sur Produit.","Efface un filtre de colonne, puis tous (Données → Effacer).","Copie les lignes visibles d'un tableau filtré ailleurs."],
+ 13:["En F2 : =SOMME(B2:E2) ; recopie F2:F5 (→ 5600 / 4900 / 3950 / 6800).","Sélectionne A1:E5 → Insertion → Histogramme groupé.","Clique le titre et tape « Ventes par région ».","Création → Intervertir les lignes/colonnes et observe.","Change les couleurs / le style (onglet Création).","Déplace le graphique sur une nouvelle feuille (Déplacer le graphique)."],
+ 14:["Sélectionne le graphique → Création → Modifier le type → Courbes.","Ajoute Légende et Étiquettes de données (bouton + du graphique).","Crée un secteurs (camembert) des 4 trimestres pour Nord (A1:E2).","Clic droit sur une série → Mettre en forme la série de données.","Ajoute un titre d'axe vertical « € ».","Bonus : clic droit sur une série → Ajouter une courbe de tendance."],
+ 15:["Refais les 3 manips de la semaine qui t'ont posé problème (tri, filtre, graphique).","Lance l'examen blanc 10 questions dans l'app et vise plus de 80 %.","Note les questions ratées et revois la notion correspondante."],
+ 16:["En F2 : =SI(C2<20;\"À commander\";\"OK\") ; recopie F2:F9.","Vérifie : « À commander » sur Écran, Chaise, Bureau.","Change le seuil (20 → 30) et observe.","=SI(D2>100;\"Cher\";\"Abordable\").","Imbrique un calcul : =SI(C2<20;C2*D2;0).","Affiche les formules (Ctrl+²) pour relire ta logique."],
+ 17:["En F2 : =SI(B2>=10;\"Reçu\";\"Recalé\") (B = Maths) ; recopie.","Teste <> : =SI(A2<>\"\";\"Rempli\";\"Vide\").","=SI(B2>=16;\"Mention\";\"\") (n'affiche qu'au-dessus de 16).","Texte assemblé : =SI(B2>=10;\"Reçu (\"&B2&\")\";\"Recalé\").","Compare deux colonnes : =SI(B2>C2;\"Maths>Français\";\"…\")."],
+ 18:["En G2 : =SI(ET(C2<20;D2>50);\"Prioritaire\";\"\") ; recopie.","Teste OU : =SI(OU(C2<10;D2>100);\"À surveiller\";\"\").","Vérifie : « Prioritaire » sur Écran, Chaise, Bureau.","3 conditions : =SI(ET(C2<20;D2>50;B2=\"Informatique\");\"!\";\"\").","Lis =ET(1<2;3<4) (→ VRAI) et =OU(1>2;3<4) (→ VRAI)."],
+ 19:["En G2 : =SI(B2>=16;\"TB\";SI(B2>=14;\"B\";SI(B2>=10;\"Reçu\";\"Recalé\"))).","Recopie et vérifie plusieurs élèves.","Ajoute un niveau « AB » entre 12 et 14.","Inverse l'ordre des conditions pour voir le bug, puis remets-le.","Bonus : teste =SI.CONDITIONS(...) si ta version le propose."],
+ 20:["En H2 : =SIERREUR(D2/C2;\"-\") (prix par unité protégé).","Force une erreur (=10/0) puis enveloppe-la avec SIERREUR.","Aperçu de demain : =SIERREUR(RECHERCHEV(...);\"Introuvable\").","Révise SI / ET / OU sur 2-3 cellules.","Prédis chaque résultat avant d'appuyer sur Entrée."],
+ 21:["=NB.SI(B2:B13;\"Nord\") (→ 5).","=NB.SI(B2:B13;\"Sud\") (→ 4) ; =NB.SI(B2:B13;\"Est\") (→ 3).","Critère numérique : =NB.SI(E2:E13;\">=200\").","Non-vides : =NB.SI(C2:C13;\"<>\").","Critère via cellule : tape « Nord » en G1 puis =NB.SI(B2:B13;G1)."],
+ 22:["=SOMME.SI(B2:B13;\"Nord\";E2:E13) (→ 932).","=SOMME.SI(E2:E13;\">=200\") (→ 923, somme sur la même plage).","=SOMME.SI(C2:C13;\"Alice\";E2:E13) (total d'Alice).","Critère via cellule (G1=\"Nord\") : =SOMME.SI(B2:B13;G1;E2:E13).","Vérifie Nord+Sud+Est = total général (1923)."],
+ 23:["=MOYENNE.SI(C2:C13;\"Alice\";E2:E13) (→ ≈ 186,67).","=MOYENNE.SI(B2:B13;\"Sud\";E2:E13).","=MOYENNE.SI(E2:E13;\">=200\") (moyenne des grosses ventes).","Recoupe : SOMME.SI ÷ NB.SI = MOYENNE.SI (même critère).","Bonus : =MOYENNE.SI.ENS pour deux critères."],
+ 24:["=SOMME.SI(B2:B10;\"Courses\";C2:C10) (→ 197,5).","=NB.SI(C2:C10;\">=50\").","Joker : =NB.SI(B2:B10;\"C*\") (commence par C).","=SOMME.SI(C2:C10;\">50\").","Bonus 2 critères : =SOMME.SI.ENS(C:C;B:B;\"Courses\";C:C;\">50\")."],
+ 25:["Refais un cas NB.SI / SOMME.SI / MOYENNE.SI sans regarder.","Examen blanc 10 questions, vise plus de 80 %.","Revois les critères (>, <, texte, jokers)."],
+ 26:["Feuille Commandes, C2 : =RECHERCHEV(B2;Catalogue!A2:C6;2;FAUX) (→ Écran).","D2 : =RECHERCHEV(B2;Catalogue!A2:C6;3;FAUX) (→ 129).","Identifie les 4 arguments (valeur ; table ; n° colonne ; FAUX).","Change le code en B2 (101 → Clavier).","Mets un code inexistant (999) et observe #N/A."],
+ 27:["Ajoute les $ : =RECHERCHEV(B2;Catalogue!$A$2:$C$6;2;FAUX).","Recopie C2 → C3:C5 : la table ne se décale pas.","D2:D5 pour le prix (colonne 3).","F2 : =D2*E2 (Total) ; recopie.","Vérifie C1=Écran/258, C2=Clavier/99,5, C3=Webcam/39, C4=Souris/95."],
+ 28:["=SIERREUR(RECHERCHEV(B2;Catalogue!$A$2:$C$6;2;FAUX);\"Code inconnu\").","Mets un code bidon (888) et vérifie le message.","Combine : =SIERREUR(RECHERCHEV(...)*E2;0).","Bonus : recherche approximative (VRAI) sur une table triée (barème).","Compare RECHERCHEV (vertical) et RECHERCHEH (horizontal)."],
+ 29:["=GAUCHE(B2;3) (3 premières lettres).","=DROITE(B2;4) ; =STXT(B2;2;3) (extrait du milieu).","=NBCAR(B2) (nombre de caractères).","=NBCAR(SUPPRESPACE(B2)) après avoir ajouté des espaces.","Combine : =GAUCHE(B2;1)&\".\" (initiale)."],
+ 30:["=MAJUSCULE(B2) (→ CLAVIER) ; =MINUSCULE(B2) ; =NOMPROPRE(B2).","=B2&\" (\"&A2&\")\" (→ Clavier (101)).","=CONCAT(A2;\" - \";B2) ou =CONCATENER(...).","=TEXTE(C2;\"0,00 €\") pour formater un nombre en texte.","Bonus : =GAUCHE(B2;3)&A2 pour un code article."],
+ 31:["Clique dans la liste → Insertion → Tableau croisé dynamique → Nouvelle feuille.","Glisse Région dans Lignes, Montant dans Valeurs (Somme).","Vérifie Nord 932, Sud 575, Est 416, Total 1923.","Renomme l'étiquette « Somme de Montant » en « Total ».","Mets les nombres du TCD au format €."],
+ 32:["Ajoute Produit dans Colonnes (croisement Région × Produit).","Ajoute Vendeur sous Région dans Lignes (hiérarchie).","Réorganise les champs par glisser-déposer.","Développe / réduis un groupe (+ / −).","Vérifie que le Total général reste 1923."],
+ 33:["Champ de valeurs → Paramètres → Moyenne, puis reviens à Somme.","Affiche en « % du total général » (Paramètres → Afficher les valeurs).","Par Vendeur : Alice 560, Bob 446, Chloé 385, David 532.","Modifie un Montant source, reviens au TCD → clic droit → Actualiser.","Bonus : Analyse → Champs, éléments → Champ calculé."],
+ 34:["Mets Région en Filtres (en haut) et filtre sur Nord.","Insère un Segment (Analyse → Insérer un segment) sur Vendeur.","Insère une Chronologie sur la Date (si disponible).","Clic droit sur une date → Grouper → par mois.","Trie le TCD par Total décroissant."],
+ 35:["Reconstruis un TCD de zéro (Région en lignes, Montant en valeurs) sans aide.","Examen blanc 10 questions, vise plus de 80 %.","Entraîne-toi à Actualiser après une modification source."],
+ 36:["Affichage → Figer les volets → Figer la ligne supérieure ; fais défiler.","Fige aussi la 1ʳᵉ colonne (Figer la première colonne).","Clic droit sur l'onglet → Déplacer ou copier → coche « Créer une copie ».","Renomme et colore les onglets.","Masque puis réaffiche une colonne (clic droit → Masquer / Afficher)."],
+ 37:["Sélectionne A1:F5 → Mise en page → Zone d'impression → Définir.","Ctrl+P : orientation Paysage, « Ajuster la feuille à une page ».","Insertion → En-tête/Pied : ajoute le numéro de page.","Règle les marges (Mise en page → Marges).","Fichier → Exporter → Créer un PDF/XPS."],
+ 38:["Lance l'examen blanc 20 questions dans l'app.","Chronomètre-toi (~1 min/question).","Note ton score estimé et tes thèmes faibles."],
+ 39:["Ouvre le Suivi et repère tes 2-3 modules les plus faibles.","Clique « Refaire » pour relancer leur séance.","Refais les manips Excel correspondantes dans le vrai Excel."],
+ 40:["Lance l'examen blanc complet 35 questions (1 h, sans aide).","Relis la checklist du jour J (pièce d'identité, lire chaque consigne).","Respire : tu as travaillé, fais-toi confiance."]
+};
+/* Vidéos de démonstration ciblées par jour [label, requête YouTube] */
+const DEMOS={
+ 1:[["Démo : l'interface d'Excel","interface ruban navigation"],["Se déplacer avec le clavier","raccourcis déplacement Ctrl flèches"]],
+ 2:[["Sélectionner & recopier","sélection poignée de recopie"],["Insérer/supprimer lignes","insérer supprimer lignes colonnes"]],
+ 3:[["Démo : formats de nombre","format monétaire euro pourcentage décimales"],["Formats de date","format date personnalisé"]],
+ 4:[["Bordures & remplissage","bordures couleur remplissage"],["Fusionner & pinceau","fusionner centrer reproduire mise en forme"]],
+ 5:[["Mise en forme conditionnelle","mise en forme conditionnelle barres icônes"],["Gérer les règles","gérer règles mise en forme conditionnelle"]],
+ 6:[["Première formule","créer formule opérateurs priorités"],["Formule par clic","saisir formule clic cellule"]],
+ 7:[["SOMME & MOYENNE","fonction SOMME MOYENNE somme automatique"],["La Somme automatique","somme automatique sigma"]],
+ 8:[["MIN, MAX, NB","MIN MAX NB NBVAL"],["Compter des cellules","NB NBVAL différence"]],
+ 9:[["Références absolues ($)","référence absolue relative F4 dollar"],["Recopier une formule","recopier formule poignée"]],
+ 10:[["Pourcentages","calcul pourcentage remise"],["ARRONDI","fonction ARRONDI décimales"]],
+ 11:[["Trier des données","trier croissant décroissant"],["Tri multi-niveaux","trier plusieurs niveaux critères"]],
+ 12:[["Les filtres","filtre automatique filtrer"],["Filtres avancés","filtre numérique texte"]],
+ 13:[["Créer un histogramme","insérer histogramme graphique"],["Personnaliser le graphique","titre couleurs style graphique"]],
+ 14:[["Courbes & secteurs","graphique courbe secteurs camembert"],["Étiquettes & légende","étiquettes données légende graphique"]],
+ 15:[["Révision tri/filtre/graphique","tri filtre graphique récapitulatif"],["QCM type TOSA","QCM TOSA Excel"]],
+ 16:[["La fonction SI","fonction SI débutant"],["SI avec condition","SI test logique"]],
+ 17:[["SI avec du texte","SI texte guillemets reçu recalé"],["Opérateurs de comparaison","opérateurs comparaison Excel"]],
+ 18:[["Fonctions ET & OU","fonction ET OU dans SI"],["SI + ET + OU","SI ET OU combinés"]],
+ 19:[["SI imbriqués","SI imbriqués plusieurs cas"],["SI.CONDITIONS","SI.CONDITIONS alternative"]],
+ 20:[["La fonction SIERREUR","SIERREUR gérer erreur"],["Éviter #N/A et #DIV/0","masquer erreurs formules"]],
+ 21:[["La fonction NB.SI","NB.SI compter critère"],["NB.SI avec conditions","NB.SI supérieur texte"]],
+ 22:[["La fonction SOMME.SI","SOMME.SI additionner critère"],["SOMME.SI plage séparée","SOMME.SI plage de somme"]],
+ 23:[["La fonction MOYENNE.SI","MOYENNE.SI moyenne critère"],["MOYENNE.SI.ENS","MOYENNE.SI.ENS plusieurs critères"]],
+ 24:[["Critères & jokers","critères NB.SI SOMME.SI joker étoile"],["SOMME.SI.ENS","SOMME.SI.ENS deux critères"]],
+ 25:[["Révision calculs conditionnels","NB.SI SOMME.SI MOYENNE.SI récap"],["QCM type TOSA","QCM TOSA Excel calculs"]],
+ 26:[["RECHERCHEV pour débutants","RECHERCHEV débutant expliqué"],["RECHERCHEV pas à pas","RECHERCHEV exemple simple"]],
+ 27:[["RECHERCHEV + $ (recopie)","RECHERCHEV dollar recopier table"],["Correspondance exacte (FAUX)","RECHERCHEV FAUX exacte"]],
+ 28:[["RECHERCHEV + SIERREUR","RECHERCHEV SIERREUR introuvable"],["RECHERCHEV approximative","RECHERCHEV VRAI valeur proche"]],
+ 29:[["GAUCHE / DROITE / STXT","GAUCHE DROITE STXT extraire texte"],["NBCAR & SUPPRESPACE","NBCAR SUPPRESPACE"]],
+ 30:[["MAJUSCULE & NOMPROPRE","MAJUSCULE MINUSCULE NOMPROPRE"],["Concaténer (&)","concaténer texte esperluette CONCAT"]],
+ 31:[["Créer un TCD","tableau croisé dynamique créer débutant"],["TCD pas à pas","tableau croisé dynamique exemple"]],
+ 32:[["Croiser lignes & colonnes","tableau croisé dynamique lignes colonnes"],["Hiérarchie de champs","tableau croisé dynamique hiérarchie"]],
+ 33:[["Changer le calcul d'un TCD","tableau croisé dynamique moyenne nombre"],["Actualiser un TCD","actualiser tableau croisé dynamique"]],
+ 34:[["Segments & chronologie","tableau croisé dynamique segment chronologie"],["Grouper par mois","grouper dates tableau croisé dynamique"]],
+ 35:[["Révision TCD","tableau croisé dynamique récapitulatif"],["QCM type TOSA","QCM TOSA Excel TCD"]],
+ 36:[["Figer les volets","figer volets première ligne colonne"],["Copier une feuille","dupliquer copier feuille onglet"]],
+ 37:[["Mise en page & impression","mise en page impression zone aperçu"],["Exporter en PDF","exporter PDF Excel"]],
+ 38:[["Examen TOSA type","TOSA Excel examen type questions"],["Gérer son temps","TOSA gestion du temps examen"]],
+ 39:[["Réviser efficacement","révision Excel points faibles"],["Erreurs fréquentes TOSA","erreurs fréquentes Excel TOSA"]],
+ 40:[["Examen blanc complet","TOSA Excel examen blanc complet"],["Conseils jour J","TOSA conseils jour J réussir"]]
+};
+function demoChips(dv){const d=DEMOS[dv];if(!d)return '';return d.map(x=>resChip({type:'video',label:x[0],url:ytSearch(x[1])})).join('');}
+function dayManips(dv,theme){const m=DRILLS[dv];if(m&&m.length)return m;const p=THEME_PRACTICE[theme];return p?p.manip:[];}
+let TODAY_VIEW=null;
+function curDayNum(){return Math.min(Math.max(store.curDay||1,1),PROGRAM.length);}
+function gotoDay(n){TODAY_VIEW=Math.max(1,Math.min(n,PROGRAM.length));renderToday();window.scrollTo({top:0,behavior:'smooth'});}
+function completeDay(){
+  const cur=curDayNum();
+  store.dayDone=store.dayDone||{};
+  store.dayDone[cur]=true;
+  if((store.curDay||1)<PROGRAM.length) store.curDay=(store.curDay||1)+1;
+  updateStreak(); saveStore();
+  TODAY_VIEW=curDayNum();
+  addHistory('jour','Jour '+cur+' terminé','✓');
+  renderToday(); updateNavBadge();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function resChip(r){
+  const ic=r.type==='video'?'▶':(r.type==='doc'?'📘':'🔗');
+  const col=r.type==='video'?'var(--red)':(r.type==='doc'?'var(--blue)':'var(--accent)');
+  return `<a href="${r.url}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;background:var(--surface-2);border:1px solid var(--border-soft);border-radius:10px;padding:9px 13px;color:var(--text);font-size:13px;transition:border-color .15s,background .15s" onmouseover="this.style.borderColor='${col}';this.style.background='var(--surface-3)'" onmouseout="this.style.borderColor='var(--border-soft)';this.style.background='var(--surface-2)'"><span style="color:${col};font-size:14px">${ic}</span>${r.label}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;color:var(--text-mute)"><path d="M7 17L17 7M7 7h10v10"/></svg></a>`;
+}
+function renderToday(){
+  store.dayDone=store.dayDone||{};
+  if(!TODAY_VIEW)TODAY_VIEW=curDayNum();
+  const dv=TODAY_VIEW, day=PROGRAM[dv-1];
+  const theme=THEMES.find(t=>t.id===day.theme)||THEMES[0];
+  const pr=themeProgress(theme.id);
+  const isCurrent=dv===curDayNum();
+  const done=!!store.dayDone[dv];
+  const host=document.getElementById('today-host');
+  const dl=daysLeft();
+  const dleftTxt = dl>0? dl+' j avant l\'examen' : (dl===0?'examen aujourd\'hui':'examen passé');
+  const play='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 3l14 9-14 9V3z"/></svg>';
+  const arr='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+  // dimension pill
+  const dpill=(ok,label)=>`<span style="display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:${ok?'var(--accent)':'var(--text-mute)'};background:${ok?'var(--accent)1a':'var(--surface-3)'};padding:5px 11px;border-radius:20px">${ok?'✓':'○'} ${label}</span>`;
+  // step card helper
+  const card=(num,color,title,inner)=>`<div class="card" style="margin-top:14px;padding:20px 22px">
+    <div style="display:flex;align-items:center;gap:11px;margin-bottom:12px">
+      <div style="width:26px;height:26px;flex:0 0 26px;border-radius:50%;background:${color};color:#0b0f14;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px">${num}</div>
+      <div style="font-family:var(--display);font-weight:800;font-size:15px">${title}</div>
+    </div>${inner}</div>`;
+
+  // ----- header -----
+  let head=`<div class="eyebrow">${isCurrent?'Ton programme du jour':'Révision d\'un jour précédent'}</div>
+    <h1 class="page" style="margin-bottom:4px">Jour ${dv} · ${day.title}</h1>
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:6px">
+      <span style="font-size:13px;color:var(--text-dim)"><b style="color:${theme.color}">${theme.name}</b> · <span style="font-family:var(--mono);color:var(--text-mute)">${day.days||('Semaine '+day.wk)}</span></span>
+      <span style="font-size:12.5px;color:var(--text-mute)">🔥 ${store.streak.count} j de série</span>
+      <span style="font-size:12.5px;color:var(--text-mute)">⏳ ${dleftTxt}</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;margin:14px 0 2px">
+      <button class="btn ghost sm" id="day-prev" ${dv<=1?'disabled':''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>Jour précédent</button>
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-mute);margin-bottom:4px"><span>Jour ${dv} / ${PROGRAM.length}</span><span>${Math.round(dv/PROGRAM.length*100)}%</span></div>
+        <div class="bar"><i style="width:${dv/PROGRAM.length*100}%"></i></div>
+      </div>
+      <button class="btn ghost sm" id="day-next" ${dv>=PROGRAM.length?'disabled':''}>Jour suivant<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+    </div>
+    ${!isCurrent?`<div style="margin-top:8px"><button class="btn ghost sm" id="day-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>Revenir au jour du jour (Jour ${curDayNum()})</button></div>`:''}
+    ${done?`<div style="margin-top:10px;display:inline-flex;align-items:center;gap:8px;background:var(--accent)1a;color:var(--accent);font-weight:700;font-size:13px;padding:7px 14px;border-radius:20px">✓ Journée déjà validée</div>`:''}`;
+
+  // ----- Bloc 1 : comprendre -----
+  const bloc1=card('1','var(--blue)','Comprendre la notion',
+    `<p style="color:var(--text-dim);font-size:14.5px;line-height:1.55;margin:0 0 14px">${day.learn}</p>
+     <div style="font-size:12px;font-weight:700;color:var(--text-mute);text-transform:uppercase;letter-spacing:.04em;margin-bottom:9px">📚 Ressources pour maîtriser</div>
+     <div style="display:flex;flex-wrap:wrap;gap:9px">${day.res.map(resChip).join('')}</div>`);
+
+  // ----- Bloc 2 : s'entraîner -----
+  let bloc2;
+  if(day.exam){
+    const drl=DRILLS[dv]||[];
+    bloc2=card('2','var(--amber)','Mets-toi à l\'épreuve',
+      `<p style="color:var(--text-dim);font-size:14px;margin:0 0 12px">Lance un examen blanc chronométré pour te tester en conditions réelles.</p>
+       ${drl.length?`<div style="font-size:12px;font-weight:700;color:var(--text-mute);text-transform:uppercase;letter-spacing:.04em;margin-bottom:7px">À faire aujourd'hui</div><ul style="margin:0 0 14px;padding-left:20px;line-height:1.8;color:var(--text);font-size:13.5px">${drl.map(m=>`<li>${m}</li>`).join('')}</ul>`:''}
+       <button class="btn primary" id="to-exam"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 11l3 3 8-8"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Lancer un examen blanc</button>
+       <div style="margin-top:14px;padding:12px 14px;background:var(--amber)1a;border:1px solid var(--amber);border-radius:10px;font-size:13px;color:var(--text)">🎯 <b>Pour mesurer ton vrai niveau</b>, rien ne remplace un examen blanc <b>officiel</b>. <a href="https://www.tosa.org/FR/certification-microsoft-excel?sbj_id=57" target="_blank" rel="noopener" style="color:var(--amber);font-weight:700">Voir sur tosa.org →</a></div>`);
+  }else{
+    bloc2=card('2','var(--accent)','S\'entraîner (séance guidée)',
+      `<p style="color:var(--text-dim);font-size:14px;margin:0 0 12px">Une séance guidée sur « ${theme.short} » : QCM, exercices interactifs, puis manipulation dans Excel.</p>
+       <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px">
+         ${dpill(pr.qcm.ok,'QCM'+(pr.qcm.tried?' '+pr.qcm.pct+'%':''))}
+         ${dpill(pr.exos.ok,'Exercices'+(pr.exos.total?' '+pr.exos.done+'/'+pr.exos.total:''))}
+         ${dpill(pr.excel,'Manip. Excel')}
+       </div>
+       <button class="btn primary" id="to-session">${play}Commencer la séance</button>`);
+  }
+
+  // ----- Bloc 3 : manipulation Excel du jour (manips détaillées + vidéos démo) -----
+  let bloc3='';
+  if(!day.exam){
+    const p=THEME_PRACTICE[theme.id];
+    const f=p?XLSX_FILES.find(x=>x.id===p.file):null;
+    const manips=dayManips(dv,theme.id);
+    const demos=demoChips(dv);
+    const dlsvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>';
+    bloc3=card('3','var(--blue)','La manipulation dans Excel',
+      `<p style="color:var(--text-dim);font-size:14px;margin:0 0 12px">L'étape qui fait <b>vraiment</b> progresser : ouvre le fichier dans Excel et refais chaque geste jusqu'à ce qu'il devienne automatique.</p>
+       ${manips.length?`<div style="font-size:12px;font-weight:700;color:var(--text-mute);text-transform:uppercase;letter-spacing:.04em;margin-bottom:7px">✍️ À faire dans Excel aujourd'hui</div><ol style="margin:0 0 16px;padding-left:20px;line-height:1.85;color:var(--text);font-size:14px">${manips.map(m=>`<li>${m}</li>`).join('')}</ol>`:''}
+       ${demos?`<div style="font-size:12px;font-weight:700;color:var(--text-mute);text-transform:uppercase;letter-spacing:.04em;margin-bottom:9px">🎬 Vidéos de démonstration</div><div style="display:flex;flex-wrap:wrap;gap:9px;margin-bottom:16px">${demos}</div>`:''}
+       ${f?`<button class="btn ghost" id="dl-day">${dlsvg}Télécharger « ${f.title} »</button>`:''}
+       <div style="font-size:12px;color:var(--text-mute);margin-top:10px">💡 Les <b>résultats attendus</b> pour t'auto-corriger sont dans les PDF « Plan de pratique » et « Grille de correction ».</div>`);
+  }
+
+  // ----- Bloc « Faire corriger par Claude » (repliable) -----
+  let blocCorrect='';
+  if(!day.exam){
+    blocCorrect=`<div class="card" style="margin-top:14px;padding:18px 22px;border:1px solid var(--blue)">
+      <div style="display:flex;align-items:center;gap:11px;flex-wrap:wrap">
+        <div style="width:26px;height:26px;flex:0 0 26px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px">✓</div>
+        <div style="flex:1;min-width:180px"><div style="font-family:var(--display);font-weight:800;font-size:15px">Faire corriger par Claude</div>
+        <div style="color:var(--text-dim);font-size:13px;margin-top:1px">Fais vérifier tes formules et tes résultats quand tu as fini.</div></div>
+        <button class="btn ghost sm" id="corr-toggle" style="margin-left:auto">Comment faire ?</button>
+      </div>
+      <div id="corr-how" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border-soft);font-size:13.5px;color:var(--text);line-height:1.6">
+        <ol style="margin:0;padding-left:20px;line-height:1.85">
+          <li>Fais les manipulations ci-dessus dans Excel.</li>
+          <li>Reviens dans ta conversation Claude et écris : <b>« Vérifie le Jour ${dv} »</b>.</li>
+          <li>Joins ton travail :
+            <ul style="margin:5px 0;padding-left:18px">
+              <li><b>Formules</b> → copie-colle tes formules (clique la cellule, copie la barre de formule).</li>
+              <li><b>TCD / tri / graphique</b> → <b>uploade ton fichier .xlsx</b> (glisse-le dans le chat).</li>
+              <li>Une <b>capture d'écran</b> aide pour le visuel.</li>
+            </ul>
+          </li>
+          <li>Claude vérifie et te dit quoi corriger. <span style="color:var(--text-mute)">(Fiable sur les formules/résultats ; partiel sur l'esthétique des graphiques.)</span></li>
+        </ol>
+      </div>
+    </div>`;
+  }
+
+  // ----- validation -----
+  let valid='';
+  if(isCurrent){
+    valid=`<div class="card" style="margin-top:14px;padding:20px 22px;border:1px solid var(--accent-soft)">
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+        <div style="flex:1;min-width:200px">
+          <div style="font-family:var(--display);font-weight:800;font-size:15px">${done?'Journée validée ✓':'Tu as fini ta journée ?'}</div>
+          <div style="color:var(--text-dim);font-size:13.5px;margin-top:2px">${done?(dv<PROGRAM.length?'Passe au jour suivant quand tu veux.':'Tu es arrivé au bout du programme. Enchaîne les examens blancs !'):'Valide pour débloquer le Jour '+(dv+1)+'.'}</div>
+        </div>
+        ${!done?`<button class="btn primary" id="day-done" style="margin-left:auto;font-size:15px;padding:13px 20px">✓ J'ai terminé ma journée</button>`:(dv<PROGRAM.length?`<button class="btn primary" id="day-gonext" style="margin-left:auto">Aller au Jour ${dv+1} ${arr}</button>`:`<button class="btn primary" data-goto="examen" style="margin-left:auto">Examen blanc</button>`)}
+      </div>
+    </div>`;
+  }
+
+  host.innerHTML=head+bloc1+bloc2+bloc3+blocCorrect+valid;
+
+  // wiring
+  const q=(id)=>host.querySelector(id);
+  if(q('#corr-toggle'))q('#corr-toggle').addEventListener('click',()=>{const d=q('#corr-how');const open=d.style.display!=='none';d.style.display=open?'none':'block';q('#corr-toggle').textContent=open?'Comment faire ?':'Masquer';});
+  if(q('#day-prev'))q('#day-prev').addEventListener('click',()=>gotoDay(dv-1));
+  if(q('#day-next'))q('#day-next').addEventListener('click',()=>gotoDay(dv+1));
+  if(q('#day-back'))q('#day-back').addEventListener('click',()=>gotoDay(curDayNum()));
+  if(q('#to-session'))q('#to-session').addEventListener('click',()=>launchSession(theme.id));
+  if(q('#to-exam'))q('#to-exam').addEventListener('click',()=>go('examen'));
+  if(q('#dl-day')){const p=THEME_PRACTICE[theme.id];if(p)q('#dl-day').addEventListener('click',()=>downloadXlsx(p.file));}
+  if(q('#day-done'))q('#day-done').addEventListener('click',completeDay);
+  if(q('#day-gonext'))q('#day-gonext').addEventListener('click',()=>gotoDay(dv+1));
+  host.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.goto)));
+}
 
 /* ============================================================
    ROUTER
    ============================================================ */
 const app=document.getElementById('app');
 function go(view){
+  if(typeof clearExamTimer==='function')clearExamTimer();
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.view===view));
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   const el=document.getElementById('view-'+view);
   if(el)el.classList.add('active');
   app.classList.remove('nav-open');
+  if(view==='today'){TODAY_VIEW=curDayNum();renderToday();}
   if(view==='dashboard')renderDashboard();
   if(view==='parcours')renderParcours();
   if(view==='suivi')renderSuivi();
+  if(view==='session')initSessionView();
+  if(view==='examen')initExamView();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 document.getElementById('nav').addEventListener('click',e=>{
@@ -844,7 +1652,7 @@ function renderDashboard(){
   document.getElementById('countdown').textContent= d>0? d+'j' : (d===0?'J':'—');
   const done=themesDoneCount(); const pct=Math.round(done/THEMES.length*100);
   document.getElementById('d-prog').textContent=pct+'%';
-  document.getElementById('prog-text').textContent=done+' thème'+(done>1?'s':'')+' sur '+THEMES.length;
+  document.getElementById('prog-text').textContent=done+' / '+THEMES.length+' modules validés';
   document.getElementById('prog-pct').textContent=pct+'%';
   document.getElementById('prog-bar').style.width=pct+'%';
   const {a,c}=totalQcm();
@@ -852,6 +1660,33 @@ function renderDashboard(){
   document.getElementById('d-streak').textContent=store.streak.count;
   const tip=TIPS[new Date().getDate()%TIPS.length];
   document.getElementById('tip-text').innerHTML=tip;
+
+  // Hero "séance du jour"
+  const hero=document.getElementById('dash-hero');
+  const play='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 3l14 9-14 9V3z"/></svg>';
+  if(THEMES.every(t=>isThemeComplete(t.id))){
+    hero.innerHTML=`<div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+      <div style="flex:1;min-width:220px">
+        <div style="font-size:12px;color:var(--text-mute);font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Bravo 🏆</div>
+        <div style="font-size:20px;font-weight:800;font-family:var(--display);color:var(--accent)">Tous les modules sont bouclés</div>
+        <div style="color:var(--text-dim);font-size:13.5px;margin-top:3px">Place aux examens blancs pour te tester en conditions réelles.</div>
+      </div>
+      <button class="btn primary" data-goto="examen" style="font-size:15px;padding:13px 22px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 11l3 3 8-8"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Lancer un examen blanc</button>
+    </div>`;
+  }else{
+    const ft=focusTheme(); const pr=themeProgress(ft.id);
+    const steps=[]; if(!pr.qcm.ok)steps.push('QCM'); if(!pr.exos.ok&&pr.exos.total)steps.push('exercices'); if(!pr.excel)steps.push('manip Excel');
+    hero.innerHTML=`<div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+      <div style="flex:1;min-width:220px">
+        <div style="font-size:12px;color:var(--text-mute);font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Ta séance du jour</div>
+        <div style="font-size:20px;font-weight:800;font-family:var(--display);color:${ft.color}">${ft.name}</div>
+        <div style="color:var(--text-dim);font-size:13.5px;margin-top:3px">${ft.days} · à faire : ${steps.join(', ')||'révision'}</div>
+      </div>
+      <button class="btn primary" id="hero-start" style="font-size:15px;padding:13px 22px">${play}Commencer la séance</button>
+    </div>`;
+  }
+  const hs=document.getElementById('hero-start'); if(hs)hs.addEventListener('click',()=>launchSession());
+  hero.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.goto)));
 }
 
 /* ============================================================
@@ -862,7 +1697,7 @@ function renderParcours(){
   const host=document.getElementById('parcours-list');
   host.className='grid stagger';
   host.innerHTML=THEMES.map((t,i)=>{
-    const done=!!store.themesDone[t.id];
+    const done=moduleDone(t.id);
     return `<div class="theme-card ${done?'done':''}">
       <div class="theme-head">
         <div class="theme-num" style="${done?'':'color:'+t.color}">${done?tickSvg:(i+1)}</div>
@@ -878,7 +1713,7 @@ function renderParcours(){
           <span class="box">${tickSvg}</span>${done?'Thème maîtrisé':'Marquer comme terminé'}
         </button>
         <button class="btn ghost sm" data-libre="${t.id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>QCM ${t.short}</button>
-        ${t.id==='formules'?'<button class="btn ghost sm" data-goto="pratique"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>Exercices Excel</button>':''}
+        ${themeExercises(t.id).length?'<button class="btn ghost sm" data-goto="pratique"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>Exercices</button>':''}
       </div>
     </div>`;
   }).join('');
@@ -909,7 +1744,8 @@ function seededPick(pool,n,seed){
 }
 function themeName(id){const t=THEMES.find(x=>x.id===id);return t?t.short:id;}
 
-function runQuiz(host,questions,label,onDone){
+function runQuiz(host,questions,label,onDone,opts){
+  opts=opts||{};
   let idx=0, score=0, answered=false;
   const total=questions.length;
   function render(){
@@ -955,11 +1791,11 @@ function runQuiz(host,questions,label,onDone){
       <h3>${msg}</h3>
       <p>${pct}% de bonnes réponses${label?' · '+label:''}</p>
       <div class="cta-row" style="justify-content:center;margin-top:22px">
-        <button class="btn primary" id="again"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>Recommencer</button>
-        <button class="btn ghost" data-goto="suivi">Voir mon suivi</button>
+        ${opts.onContinue?`<button class="btn primary" id="cont">${opts.continueLabel||'Continuer'} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button><button class="btn ghost" id="again">Refaire le QCM</button>`:`<button class="btn primary" id="again"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>Recommencer</button><button class="btn ghost" data-goto="suivi">Voir mon suivi</button>`}
       </div>
     </div></div>`;
     host.querySelector('#again').addEventListener('click',()=>{idx=0;score=0;render();});
+    if(opts.onContinue){const cb=host.querySelector('#cont');if(cb)cb.addEventListener('click',()=>opts.onContinue(score,total));}
     host.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.goto)));
     if(onDone)onDone(score,total);
   }
@@ -1006,20 +1842,175 @@ function offlineFallback(theme,count){
    SESSION DU JOUR
    ============================================================ */
 function dateSeed(){const d=new Date();return d.getFullYear()*1000+ (d.getMonth()+1)*40 + d.getDate();}
-async function startSession(){
-  const host=document.getElementById('session-host');
+/* ----- Pratique Excel par module (étape 3 de la séance) ----- */
+const ADV_THEMES=['logique','conditionnelles','recherche','texte','tcd'];
+const THEME_PRACTICE={
+  interface:{file:'f_ventes', manip:["Ouvre le fichier et déplace-toi avec <b>Ctrl + flèches</b> jusqu'aux bords des données.","Insère une ligne (clic droit sur un numéro de ligne &gt; Insérer), puis annule avec <b>Ctrl + Z</b>.","Renomme la feuille (double-clic sur l'onglet) et change sa <b>couleur d'onglet</b>."]},
+  miseEnForme:{file:'f_stock', manip:["Mets la colonne des prix au format <b>monétaire €</b>.","Ajoute des <b>bordures</b> au tableau et mets la ligne d'en-tête en gras.","Applique une <b>mise en forme conditionnelle</b> (barres de données) sur la colonne Quantité."]},
+  formules:{file:'f_ventes', manip:["Calcule le <b>Total</b> avec <code>=SOMME(...)</code>, puis la <b>Moyenne</b>, le <b>Min</b> et le <b>Max</b>.","Repère le meilleur jour avec <code>=MAX(...)</code>.","Crée une cellule « TVA » et utilise une <b>référence absolue $</b> recopiée vers le bas."]},
+  tri:{file:'f_stock', manip:["Sélectionne <b>tout</b> le tableau, puis trie par <b>Catégorie</b> (A→Z).","Fais un <b>tri à 2 niveaux</b> : Catégorie, puis Prix décroissant.","Active les <b>filtres</b> (Ctrl+Maj+L) et n'affiche qu'une seule catégorie."]},
+  graphiques:{file:'f_ventes_region', manip:["Sélectionne les données (en-têtes compris) et insère un <b>histogramme</b>.","Change-le en <b>courbes</b> via « Modifier le type de graphique ».","Ajoute un <b>titre</b> et des <b>étiquettes de données</b>."]},
+  logique:{file:'f_stock', manip:["Ajoute une colonne « État » : <code>=SI(C2&lt;20;\"À commander\";\"OK\")</code> (C = quantité).","Combine deux conditions avec <code>ET</code> (ex. quantité faible <b>et</b> prix élevé).","Protège un calcul avec <code>SIERREUR</code> pour éviter une erreur affichée."]},
+  conditionnelles:{file:'f_tcd', manip:["Compte les ventes d'une région avec <code>=NB.SI(...)</code>.","Additionne les montants d'un produit avec <code>=SOMME.SI(...)</code>.","Calcule la moyenne des ventes d'un vendeur avec <code>=MOYENNE.SI(...)</code>."]},
+  recherche:{file:'f_recherchev', manip:["Dans la feuille <b>Commandes</b>, complète la colonne <b>Produit</b> avec <code>=RECHERCHEV(...)</code> depuis la feuille Catalogue.","Complète la colonne <b>Prix</b> de la même façon (3ᵉ colonne, FAUX = exact).","Fige la table avec des <b>$</b> et recopie la formule vers le bas."]},
+  texte:{file:'f_recherchev', manip:["Avec <code>MAJUSCULE</code>, mets les noms de produits en capitales.","Assemble deux colonnes avec l'opérateur <code>&</code> et un espace.","Extrais une partie d'un code avec <code>GAUCHE</code> ou <code>DROITE</code>."]},
+  tcd:{file:'f_tcd', manip:["Sélectionne la liste, puis <b>Insertion &gt; Tableau croisé dynamique</b>.","Place <b>Région</b> en Lignes et <b>Montant</b> en Valeurs (Somme).","Ajoute <b>Produit</b> en Colonnes, modifie un montant source puis <b>Actualise</b> le TCD."]},
+  gestion:{file:'f_ventes_region', manip:["<b>Fige les volets</b> pour garder les en-têtes visibles en défilant.","Définis une <b>zone d'impression</b> et fais <b>Ctrl + P</b> pour vérifier la mise en page.","Exporte le classeur en <b>PDF</b>."]}
+};
+function themeExercises(id){return EXERCISES.filter(e=>e.theme===id);}
+function isThemeComplete(id){
+  const exos=themeExercises(id);
+  const exDone=exos.length? exos.every(e=>store.exDone[e.id]) : true;
+  const q=store.qcm.byTheme[id];
+  const qOk=q&&q.a>=5;
+  const excel=!!(store.excelDone&&store.excelDone[id]);
+  return qOk&&exDone&&excel;
+}
+function themeProgress(id){
+  const exos=themeExercises(id);
+  const exDoneN=exos.filter(e=>store.exDone[e.id]).length;
+  const q=store.qcm.byTheme[id];
+  return {
+    qcm:{ok:!!(q&&q.a>=5), pct:q&&q.a?Math.round(q.c/q.a*100):0, tried:q?q.a:0},
+    exos:{done:exDoneN, total:exos.length, ok: exos.length? exDoneN===exos.length : true},
+    excel:!!(store.excelDone&&store.excelDone[id])
+  };
+}
+function focusTheme(){
+  for(const t of THEMES){ if(!isThemeComplete(t.id)) return t; }
+  return THEMES[dateSeed()%THEMES.length];
+}
+function offlinePickTheme(id,n){let pool=BANK.filter(q=>q.t===id);if(pool.length<n)pool=pool.concat(shuffle(BANK));return shuffle(pool).slice(0,Math.min(n,Math.max(pool.length,n)));}
+function offlineNote(){return `<div class="muted-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>Questions issues de la banque intégrée (mode hors-ligne).</div>`;}
+
+/* ----- Séance guidée en 3 étapes ----- */
+const ARR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+let sessionState=null;
+function launchSession(themeId){ go('session'); startGuidedSession(themeId); }
+function stepHeader(active,theme){
+  const labels=['Connaissances (QCM)','Pratique guidée','Manipulation dans Excel'];
+  const chip=(i)=>{
+    const n=i+1, on=n===active, done=n<active;
+    const bg=done?'var(--accent)':on?theme.color:'var(--surface-3)';
+    const txt=on?theme.color:done?'var(--accent)':'var(--text-mute)';
+    return `<span style="display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;color:${txt}"><span style="width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:${bg};color:${done||on?'#0b0f14':'var(--text-mute)'};font-size:12px">${done?'✓':n}</span>${labels[i]}</span>`;
+  };
+  return `<div style="margin-bottom:18px">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px">
+      <div style="font-size:13px;color:var(--text-dim)">Séance · <b style="color:${theme.color}">${theme.name}</b> · <span style="font-family:var(--mono);color:var(--text-mute)">${theme.days}</span></div>
+      <button class="btn ghost sm" onclick="initSessionView()" style="flex:0 0 auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>Quitter</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">${[0,1,2].map(chip).join('<span style="color:var(--text-mute)">→</span>')}</div>
+  </div>`;
+}
+function startGuidedSession(themeId){
+  const theme=(themeId && THEMES.find(t=>t.id===themeId)) || focusTheme();
+  sessionState={theme, qcmScore:0, qcmTotal:0, exosTotal:themeExercises(theme.id).length, exosNewlySolved:0};
   updateStreak();
-  host.innerHTML=`<div class="quiz-shell"><div class="loader"><div class="spinner"></div><div>Préparation de ta session du jour…</div></div></div>`;
-  let questions=null, fromAI=false;
-  try{
-    questions=await generateQCM(THEMES[dateSeed()%THEMES.length].id,'Débutant',5);
-    fromAI=true;
-  }catch(e){
-    questions=seededPick(BANK,5,dateSeed());
+  sessionStep1();
+}
+function sessionStep1(){
+  const host=document.getElementById('session-host');
+  const theme=sessionState.theme;
+  host.innerHTML=stepHeader(1,theme)+`<div id="sess-body"></div>`;
+  const body=host.querySelector('#sess-body');
+  body.innerHTML=`<div class="quiz-shell"><div class="loader"><div class="spinner"></div><div>Préparation des questions…</div></div></div>`;
+  (async()=>{
+    const lvl=ADV_THEMES.includes(theme.id)?'Avancé':'Opérationnel';
+    let questions=null, fromAI=false;
+    try{ questions=await generateQCM(theme.id,lvl,5); fromAI=questions&&questions.length>0; }catch(e){}
+    if(!questions||!questions.length) questions=offlinePickTheme(theme.id,5);
+    runQuiz(body,questions,'Connaissances · '+theme.short,
+      (s,t)=>{sessionState.qcmScore=s;sessionState.qcmTotal=t;},
+      {onContinue:()=>sessionStep2(), continueLabel:'Étape suivante : pratique'});
+    if(!fromAI)body.insertAdjacentHTML('beforeend',offlineNote());
+  })();
+}
+function sessionStep2(){
+  const host=document.getElementById('session-host');
+  const theme=sessionState.theme;
+  host.innerHTML=stepHeader(2,theme)+`<div id="sess-body"></div>`;
+  const body=host.querySelector('#sess-body');
+  const all=themeExercises(theme.id);
+  if(!all.length){
+    body.innerHTML=`<div class="card" style="padding:26px">
+      <h2 class="sec" style="margin-top:0"><span class="tick"></span>Place à la manipulation</h2>
+      <p style="color:var(--text-dim);max-width:580px">Les compétences « ${theme.short} » ne se testent pas par une formule : elles se travaillent directement dans Excel — c'est justement l'étape suivante. Garde en tête les notions clés : ${theme.chips.filter(c=>!c.startsWith('⭐')).join(', ')}.</p>
+      <button class="btn primary" id="to3" style="margin-top:6px">Étape suivante : manipulation Excel ${ARR}</button>
+    </div>`;
+    body.querySelector('#to3').addEventListener('click',sessionStep3);
+    return;
   }
-  const note = fromAI? '' : `<div class="muted-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>Session issue de la banque intégrée (mode hors-ligne).</div>`;
-  runQuiz(host,questions,'Session du jour',(s,t)=>{addHistory('session','Session du jour',s+'/'+t);});
-  host.insertAdjacentHTML('beforeend',note);
+  let exos=all.filter(e=>!store.exDone[e.id]);
+  const reviseMode=exos.length===0;
+  if(reviseMode) exos=all.slice(0,3); // tous déjà réussis → quelques-uns en révision
+  exos=exos.slice(0,5);
+  const remaining=all.filter(e=>!store.exDone[e.id]).length;
+  const moreNote = remaining>exos.length ? `<span style="color:var(--text-mute)"> · ${remaining-exos.length} autre(s) à faire ensuite (onglet Exercices)</span>` : '';
+  body.innerHTML=`<div class="card" style="padding:22px 22px 8px;margin-bottom:16px">
+      <h2 class="sec" style="margin-top:0"><span class="tick"></span>Pratique : applique les formules</h2>
+      <p style="color:var(--text-dim);margin:-6px 0 2px">${reviseMode?'Tu as déjà réussi tous les exercices de ce module — en voici pour réviser.':'Résous ces '+exos.length+' exercice(s).'} Tape la formule dans la <b>cellule verte</b> puis « Vérifier ».${moreNote}</p>
+    </div>
+    <div id="sess-exos"></div>
+    <div class="cta-row" style="margin-top:18px"><button class="btn primary" id="to3">Étape suivante : manipulation Excel ${ARR}</button></div>`;
+  const exoHost=body.querySelector('#sess-exos');
+  exoHost.innerHTML=exos.map(exerciseCardHTML).join('');
+  wireExercises(exoHost,(id,wasNew)=>{ if(wasNew)sessionState.exosNewlySolved++; });
+  body.querySelector('#to3').addEventListener('click',sessionStep3);
+}
+function sessionStep3(){
+  const host=document.getElementById('session-host');
+  const theme=sessionState.theme;
+  const p=THEME_PRACTICE[theme.id]||{file:'f_ventes',manip:["Entraîne-toi librement dans Excel sur ce thème."]};
+  const f=XLSX_FILES.find(x=>x.id===p.file);
+  const already=!!(store.excelDone&&store.excelDone[theme.id]);
+  const dl='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>';
+  host.innerHTML=stepHeader(3,theme)+`<div class="card" style="padding:26px">
+    <h2 class="sec" style="margin-top:0"><span class="tick"></span>À faire dans le vrai Excel</h2>
+    <p style="color:var(--text-dim);max-width:620px;margin:-4px 0 16px">C'est l'étape la plus importante du TOSA : une grande partie des points vient du <b>faire</b>, pas seulement du savoir. Télécharge le fichier, ouvre-le dans Excel (ou l'éditeur en ligne) et réalise ces manipulations :</p>
+    <ol style="margin:0 0 18px;padding-left:20px;line-height:1.95;color:var(--text)">${p.manip.map(m=>`<li>${m}</li>`).join('')}</ol>
+    <div class="cta-row">
+      ${f?`<button class="btn ghost" id="dl-file">${dl}Télécharger « ${f.title} »</button>`:''}
+      <button class="btn primary" id="excel-done">${already?'✓ Déjà fait — terminer la séance':'J\u0027ai fait la manipulation ✓'}</button>
+    </div>
+    <div class="muted-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>Pas Excel sous la main maintenant ? Termine quand même la séance et fais la manip plus tard — elle restera marquée à faire dans le suivi.</div>
+  </div>`;
+  if(f)host.querySelector('#dl-file').addEventListener('click',()=>downloadXlsx(f.id));
+  host.querySelector('#excel-done').addEventListener('click',()=>{
+    if(!store.excelDone)store.excelDone={};
+    store.excelDone[theme.id]=true; saveStore();
+    finishSession();
+  });
+}
+function finishSession(){
+  const theme=sessionState.theme;
+  const exos=themeExercises(theme.id);
+  const exosDone=exos.filter(e=>store.exDone[e.id]).length;
+  addHistory('session','Séance · '+theme.short, (sessionState.qcmTotal?sessionState.qcmScore+'/'+sessionState.qcmTotal:'OK'));
+  const complete=isThemeComplete(theme.id);
+  const next=focusTheme();
+  const moveOn=complete && next.id!==theme.id;
+  const recap=(val,col,lab)=>`<div style="text-align:center"><div style="font-size:26px;font-weight:800;font-family:var(--display);color:${col}">${val}</div><div style="font-size:12px;color:var(--text-mute)">${lab}</div></div>`;
+  const host=document.getElementById('session-host');
+  host.innerHTML=`<div class="quiz-shell"><div class="result">
+    <div style="font-size:46px;margin-bottom:4px">🎉</div>
+    <h3>Séance terminée !</h3>
+    <div style="display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin:16px 0 4px">
+      ${recap(sessionState.qcmScore+'/'+(sessionState.qcmTotal||0),'var(--amber)','QCM')}
+      ${recap(exosDone+'/'+exos.length,'var(--blue)','exercices')}
+      ${recap('✓','var(--accent)','manip. Excel')}
+    </div>
+    <p style="color:var(--text-dim);max-width:540px;margin:12px auto 0">${complete?('Module « '+theme.short+' » bouclé sur les 3 dimensions. '):'Continue : il te reste des éléments sur ce module (vois le suivi). '}${moveOn?('Prochaine étape conseillée : <b>'+next.name+'</b>.'):'Reviens demain pour garder ta série 🔥'}</p>
+    <div class="cta-row" style="justify-content:center;margin-top:20px">
+      ${!store.themesDone[theme.id]?`<button class="btn primary" id="master">Marquer « ${theme.short} » comme maîtrisé</button>`:''}
+      <button class="btn ghost" data-goto="suivi">Voir mon suivi</button>
+      <button class="btn ghost" id="restart">Nouvelle séance ${ARR}</button>
+    </div>
+  </div></div>`;
+  const mb=host.querySelector('#master'); if(mb)mb.addEventListener('click',()=>{store.themesDone[theme.id]=true;saveStore();updateNavBadge();finishSession();});
+  host.querySelector('#restart').addEventListener('click',()=>startGuidedSession());
+  host.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.goto)));
+  updateNavBadge();
 }
 
 /* ============================================================
@@ -1051,100 +2042,175 @@ async function genLibre(){
 document.getElementById('libre-gen').addEventListener('click',genLibre);
 
 /* ============================================================
-   FORMULA ENGINE (mini-Excel)
+   FORMULA ENGINE (mini-Excel) — évaluateur récursif
+   Gère : + - * / ^ & % , comparaisons (= <> < > <= >=),
+   plages, références ($), nombres, "texte", VRAI/FAUX,
+   et les fonctions : SOMME, MOYENNE, MIN, MAX, NB, NBVAL,
+   PRODUIT, ARRONDI, ABS, ENT, SI, ET, OU, NON, SIERREUR,
+   NB.SI, SOMME.SI, MOYENNE.SI, RECHERCHEV, GAUCHE, DROITE,
+   STXT, NBCAR, MAJUSCULE, MINUSCULE, CONCATENER/CONCAT, SUPPRESPACE.
    ============================================================ */
-function colToIdx(col){let n=0;for(const ch of col.toUpperCase())n=n*26+(ch.charCodeAt(0)-64);return n-1;}
-function cellRaw(ref,grid){
-  const m=ref.match(/^([A-Z]+)(\d+)$/i); if(!m)return null;
-  const c=colToIdx(m[1]); const r=+m[2]-1;
-  if(r<0||r>=grid.length)return '';
-  const cell=grid[r][c];
-  if(cell==null||cell.v==='')return '';
-  return cell.v;
-}
-function expandRange(rng,grid){
-  const m=rng.match(/^([A-Z]+)(\d+):([A-Z]+)(\d+)$/i); if(!m)return [];
+function colToIdx(col){let n=0;for(const ch of col.toUpperCase()){if(ch<'A'||ch>'Z')continue;n=n*26+(ch.charCodeAt(0)-64);}return n-1;}
+function refToRC(ref){const m=ref.replace(/\$/g,'').match(/^([A-Z]+)(\d+)$/i);return{c:colToIdx(m[1]),r:+m[2]-1};}
+function cellAt(r,c,grid){const row=grid[r];const cell=row?row[c]:null;return(cell&&cell.v!==''&&cell.v!=null)?cell.v:'';}
+function rangeValue(str,grid){
+  const m=str.replace(/\$/g,'').match(/^([A-Z]+)(\d+):([A-Z]+)(\d+)$/i);
   let c1=colToIdx(m[1]),r1=+m[2]-1,c2=colToIdx(m[3]),r2=+m[4]-1;
-  if(c1>c2)[c1,c2]=[c2,c1]; if(r1>r2)[r1,r2]=[r2,r1];
-  const out=[];
-  for(let r=r1;r<=r2;r++)for(let c=c1;c<=c2;c++){
-    const cell=(grid[r]&&grid[r][c])?grid[r][c]:null;
-    out.push(cell&&cell.v!==''?cell.v:'');
-  }
-  return out;
+  if(c1>c2){const t=c1;c1=c2;c2=t;} if(r1>r2){const t=r1;r1=r2;r2=t;}
+  const flat=[],grid2d=[];
+  for(let r=r1;r<=r2;r++){const row=[];for(let c=c1;c<=c2;c++){const v=cellAt(r,c,grid);row.push(v);flat.push(v);}grid2d.push(row);}
+  return {__range:true,flat:flat,grid2d:grid2d};
 }
-function toNums(arr){
-  return arr.map(x=>{
-    if(typeof x==='number')return x;
-    if(x===''||x==null)return null;
-    const n=parseFloat(String(x).replace(',','.'));
-    return isNaN(n)?null:n;
-  }).filter(x=>x!==null);
-}
-const FN={
-  SOMME:a=>toNums(a).reduce((s,x)=>s+x,0),
-  SUM:a=>toNums(a).reduce((s,x)=>s+x,0),
-  MOYENNE:a=>{const n=toNums(a);return n.length?n.reduce((s,x)=>s+x,0)/n.length:0;},
-  AVERAGE:a=>{const n=toNums(a);return n.length?n.reduce((s,x)=>s+x,0)/n.length:0;},
-  MIN:a=>{const n=toNums(a);return n.length?Math.min.apply(null,n):0;},
-  MAX:a=>{const n=toNums(a);return n.length?Math.max.apply(null,n):0;},
-  NB:a=>toNums(a).length,
-  COUNT:a=>toNums(a).length,
-  NBVAL:a=>a.filter(x=>x!==''&&x!=null).length,
-  COUNTA:a=>a.filter(x=>x!==''&&x!=null).length,
-  PRODUIT:a=>{const n=toNums(a);return n.reduce((p,x)=>p*x,1);},
-  ARRONDI:a=>{const n=parseFloat(String(a[0]).replace(',','.'))||0;const d=Math.trunc(parseFloat(a[1])||0);const f=Math.pow(10,d);return Math.round(n*f)/f;}
-};
-function splitArgs(s){
-  // En Excel français : point-virgule = séparateur d'arguments, virgule = décimale.
-  // On accepte aussi la virgule comme séparateur SI aucun point-virgule n'est présent
-  // ET qu'elle ne sert pas de décimale (cas anglo-saxon SOMME(A1,B1)).
-  if(s.indexOf(';')!==-1){
-    return s.split(';').map(x=>x.trim()).filter(x=>x!=='');
+function toNumOrNull(x){if(typeof x==='number')return x;if(typeof x==='boolean')return x?1:0;if(x===''||x==null)return null;const n=parseFloat(String(x).replace(',','.'));return isNaN(n)?null:n;}
+function toNum(v){if(v&&v.__range)throw new Error('Plage non valide ici');if(typeof v==='number')return v;if(typeof v==='boolean')return v?1:0;if(v===''||v==null)return 0;const n=parseFloat(String(v).replace(',','.'));if(isNaN(n))throw new Error('#VALEUR!');return n;}
+function toStr(v){if(v&&v.__range)throw new Error('Plage non valide ici');if(v===''||v==null)return '';if(typeof v==='boolean')return v?'VRAI':'FAUX';if(typeof v==='number')return (''+v).replace('.',',');return String(v);}
+function truthy(v){if(typeof v==='boolean')return v;if(typeof v==='number')return v!==0;if(v===''||v==null)return false;const n=toNumOrNull(v);if(n!==null)return n!==0;const s=String(v).toUpperCase();return s==='VRAI'||s==='TRUE';}
+function matchCrit(cell,crit){
+  if(typeof crit==='number')return toNumOrNull(cell)===crit;
+  const s=String(crit).trim();
+  const m=s.match(/^(<=|>=|<>|=|<|>)(.*)$/);
+  if(m){
+    const op=m[1],rhs=m[2],rn=parseFloat(rhs.replace(',','.')),cn=toNumOrNull(cell);
+    if(rhs!==''&&!isNaN(rn)&&cn!==null){
+      if(op==='<=')return cn<=rn;if(op==='>=')return cn>=rn;if(op==='<')return cn<rn;if(op==='>')return cn>rn;if(op==='=')return cn===rn;if(op==='<>')return cn!==rn;
+    }
+    const cs=String(cell).toLowerCase(),rs=rhs.toLowerCase();
+    if(op==='=')return cs===rs;if(op==='<>')return cs!==rs;return false;
   }
-  // pas de ';' : la virgule est un séparateur seulement si elle sépare des références/plages
-  if(/,/.test(s) && /[A-Z]+\d+/i.test(s) && !/\d,\d/.test(s.replace(/[A-Z]+\d+/gi,''))){
-    return s.split(',').map(x=>x.trim()).filter(x=>x!=='');
-  }
-  return [s.trim()].filter(x=>x!=='');
+  const cn=toNumOrNull(cell),sn=parseFloat(s.replace(',','.'));
+  if(cn!==null&&!isNaN(sn))return cn===sn;
+  return String(cell).toLowerCase()===s.toLowerCase();
 }
-function resolveArg(arg,grid){
-  arg=arg.trim();
-  if(/^[A-Z]+\d+:[A-Z]+\d+$/i.test(arg))return expandRange(arg,grid);
-  if(/^[A-Z]+\d+$/i.test(arg))return [cellRaw(arg,grid)];
-  const n=parseFloat(arg.replace(',','.'));
-  return [isNaN(n)?arg:n];
+function tokenize(s){
+  const toks=[];let i=0;
+  while(i<s.length){
+    const ch=s[i];
+    if(ch===' '||ch==='\t'){i++;continue;}
+    if(ch==='"'){let j=i+1,str='';while(j<s.length&&s[j]!=='"'){str+=s[j];j++;}toks.push({t:'str',v:str});i=j+1;continue;}
+    const rest=s.slice(i);
+    let m;
+    if((m=/^\$?[A-Za-z]+\$?\d+:\$?[A-Za-z]+\$?\d+/.exec(rest))){toks.push({t:'range',v:m[0]});i+=m[0].length;continue;}
+    if((m=/^\$?[A-Za-z]+\$?\d+/.exec(rest))){toks.push({t:'ref',v:m[0]});i+=m[0].length;continue;}
+    if((m=/^[A-Za-z_]+(?:\.[A-Za-z]+)*/.exec(rest))){toks.push({t:'name',v:m[0]});i+=m[0].length;continue;}
+    if((m=/^\d+(?:[.,]\d+)?/.exec(rest))){toks.push({t:'num',v:parseFloat(m[0].replace(',','.'))});i+=m[0].length;continue;}
+    if(rest.startsWith('<=')||rest.startsWith('>=')||rest.startsWith('<>')){toks.push({t:'op',v:rest.slice(0,2)});i+=2;continue;}
+    if('+-*/^&%=<>():;,'.indexOf(ch)!==-1){toks.push({t:'op',v:ch});i++;continue;}
+    throw new Error('Caractère non reconnu : '+ch);
+  }
+  return toks;
+}
+function parseFormula(toks){
+  let pos=0;
+  const peek=()=>toks[pos],next=()=>toks[pos++];
+  function expect(v){const t=next();if(!t||t.v!==v)throw new Error('Parenthèse ou séparateur manquant');}
+  function isOp(v){const t=peek();return t&&t.t==='op'&&(v?t.v===v:true);}
+  function expr(){return cmp();}
+  function cmp(){let l=concat();while(peek()&&peek().t==='op'&&['=','<>','<','>','<=','>='].indexOf(peek().v)!==-1){const op=next().v;l={type:'bin',op:op,l:l,r:concat()};}return l;}
+  function concat(){let l=add();while(isOp('&')){next();l={type:'bin',op:'&',l:l,r:add()};}return l;}
+  function add(){let l=mul();while(peek()&&peek().t==='op'&&(peek().v==='+'||peek().v==='-')){const op=next().v;l={type:'bin',op:op,l:l,r:mul()};}return l;}
+  function mul(){let l=pow();while(peek()&&peek().t==='op'&&(peek().v==='*'||peek().v==='/')){const op=next().v;l={type:'bin',op:op,l:l,r:pow()};}return l;}
+  function pow(){let l=unary();while(isOp('^')){next();l={type:'bin',op:'^',l:l,r:unary()};}return l;}
+  function unary(){if(peek()&&peek().t==='op'&&(peek().v==='-'||peek().v==='+')){const op=next().v;return{type:'un',op:op,x:unary()};}return postfix();}
+  function postfix(){let n=prim();while(isOp('%')){next();n={type:'pct',x:n};}return n;}
+  function prim(){
+    const t=peek();
+    if(!t)throw new Error('Formule incomplète');
+    if(t.t==='num'){next();return{type:'num',v:t.v};}
+    if(t.t==='str'){next();return{type:'str',v:t.v};}
+    if(t.t==='range'){next();return{type:'range',v:t.v};}
+    if(t.t==='ref'){next();return{type:'ref',v:t.v};}
+    if(isOp('(')){next();const e=expr();expect(')');return e;}
+    if(t.t==='name'){
+      const nm=t.v.toUpperCase();next();
+      if(nm==='VRAI'||nm==='TRUE')return{type:'bool',v:true};
+      if(nm==='FAUX'||nm==='FALSE')return{type:'bool',v:false};
+      if(isOp('(')){next();const args=[];if(!isOp(')')){args.push(expr());while(peek()&&peek().t==='op'&&(peek().v===';'||peek().v===',')){next();args.push(expr());}}expect(')');return{type:'fn',name:nm,args:args};}
+      throw new Error('Nom inattendu : '+t.v);
+    }
+    throw new Error('Expression invalide');
+  }
+  const ast=expr();
+  if(pos<toks.length)throw new Error('Formule mal formée');
+  return ast;
+}
+function collectValues(args,grid){const out=[];for(const a of args){const v=evalNode(a,grid);if(v&&v.__range)for(const x of v.flat)out.push(x);else out.push(v);}return out;}
+function nums(arr){const o=[];for(const x of arr){const n=toNumOrNull(x);if(n!==null)o.push(n);}return o;}
+function evalNode(n,grid){
+  switch(n.type){
+    case 'num':return n.v;
+    case 'str':return n.v;
+    case 'bool':return n.v;
+    case 'ref':{const rc=refToRC(n.v);return cellAt(rc.r,rc.c,grid);}
+    case 'range':return rangeValue(n.v,grid);
+    case 'pct':return toNum(evalNode(n.x,grid))/100;
+    case 'un':{const v=toNum(evalNode(n.x,grid));return n.op==='-'?-v:v;}
+    case 'bin':return evalBin(n,grid);
+    case 'fn':return evalFn(n,grid);
+  }
+  throw new Error('Noeud inconnu');
+}
+function evalBin(n,grid){
+  const op=n.op;
+  if(op==='&')return toStr(evalNode(n.l,grid))+toStr(evalNode(n.r,grid));
+  if(['=','<>','<','>','<=','>='].indexOf(op)!==-1){
+    const l=evalNode(n.l,grid),r=evalNode(n.r,grid),ln=toNumOrNull(l),rn=toNumOrNull(r);
+    let c;
+    if(ln!==null&&rn!==null)c=ln-rn;
+    else{const ls=String(l===''||l==null?'':l).toLowerCase(),rs=String(r===''||r==null?'':r).toLowerCase();c=ls<rs?-1:(ls>rs?1:0);}
+    if(op==='=')return c===0;if(op==='<>')return c!==0;if(op==='<')return c<0;if(op==='>')return c>0;if(op==='<=')return c<=0;return c>=0;
+  }
+  const a=toNum(evalNode(n.l,grid)),b=toNum(evalNode(n.r,grid));
+  if(op==='+')return a+b;if(op==='-')return a-b;if(op==='*')return a*b;
+  if(op==='/'){if(b===0)throw new Error('#DIV/0!');return a/b;}
+  if(op==='^')return Math.pow(a,b);
+  throw new Error('Opérateur inconnu');
+}
+function xlRound(x,d){const f=Math.pow(10,d),s=x<0?-1:1;return s*Math.round(Math.abs(x)*f)/f;}
+function flatOf(v){return v&&v.__range?v.flat:[v];}
+function evalFn(n,grid){
+  const N=n.name,A=n.args;
+  const a0=()=>evalNode(A[0],grid);
+  switch(N){
+    case 'SOMME':case 'SUM':return nums(collectValues(A,grid)).reduce((s,x)=>s+x,0);
+    case 'MOYENNE':case 'AVERAGE':{const v=nums(collectValues(A,grid));if(!v.length)throw new Error('#DIV/0!');return v.reduce((s,x)=>s+x,0)/v.length;}
+    case 'MIN':{const v=nums(collectValues(A,grid));return v.length?Math.min.apply(null,v):0;}
+    case 'MAX':{const v=nums(collectValues(A,grid));return v.length?Math.max.apply(null,v):0;}
+    case 'NB':case 'COUNT':return nums(collectValues(A,grid)).length;
+    case 'NBVAL':case 'COUNTA':return collectValues(A,grid).filter(x=>x!==''&&x!=null).length;
+    case 'PRODUIT':case 'PRODUCT':return nums(collectValues(A,grid)).reduce((p,x)=>p*x,1);
+    case 'ARRONDI':case 'ROUND':return xlRound(toNum(a0()),Math.trunc(toNum(evalNode(A[1],grid))));
+    case 'ABS':return Math.abs(toNum(a0()));
+    case 'ENT':case 'INT':return Math.floor(toNum(a0()));
+    case 'SI':case 'IF':return truthy(a0())?evalNode(A[1],grid):(A.length>2?evalNode(A[2],grid):false);
+    case 'ET':case 'AND':return A.every(x=>truthy(evalNode(x,grid)));
+    case 'OU':case 'OR':return A.some(x=>truthy(evalNode(x,grid)));
+    case 'NON':case 'NOT':return !truthy(a0());
+    case 'SIERREUR':case 'IFERROR':try{return a0();}catch(e){return evalNode(A[1],grid);}
+    case 'NB.SI':case 'COUNTIF':{const f=flatOf(a0()),c=evalNode(A[1],grid);return f.filter(x=>matchCrit(x,c)).length;}
+    case 'SOMME.SI':case 'SUMIF':{const cf=flatOf(a0()),c=evalNode(A[1],grid),sf=A.length>2?flatOf(evalNode(A[2],grid)):cf;let s=0;for(let i=0;i<cf.length;i++)if(matchCrit(cf[i],c)){const v=toNumOrNull(sf[i]);if(v!==null)s+=v;}return s;}
+    case 'MOYENNE.SI':case 'AVERAGEIF':{const cf=flatOf(a0()),c=evalNode(A[1],grid),af=A.length>2?flatOf(evalNode(A[2],grid)):cf;let s=0,k=0;for(let i=0;i<cf.length;i++)if(matchCrit(cf[i],c)){const v=toNumOrNull(af[i]);if(v!==null){s+=v;k++;}}if(!k)throw new Error('#DIV/0!');return s/k;}
+    case 'RECHERCHEV':case 'VLOOKUP':{const key=a0(),tbl=evalNode(A[1],grid),idx=Math.trunc(toNum(evalNode(A[2],grid))),exact=A.length>3?!truthy(evalNode(A[3],grid)):true;if(!tbl||!tbl.__range)throw new Error('Table invalide');const g=tbl.grid2d,kn=toNumOrNull(key);for(let i=0;i<g.length;i++){const cell=g[i][0],cn=toNumOrNull(cell),hit=(kn!==null&&cn!==null)?cn===kn:String(cell).toLowerCase()===String(key).toLowerCase();if(hit)return g[i][idx-1];}if(exact)throw new Error('#N/A');let res=null;for(let i=0;i<g.length;i++){const cn=toNumOrNull(g[i][0]);if(cn!==null&&kn!==null&&cn<=kn)res=g[i][idx-1];}if(res!==null)return res;throw new Error('#N/A');}
+    case 'GAUCHE':case 'LEFT':{const s=toStr(a0()),k=A.length>1?Math.trunc(toNum(evalNode(A[1],grid))):1;return s.slice(0,Math.max(0,k));}
+    case 'DROITE':case 'RIGHT':{const s=toStr(a0()),k=A.length>1?Math.trunc(toNum(evalNode(A[1],grid))):1;return k<=0?'':s.slice(-k);}
+    case 'STXT':case 'MID':{const s=toStr(a0()),st=Math.trunc(toNum(evalNode(A[1],grid))),ln=Math.trunc(toNum(evalNode(A[2],grid)));return s.substr(Math.max(0,st-1),Math.max(0,ln));}
+    case 'NBCAR':case 'LEN':return toStr(a0()).length;
+    case 'MAJUSCULE':case 'UPPER':return toStr(a0()).toUpperCase();
+    case 'MINUSCULE':case 'LOWER':return toStr(a0()).toLowerCase();
+    case 'CONCATENER':case 'CONCAT':case 'CONCATENATE':return A.map(x=>{const v=evalNode(x,grid);return v&&v.__range?v.flat.map(toStr).join(''):toStr(v);}).join('');
+    case 'SUPPRESPACE':case 'TRIM':return toStr(a0()).trim().replace(/\s+/g,' ');
+    default:throw new Error('Fonction inconnue : '+N);
+  }
 }
 function evalFormula(formula,grid){
   if(typeof formula!=='string'||formula.trim()[0]!=='=')throw new Error('La formule doit commencer par =');
-  let expr=formula.trim().slice(1).replace(/\s+/g,'');
-  if(!expr)throw new Error('Formule vide');
-  let guard=0;
-  const fnRe=/([A-Z]+)\(([^()]*)\)/i;
-  while(fnRe.test(expr)){
-    if(++guard>40)throw new Error('Formule trop complexe');
-    expr=expr.replace(fnRe,(m,name,args)=>{
-      const fn=FN[name.toUpperCase()];
-      if(!fn)throw new Error('Fonction inconnue : '+name);
-      const list=splitArgs(args);
-      let vals=[];
-      list.forEach(a=>{vals=vals.concat(resolveArg(a,grid));});
-      const r=fn(vals);
-      if(typeof r!=='number'||!isFinite(r))throw new Error('Résultat invalide');
-      return '('+r+')';
-    });
-  }
-  // replace remaining cell refs with numeric values
-  expr=expr.replace(/[A-Z]+\d+/gi,(ref)=>{
-    const v=cellRaw(ref,grid);
-    const n=parseFloat(String(v).replace(',','.'));
-    return isNaN(n)?'0':'('+n+')';
-  });
-  expr=expr.replace(/,/g,'.');
-  if(!/^[0-9+\-*/().%\s]+$/.test(expr))throw new Error('Formule non reconnue');
-  let val;
-  try{ val=Function('"use strict";return ('+expr+')')(); }catch(e){ throw new Error('Erreur de calcul'); }
-  if(typeof val!=='number'||!isFinite(val))throw new Error('Erreur de calcul');
+  const body=formula.trim().slice(1);
+  if(!body.trim())throw new Error('Formule vide');
+  const toks=tokenize(body);
+  if(!toks.length)throw new Error('Formule vide');
+  const ast=parseFormula(toks);
+  const val=evalNode(ast,grid);
+  if(val&&val.__range)throw new Error('La formule renvoie une plage');
+  if(typeof val==='number'&&!isFinite(val))throw new Error('Résultat non valide');
   return val;
 }
 
@@ -1152,52 +2218,57 @@ function evalFormula(formula,grid){
    PRACTICE RENDER
    ============================================================ */
 function colLetter(i){let s='';i++;while(i>0){const m=(i-1)%26;s=String.fromCharCode(65+m)+s;i=Math.floor((i-1)/26);}return s;}
+function exerciseCardHTML(ex){
+  const cols=Math.max(...ex.data.map(r=>r.length));
+  let head='<tr><th></th>'+Array.from({length:cols},(_,c)=>`<th>${colLetter(c)}</th>`).join('')+'</tr>';
+  let body=ex.data.map((row,r)=>{
+    let cells='';
+    for(let c=0;c<cols;c++){
+      const cell=row[c];
+      if(ex.target.r===r&&ex.target.c===c){
+        cells+=`<td class="target"><input type="text" class="ex-input" placeholder="=…" data-ex="${ex.id}" autocomplete="off" spellcheck="false"></td>`;
+      }else if(cell==null||cell.v===''){
+        cells+='<td></td>';
+      }else if(cell.t==='num'){
+        cells+=`<td class="num">${cell.v}</td>`;
+      }else{
+        cells+=`<td class="txt">${cell.v}</td>`;
+      }
+    }
+    return `<tr><th>${r+1}</th>${cells}</tr>`;
+  }).join('');
+  const doneTag = store.exDone[ex.id]?'<span class="ex-done" style="margin-left:auto;font-size:12px;font-weight:700;color:var(--accent);background:var(--accent)1f;padding:3px 9px;border-radius:20px">✓ réussi</span>':'';
+  return `<div class="ex-card" data-exid="${ex.id}">
+    <div class="ex-head" style="display:flex;align-items:center;gap:10px"><div class="ex-title">${ex.title}</div>${doneTag}</div>
+    <div class="ex-goal">${ex.goal}</div>
+    <div class="ss-wrap"><table class="ss"><thead>${head}</thead><tbody>${body}</tbody></table></div>
+    <div class="ex-controls">
+      <button class="btn primary sm ex-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Vérifier</button>
+      <button class="btn ghost sm ex-hintbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>Indice</button>
+      <span class="ex-fb"></span>
+    </div>
+    <div class="hint"><b>Indice —</b> ${ex.hint}</div>
+  </div>`;
+}
+function wireExercises(hostEl,onSolved){
+  hostEl.querySelectorAll('.ex-card').forEach(card=>{
+    const id=card.dataset.exid;
+    const inp=card.querySelector('.ex-input');
+    const fb=card.querySelector('.ex-fb');
+    const hint=card.querySelector('.hint');
+    const run=()=>checkExerciseEl(id,inp,fb,onSolved);
+    card.querySelector('.ex-check').addEventListener('click',run);
+    card.querySelector('.ex-hintbtn').addEventListener('click',()=>hint.classList.toggle('show'));
+    inp.addEventListener('keydown',e=>{if(e.key==='Enter')run();});
+  });
+}
 function renderPratique(){
   const host=document.getElementById('pratique-list');
-  host.innerHTML=EXERCISES.map(ex=>{
-    const cols=Math.max(...ex.data.map(r=>r.length));
-    let head='<tr><th></th>'+Array.from({length:cols},(_,c)=>`<th>${colLetter(c)}</th>`).join('')+'</tr>';
-    let body=ex.data.map((row,r)=>{
-      let cells='';
-      for(let c=0;c<cols;c++){
-        const cell=row[c];
-        if(ex.target.r===r&&ex.target.c===c){
-          cells+=`<td class="target"><input type="text" placeholder="=…" data-ex="${ex.id}" autocomplete="off" spellcheck="false"></td>`;
-        }else if(cell==null||cell.v===''){
-          cells+='<td></td>';
-        }else if(cell.t==='num'){
-          cells+=`<td class="num">${cell.v}</td>`;
-        }else{
-          cells+=`<td class="txt">${cell.v}</td>`;
-        }
-      }
-      return `<tr><th>${r+1}</th>${cells}</tr>`;
-    }).join('');
-    return `<div class="ex-card">
-      <div class="ex-head"><div class="ex-title">${ex.title}</div></div>
-      <div class="ex-goal">${ex.goal}</div>
-      <div class="ss-wrap"><table class="ss"><thead>${head}</thead><tbody>${body}</tbody></table></div>
-      <div class="ex-controls">
-        <button class="btn primary sm" data-check="${ex.id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Vérifier</button>
-        <button class="btn ghost sm" data-hint="${ex.id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>Indice</button>
-        <span class="ex-fb" id="fb-${ex.id}"></span>
-      </div>
-      <div class="hint" id="hint-${ex.id}"><b>Indice —</b> ${ex.hint}</div>
-    </div>`;
-  }).join('');
-
-  host.querySelectorAll('[data-check]').forEach(b=>b.addEventListener('click',()=>checkExercise(b.dataset.check)));
-  host.querySelectorAll('[data-hint]').forEach(b=>b.addEventListener('click',()=>{
-    document.getElementById('hint-'+b.dataset.hint).classList.toggle('show');
-  }));
-  host.querySelectorAll('input[data-ex]').forEach(inp=>inp.addEventListener('keydown',e=>{
-    if(e.key==='Enter')checkExercise(inp.dataset.ex);
-  }));
+  host.innerHTML=EXERCISES.map(exerciseCardHTML).join('');
+  wireExercises(host);
 }
-function checkExercise(id){
+function checkExerciseEl(id,inp,fb,onSolved){
   const ex=EXERCISES.find(x=>x.id===id);
-  const inp=document.querySelector(`input[data-ex="${id}"]`);
-  const fb=document.getElementById('fb-'+id);
   const val=inp.value.trim();
   fb.className='ex-fb';
   if(!val){fb.textContent='⚠ Saisis une formule dans la cellule verte.';fb.classList.add('no');return;}
@@ -1206,16 +2277,26 @@ function checkExercise(id){
   let got;
   try{ got=evalFormula(val,ex.data); }
   catch(err){ fb.textContent='✗ '+err.message; fb.classList.add('no'); return; }
-  if(Math.abs(got-expected)<1e-6){
-    fb.innerHTML='✓ Correct ! Résultat = <b>'+(Math.round(expected*100)/100)+'</b>';
+  const showVal=(v)=>{
+    if(typeof v==='number')return (Math.round(v*1000)/1000).toString().replace('.',',');
+    if(typeof v==='boolean')return v?'VRAI':'FAUX';
+    return '« '+v+' »';
+  };
+  const ok=(typeof expected==='number'&&typeof got==='number')
+    ? Math.abs(got-expected)<1e-6
+    : String(got).trim().toLowerCase()===String(expected).trim().toLowerCase();
+  if(ok){
+    fb.innerHTML='✓ Correct ! Résultat = <b>'+showVal(expected)+'</b>';
     fb.classList.add('ok');
     inp.style.color='var(--accent)';
-    if(!store.exDone[id]){
+    const wasNew=!store.exDone[id];
+    if(wasNew){
       store.exDone[id]=true; saveStore();
       addHistory('exercice',ex.title.replace(/^\d+\s·\s/,''),'réussi');
     }
+    if(onSolved)onSolved(id,wasNew);
   }else{
-    fb.innerHTML='✗ Ton résultat ('+(Math.round(got*100)/100)+') ne correspond pas. Attendu : <b>'+(Math.round(expected*100)/100)+'</b>. Vérifie ta plage.';
+    fb.innerHTML='✗ Ton résultat ('+showVal(got)+') ne correspond pas. Attendu : <b>'+showVal(expected)+'</b>. Vérifie ta formule.';
     fb.classList.add('no');
   }
 }
@@ -1241,6 +2322,57 @@ const XLSX_FILES=[
    build:()=>{
      const aoa=[["Poste","Montant (€)"],["Loyer",650],["Courses",280],["Transport",75],["Loisirs",120],["Abonnements",45],["Total dépenses ?",""],["Revenus",1400],["Reste ?",""]];
      return [{name:'Budget',aoa}];
+   }},
+  {id:'f_ventes_region', title:"Ventes par région", color:'var(--blue)', icon:'📊',
+   desc:"Ventes trimestrielles par région. Entraîne-toi aux totaux (lignes et colonnes) puis crée un histogramme ou des courbes.",
+   build:()=>{
+     const aoa=[["Région","T1","T2","T3","T4","Total ?"],["Nord",1200,1500,1100,1800,""],["Sud",900,1100,1300,1600,""],["Est",800,950,1000,1200,""],["Ouest",1500,1700,1600,2000,""],["Total ?","","","","",""]];
+     return [{name:'Ventes régions',aoa}];
+   }},
+  {id:'f_stock', title:"Inventaire / stock", color:'var(--accent)', icon:'📦',
+   desc:"Liste de stock idéale pour le TRI (par catégorie, par prix) et les FILTRES. Calcule aussi la valeur du stock (quantité × prix).",
+   build:()=>{
+     const aoa=[["Produit","Catégorie","Quantité","Prix unitaire (€)","Valeur ?"],["Clavier","Informatique",24,19.9,""],["Souris","Informatique",40,9.5,""],["Écran","Informatique",15,120,""],["Chaise","Mobilier",12,89,""],["Bureau","Mobilier",6,150,""],["Lampe","Mobilier",30,25,""],["Cahier","Fourniture",200,2.5,""],["Stylo","Fourniture",350,1.2,""]];
+     return [{name:'Stock',aoa}];
+   }},
+  {id:'f_facture', title:"Facture / devis", color:'var(--amber)', icon:'🧾',
+   desc:"Modèle de facture : total par ligne (qté × PU), sous-total HT, TVA 20 % et total TTC.",
+   build:()=>{
+     const aoa=[["Désignation","Quantité","Prix unitaire (€)","Total HT ?"],["Prestation A",3,150,""],["Prestation B",5,80,""],["Matériel",10,12.5,""],["","","Sous-total HT ?",""],["","","TVA 20 % ?",""],["","","Total TTC ?",""]];
+     return [{name:'Facture',aoa}];
+   }},
+  {id:'f_depenses', title:"Suivi de dépenses", color:'var(--blue)', icon:'💳',
+   desc:"Dépenses du mois par catégorie. Trie par montant, filtre une catégorie, et fais un camembert de la répartition.",
+   build:()=>{
+     const aoa=[["Date","Catégorie","Montant (€)"],["01/03","Courses",62.5],["03/03","Transport",18],["05/03","Loisirs",45],["08/03","Courses",80],["10/03","Santé",30],["12/03","Transport",22],["15/03","Loisirs",60],["18/03","Courses",55],["22/03","Santé",40]];
+     return [{name:'Dépenses',aoa}];
+   }},
+  {id:'f_temperatures', title:"Températures (courbes)", color:'var(--accent)', icon:'🌡️',
+   desc:"Deux séries de températures sur 6 mois : parfait pour créer un graphique en COURBES et comparer deux villes.",
+   build:()=>{
+     const aoa=[["Mois","Paris (°C)","Nice (°C)"],["Jan",5,9],["Fév",6,10],["Mar",10,13],["Avr",13,16],["Mai",17,20],["Juin",20,24]];
+     return [{name:'Températures',aoa}];
+   }},
+  {id:'f_recherchev', title:"RECHERCHEV (2 feuilles)", color:'var(--amber)', icon:'🔎',
+   desc:"⭐ Avancé : une feuille « Catalogue » (code → produit → prix) et une feuille « Commandes » à compléter avec RECHERCHEV pour retrouver produit et prix.",
+   build:()=>{
+     const cat=[["Code","Produit","Prix (€)"],[101,"Clavier",19.9],[102,"Souris",9.5],[103,"Écran",129],[104,"Casque",45],[105,"Webcam",39]];
+     const cmd=[["Commande","Code","Produit ?","Prix ?","Quantité","Total ?"],["C1",103,"","",2,""],["C2",101,"","",5,""],["C3",105,"","",1,""],["C4",102,"","",10,""]];
+     return [{name:'Catalogue',aoa:cat},{name:'Commandes',aoa:cmd}];
+   }},
+  {id:'f_tcd', title:"Données pour TCD", color:'var(--blue)', icon:'📐',
+   desc:"⭐ Avancé : une grande liste de ventes (date, région, vendeur, produit, montant). Crée un tableau croisé dynamique : ventes par région, par produit, par vendeur…",
+   build:()=>{
+     const aoa=[
+       ["Date","Région","Vendeur","Produit","Montant (€)"],
+       ["05/01","Nord","Alice","Clavier",240],["07/01","Sud","Bob","Écran",129],
+       ["09/01","Nord","Alice","Souris",95],["12/01","Est","Chloé","Casque",180],
+       ["15/01","Sud","Bob","Clavier",200],["18/01","Nord","David","Écran",258],
+       ["20/01","Est","Chloé","Souris",76],["22/01","Sud","Bob","Webcam",117],
+       ["25/01","Nord","Alice","Casque",225],["27/01","Est","David","Clavier",160],
+       ["29/01","Sud","Chloé","Écran",129],["31/01","Nord","David","Souris",114]
+     ];
+     return [{name:'Ventes',aoa}];
    }}
 ];
 function downloadXlsx(id){
@@ -1290,25 +2422,113 @@ function timeAgo(ts){
   if(s<86400)return Math.floor(s/3600)+' h';
   return Math.floor(s/86400)+' j';
 }
-const HIST_ICON={session:['var(--amber)','⏱'],libre:['var(--accent)','▣'],exercice:['var(--blue)','★']};
+const HIST_ICON={session:['var(--amber)','⏱'],libre:['var(--accent)','▣'],exercice:['var(--blue)','★'],examen:['var(--accent)','🎓'],jour:['var(--accent)','📅']};
 function renderSuivi(){
   const {a,c}=totalQcm();
   document.getElementById('s-total').textContent=a;
   document.getElementById('s-correct').textContent=c;
   document.getElementById('s-ex').textContent=Object.keys(store.exDone).filter(k=>store.exDone[k]).length;
-  // per theme
-  document.getElementById('theme-prog').innerHTML=THEMES.map(t=>{
-    const d=store.qcm.byTheme[t.id]; const pct=d&&d.a?Math.round(d.c/d.a*100):0;
-    return `<div class="tp-row">
-      <span class="name">${t.short}</span>
-      <div class="bar"><i style="width:${pct}%"></i></div>
-      <span class="pct">${d&&d.a?pct+'%':'—'}</span>
+
+  // ----- Prochaine étape -----
+  const nsc=document.getElementById('next-step-card');
+  const allComplete=THEMES.every(t=>isThemeComplete(t.id));
+  if(allComplete){
+    nsc.innerHTML=`<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+      <div style="font-size:30px">🏆</div>
+      <div style="flex:1;min-width:200px"><div style="font-weight:700;font-size:16px;color:var(--accent)">Programme bouclé !</div>
+        <div style="color:var(--text-dim);font-size:13.5px">Tu as validé les ${THEMES.length} modules sur les 3 dimensions. Enchaîne maintenant les <b>examens blancs</b> et retravaille tes points les plus faibles.</div></div>
+      <button class="btn primary" data-goto="examen" style="margin-left:auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 11l3 3 8-8"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Examen blanc</button>
+    </div>`;
+  }else{
+    const nx=focusTheme(); const pr=themeProgress(nx.id);
+    const todo=[]; if(!pr.qcm.ok)todo.push('le QCM'); if(!pr.exos.ok&&pr.exos.total)todo.push('les exercices'); if(!pr.excel)todo.push('la manipulation Excel');
+    nsc.innerHTML=`<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+      <div style="font-size:30px">🎯</div>
+      <div style="flex:1;min-width:200px">
+        <div style="font-size:11px;color:var(--text-mute);font-weight:700;text-transform:uppercase;letter-spacing:.05em">Prochaine étape</div>
+        <div style="font-weight:700;font-size:16px;color:${nx.color}">${nx.name} <span style="font-family:var(--mono);color:var(--text-mute);font-size:12px;font-weight:400">· ${nx.days}</span></div>
+        <div style="color:var(--text-dim);font-size:13.5px">Il te reste : ${todo.length?todo.join(', '):'à confirmer'}.</div>
+      </div>
+      <button class="btn primary" data-revise="${nx.id}" style="margin-left:auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 3l14 9-14 9V3z"/></svg>Lancer la séance</button>
+    </div>`;
+  }
+  nsc.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.goto)));
+
+  // ----- Progression par semaine (3 dimensions) -----
+  const dim=(ok,label)=>`<span style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:${ok?'var(--accent)':'var(--text-mute)'}">${ok?'✓':'○'} ${label}</span>`;
+  const groups=[];
+  THEMES.forEach((t,i)=>{
+    let g=groups.find(x=>x.week===t.days);
+    if(!g){g={week:t.days,items:[]};groups.push(g);}
+    g.items.push({t,i});
+  });
+  document.getElementById('module-prog').innerHTML=groups.map(g=>{
+    const doneN=g.items.filter(x=>{const p=themeProgress(x.t.id);return p.qcm.ok&&p.exos.ok&&p.excel;}).length;
+    const tot=g.items.length, allW=doneN===tot;
+    const rows=g.items.map(({t,i})=>{
+      const pr=themeProgress(t.id);
+      const ok=pr.qcm.ok&&pr.exos.ok&&pr.excel;
+      return `<div style="display:flex;align-items:center;gap:13px;padding:11px 0;border-bottom:1px solid var(--border-soft)">
+        <div style="width:26px;height:26px;flex:0 0 26px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:${ok?'var(--accent)':'var(--surface-3)'};color:${ok?'#0b0f14':'var(--text-mute)'};font-size:12px;font-weight:700">${ok?'✓':i+1}</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:600;font-size:14px">${t.name}</div>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:5px">
+            ${dim(pr.qcm.ok,'QCM'+(pr.qcm.tried?' · '+pr.qcm.pct+'%':''))}
+            ${dim(pr.exos.ok,'Exercices'+(pr.exos.total?' · '+pr.exos.done+'/'+pr.exos.total:' (aucun)'))}
+            ${dim(pr.excel,'Manip. Excel')}
+          </div>
+        </div>
+        <button class="btn ghost sm" data-revise="${t.id}" style="flex:0 0 auto" title="Refaire la séance de ce module"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>${ok?'Refaire':'Réviser'}</button>
+      </div>`;
+    }).join('');
+    return `<div style="margin-bottom:4px">
+      <div style="display:flex;align-items:center;gap:10px;margin:16px 0 2px">
+        <span style="font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:${allW?'var(--accent)':'var(--text-dim)'}">${g.week}</span>
+        <span style="flex:1;height:1px;background:var(--border-soft)"></span>
+        <span style="font-size:11px;font-weight:700;color:${allW?'var(--accent)':'var(--text-mute)'}">${doneN}/${tot}${allW?' ✓':''}</span>
+      </div>
+      ${rows}
     </div>`;
   }).join('');
-  // history
+
+  // Lancement direct d'une séance ciblée (prochaine étape + boutons Réviser/Refaire)
+  document.querySelectorAll('#view-suivi [data-revise]').forEach(b=>b.addEventListener('click',()=>launchSession(b.dataset.revise)));
+
+  // ----- Checklist « Prêt pour le jour J » (persistée) -----
+  const JOURJ=[
+    'Mettre en forme un tableau (nombres €/%, bordures, alignement)',
+    'Utiliser la mise en forme conditionnelle',
+    'Écrire SOMME, MOYENNE, MIN, MAX, NB',
+    'Utiliser une référence absolue ($) et recopier une formule',
+    'Trier et filtrer un tableau',
+    'Créer et habiller un graphique',
+    'Écrire un SI (avec ET / OU, et des SI imbriqués)',
+    'Utiliser NB.SI, SOMME.SI, MOYENNE.SI',
+    'Faire une RECHERCHEV (exacte, avec $)',
+    'Utiliser les fonctions texte (GAUCHE/DROITE, &, MAJUSCULE)',
+    'Construire un tableau croisé dynamique et l\'actualiser',
+    'Mettre en page et imprimer / exporter en PDF'
+  ];
+  const jl=document.getElementById('jourj-list');
+  if(jl){
+    const doneC=JOURJ.filter((_,i)=>store.jourJ['s'+i]).length;
+    const pct=Math.round(doneC/JOURJ.length*100);
+    jl.innerHTML=`<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-mute);margin-bottom:4px"><span>${doneC}/${JOURJ.length} compétences maîtrisées</span><span>${pct}%</span></div>
+      <div class="bar" style="margin-bottom:10px"><i style="width:${pct}%;background:var(--amber)"></i></div>`+
+      JOURJ.map((s,i)=>{
+      const on=!!store.jourJ['s'+i];
+      return `<label style="display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid var(--border-soft);cursor:pointer;font-size:14px">
+        <span class="jjbox" data-k="s${i}" style="width:20px;height:20px;flex:0 0 20px;border-radius:5px;border:2px solid ${on?'var(--accent)':'var(--border)'};background:${on?'var(--accent)':'transparent'};display:flex;align-items:center;justify-content:center;color:#0b0f14;font-size:12px;font-weight:800">${on?'✓':''}</span>
+        <span style="color:${on?'var(--text)':'var(--text-dim)'}">${s}</span>
+      </label>`;
+    }).join('');
+    jl.querySelectorAll('.jjbox').forEach(b=>b.addEventListener('click',(e)=>{e.preventDefault();const k=b.dataset.k;store.jourJ[k]=!store.jourJ[k];saveStore();renderSuivi();}));
+  }
+
+  // ----- Historique -----
   const h=document.getElementById('hist-list');
   if(!store.history.length){
-    h.innerHTML=`<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg><div>Aucune session pour le moment.<br>Lance une session du jour pour démarrer !</div></div>`;
+    h.innerHTML=`<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg><div>Aucune séance pour le moment.<br>Lance ta séance du jour pour démarrer !</div></div>`;
   }else{
     h.innerHTML=store.history.map(it=>{
       const ic=HIST_ICON[it.type]||['var(--text-mute)','•'];
@@ -1322,7 +2542,7 @@ function renderSuivi(){
 }
 document.getElementById('reset-btn').addEventListener('click',()=>{
   if(confirm('Réinitialiser toute ta progression et ton historique ? Cette action est définitive.')){
-    store={themesDone:{}, qcm:{byTheme:{}}, exDone:{}, streak:{count:0,last:null}, history:[]};
+    store={themesDone:{}, qcm:{byTheme:{}}, exDone:{}, excelDone:{}, curDay:1, dayDone:{}, jourJ:{}, streak:{count:0,last:null}, history:[], exams:[]};
     saveStore(); updateNavBadge(); renderSuivi(); renderDashboard();
   }
 });
@@ -1332,14 +2552,153 @@ document.getElementById('reset-btn').addEventListener('click',()=>{
    ============================================================ */
 function initSessionView(){
   const host=document.getElementById('session-host');
+  const theme=focusTheme();
+  const exos=themeExercises(theme.id).length;
   host.innerHTML=`<div class="card" style="text-align:center;padding:34px">
-    <div style="font-size:40px;margin-bottom:8px">⏱️</div>
-    <h2 class="sec" style="justify-content:center;margin-top:0"><span class="tick"></span>Prêt pour ta session ?</h2>
-    <p style="color:var(--text-dim);max-width:440px;margin:0 auto 22px">5 questions sur l'ensemble du programme TOSA débutant. Compte environ 5 minutes.</p>
-    <button class="btn primary" id="start-session" style="margin:0 auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 3l14 9-14 9V3z"/></svg>Commencer</button>
+    <div style="font-size:40px;margin-bottom:8px">🎯</div>
+    <h2 class="sec" style="justify-content:center;margin-top:0"><span class="tick"></span>Ta séance guidée du jour</h2>
+    <p style="color:var(--text-dim);max-width:520px;margin:0 auto 6px">Aujourd'hui : <b style="color:${theme.color}">${theme.name}</b> <span style="font-family:var(--mono);color:var(--text-mute)">· ${theme.days}</span></p>
+    <p style="color:var(--text-mute);max-width:540px;margin:0 auto 20px;font-size:13.5px">3 étapes : <b>QCM</b> (connaissances) → <b>${exos?exos+' exercice(s)':'révision'}</b> (pratique) → <b>manipulation dans Excel</b>. Compte 10 à 15 minutes.</p>
+    <button class="btn primary" id="start-session" style="margin:0 auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 3l14 9-14 9V3z"/></svg>Commencer la séance</button>
   </div>`;
-  document.getElementById('start-session').addEventListener('click',startSession);
+  document.getElementById('start-session').addEventListener('click',()=>startGuidedSession());
 }
+
+/* ============================================================
+   EXAMEN BLANC (chronométré)
+   ============================================================ */
+let examTimer=null;
+function clearExamTimer(){ if(examTimer){clearInterval(examTimer);examTimer=null;} }
+function recordExam(score,total,sec){
+  const pct=Math.round(score/total*100);
+  const estScore=Math.round(pct*10); // estimation 0-1000
+  store.exams=store.exams||[];
+  store.exams.unshift({d:Date.now(),score,total,pct,estScore,sec});
+  store.exams=store.exams.slice(0,30);
+  saveStore();
+  return {pct,estScore};
+}
+function bestExam(){ if(!store.exams||!store.exams.length)return null; return store.exams.reduce((b,e)=>e.estScore>b.estScore?e:b,store.exams[0]); }
+function tosaLevel(estScore){
+  if(estScore>=876)return {lvl:'Expert',col:'var(--accent)'};
+  if(estScore>=726)return {lvl:'Avancé',col:'var(--accent)'};
+  if(estScore>=551)return {lvl:'Opérationnel',col:'var(--green,#2fd27a)'};
+  if(estScore>=351)return {lvl:'Basique',col:'var(--amber)'};
+  return {lvl:'Initial',col:'var(--red)'};
+}
+function fmtTime(s){const m=Math.floor(s/60),r=s%60;return m+':'+(r<10?'0':'')+r;}
+
+function initExamView(){
+  clearExamTimer();
+  const host=document.getElementById('examen-host');
+  const best=bestExam();
+  const bestLine=best?`<div style="margin-top:18px;font-size:14px;color:var(--text-dim)">🏆 Ton meilleur score : <b style="color:var(--accent)">${best.estScore}/1000</b> (${best.pct}%) · niveau ${tosaLevel(best.estScore).lvl}</div>`:'';
+  host.innerHTML=`<div class="card" style="padding:30px">
+    <h2 class="sec" style="margin-top:0"><span class="tick"></span>Choisis ton format</h2>
+    <p style="color:var(--text-dim);max-width:560px;margin:-6px 0 20px">Comme à l'examen : aucune correction pendant l'épreuve, un chrono, puis ton score estimé et la correction complète. Si le temps est écoulé, l'examen se termine automatiquement.</p>
+    <div class="cta-row">
+      <button class="btn ghost" data-exam="10" data-min="10"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Rapide · 10 questions · 10 min</button>
+      <button class="btn primary" data-exam="20" data-min="20"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Standard · 20 questions · 20 min</button>
+      <button class="btn ghost" data-exam="35" data-min="35"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Complet · 35 questions · 35 min</button>
+    </div>
+    ${bestLine}
+    <div class="muted-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>Le score sur 1000 est une estimation pédagogique, pas un score TOSA officiel.</div>
+  </div>`;
+  host.querySelectorAll('[data-exam]').forEach(b=>b.addEventListener('click',()=>startExam(+b.dataset.exam,+b.dataset.min)));
+}
+
+function startExam(count,minutes){
+  clearExamTimer();
+  const host=document.getElementById('examen-host');
+  const questions=shuffle(BANK).slice(0,Math.min(count,BANK.length));
+  const total=questions.length;
+  const answers=new Array(total).fill(null);
+  let idx=0, remaining=minutes*60;
+  updateStreak();
+
+  function header(){
+    const low=remaining<=30;
+    return `<div class="quiz-top">
+      <span class="q-tag">Examen blanc</span>
+      <span class="q-count" id="timer" style="font-family:var(--mono);font-weight:700;font-size:15px;color:${low?'var(--red)':'var(--amber)'}">⏱ ${fmtTime(remaining)}</span>
+    </div>
+    <div class="q-progress"><i style="width:${idx/total*100}%"></i></div>`;
+  }
+  function renderQ(){
+    const q=questions[idx];
+    host.innerHTML=`<div class="quiz-shell">
+      ${header()}
+      <div style="font-size:13px;color:var(--text-mute);font-weight:600;margin-bottom:10px">Question ${idx+1} / ${total} · ${themeName(q.t)}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="opts" id="opts">${q.o.map((o,i)=>`<button class="opt${answers[idx]===i?' correct':''}" data-i="${i}"><span class="key">${'ABCD'[i]}</span><span>${o}</span></button>`).join('')}</div>
+      <div class="quiz-foot" style="justify-content:space-between">
+        <button class="btn ghost" id="prev" ${idx===0?'disabled':''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Précédent</button>
+        <button class="btn primary" id="next">${idx+1<total?'Suivant':'Terminer l\u0027examen'} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>`;
+    const opts=host.querySelector('#opts');
+    opts.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>{
+      answers[idx]=+b.dataset.i;
+      opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('correct'));
+      b.classList.add('correct');
+    }));
+    host.querySelector('#prev').addEventListener('click',()=>{if(idx>0){idx--;renderQ();}});
+    host.querySelector('#next').addEventListener('click',()=>{if(idx+1<total){idx++;renderQ();}else finish(false);});
+  }
+  function tick(){
+    remaining--;
+    const t=document.getElementById('timer');
+    if(t){t.textContent='⏱ '+fmtTime(remaining);if(remaining<=30)t.style.color='var(--red)';}
+    if(remaining<=0)finish(true);
+  }
+  function finish(timeout){
+    clearExamTimer();
+    let score=0;
+    questions.forEach((q,i)=>{const ok=answers[i]===q.c;if(ok)score++;recordQcm(q.t,ok);});
+    const usedSec=minutes*60-Math.max(0,remaining);
+    const {pct,estScore}=recordExam(score,total,usedSec);
+    const lv=tosaLevel(estScore);
+    addHistory('examen','Examen blanc ('+total+' Q)',estScore+'/1000');
+    const r=46,circ=2*Math.PI*r,off=circ*(1-pct/100);
+    const review=questions.map((q,i)=>{
+      const ua=answers[i],ok=ua===q.c;
+      const uaTxt=ua==null?'<i>Pas de réponse</i>':('<b>'+'ABCD'[ua]+'.</b> '+q.o[ua]);
+      return `<div style="padding:14px 16px;border:1px solid var(--border-soft);border-left:3px solid ${ok?'var(--accent)':'var(--red)'};border-radius:10px;background:var(--surface-2)">
+        <div style="font-size:13px;color:var(--text-mute);font-weight:600;margin-bottom:6px">Q${i+1} · ${themeName(q.t)} ${ok?'✓':'✗'}</div>
+        <div style="font-weight:600;margin-bottom:8px">${q.q}</div>
+        <div style="font-size:13.5px;color:${ok?'var(--accent)':'var(--red)'}">Ta réponse : ${uaTxt}</div>
+        ${ok?'':`<div style="font-size:13.5px;color:var(--accent);margin-top:3px">Bonne réponse : <b>${'ABCD'[q.c]}.</b> ${q.o[q.c]}</div>`}
+        <div style="font-size:13px;color:var(--text-dim);margin-top:8px;padding-top:8px;border-top:1px solid var(--border-soft)">${q.e}</div>
+      </div>`;
+    }).join('');
+    host.innerHTML=`<div class="quiz-shell">
+      <div class="result">
+        ${timeout?'<div style="color:var(--amber);font-weight:600;margin-bottom:10px">⏱ Temps écoulé !</div>':''}
+        <div class="ring">
+          <svg viewBox="0 0 110 110" style="width:130px;height:130px;transform:rotate(-90deg)">
+            <circle cx="55" cy="55" r="${r}" fill="none" stroke="var(--surface-3)" stroke-width="9"/>
+            <circle cx="55" cy="55" r="${r}" fill="none" stroke="${lv.col}" stroke-width="9" stroke-linecap="round" stroke-dasharray="${circ}" stroke-dashoffset="${off}" style="transition:stroke-dashoffset 1s ease"/>
+          </svg>
+          <div class="score" style="color:${lv.col};font-size:26px">${estScore}<span style="font-size:14px;color:var(--text-mute)">/1000</span></div>
+        </div>
+        <h3>Niveau estimé : <span style="color:${lv.col}">${lv.lvl}</span></h3>
+        <p>${score}/${total} bonnes réponses (${pct}%) · temps : ${fmtTime(usedSec)}</p>
+        <div class="cta-row" style="justify-content:center;margin-top:20px">
+          <button class="btn primary" id="retry"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>Nouvel examen</button>
+          <button class="btn ghost" data-goto="suivi">Voir mon suivi</button>
+        </div>
+      </div>
+    </div>
+    <h2 class="sec"><span class="tick"></span>Correction détaillée</h2>
+    <div style="display:flex;flex-direction:column;gap:12px">${review}</div>`;
+    host.querySelector('#retry').addEventListener('click',initExamView);
+    host.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.goto)));
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  renderQ();
+  examTimer=setInterval(tick,1000);
+}
+
 function init(){
   // exam date label
   const ed=new Date(EXAM_DATE);
@@ -1349,6 +2708,7 @@ function init(){
   fillLibreThemes();
   updateNavBadge();
   renderDashboard();
+  renderToday();
   renderPratique();
   renderFiles();
   renderRessources();
